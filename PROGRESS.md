@@ -1,24 +1,33 @@
 # PROGRESS
 
-- 目标：完成整套 PM Workflow Skills 的收尾审计与维护，统一 skill 质量门、上下游交接、协作方阅读路径、引用资源和仓库校验。
-- 基线：`master@c841325`；工作区初始干净；已有 6 个 skill 结构校验通过。
-- 本轮判断：`pm-requirement-define` 与 `pm-prd-write` 的核心方法和交付边界已经成熟；其他 4 个 skills 不是简单“缺内容”，而是需要补齐交接契约、入口说明和维护一致性。`pm-update-write` 保持轻量是有意设计。
+- 目标：完成整套 PM Workflow Skills 的收尾审计与维护，尤其把后续单点加入的 `pm-requirement-grade` 串回完整工作流，统一仓库级引导、上下游交接和维护规范。
+- 当前工作流：证据补齐（按需）→ `pm-requirement-define` → `pm-requirement-grade` → L0/L1/L2/L3/H 对应交付 → `pm-prd-write` / `pm-update-write` / `pm-metrics-review` 闭环。
+- 本轮判断：原有 README 与 WORKFLOW_GUIDE 已能提到分级，但对“何时用、怎么串、上下游交接契约、理想协作实践”的说明不足；`pm-requirement-define` 和 `pm-prd-write` 中也仍有少量“直接进 PRD”的旧口径，需要统一为先分级再交付。
 
 ## 本轮完成
 
-- 新增仓库级 `WORKFLOW_GUIDE.md`，统一说明任务选择、工作流总图、交接契约、执行模式、协作方阅读顺序、完备度评估、资源索引和 AI 维护规则。
-- 为 `pm-requirement-define` 补充阻塞决策负责人 / 最晚时间，并保持深度质询作为可选模式。
-- 为 `pm-prd-write` 增加产品、设计、研发、测试、运营和管理者的阅读与交接说明。
-- 为研究综合、竞品分析、指标复盘补充明确的需求定义交接契约。
-- 为 `pm-update-write` 补充输入检查和与其他 skills 的关系，明确它只传播已确认结论。
-- 更新 README、CONTRIBUTING、上游映射、共享产品方案六问和迭代指南。
-- 新增 `scripts/validate-docs.py`，校验本地 Markdown 链接、表格、skill 必备章节、资源引用和工作流文档；CI 同步执行文档校验。
-- 增强 `scripts/validate-skills.sh`，校验默认输出、完成标准、agent 展示字段和默认提示词。
+- 重写 `README.md`，从仓库入口层面说明完整主线、7 个 skills 的职责、分级门禁和 XQD 兼容规则。
+- 重写 `WORKFLOW_GUIDE.md`，补齐总体流程图、skill 职责地图、输入成熟度判断、C1-C5 上下游交接契约、L1/L2/L3/H 理想实践和统一规范。
+- 更新 `pm-requirement-define`，将输出定位从“可写 PRD”调整为“可进入需求分级与后续交付路由”，并补充交给 `pm-requirement-grade` 的风险线索契约。
+- 更新 `pm-prd-write`，显式接收 `pm-requirement-grade` 的分级结论、AI Coding / 协作 / PRD 门槛、spec / QA / 灰度 / 回滚 / 上线观察要求。
+- 更新 `commands/pm-requirement-define.md`、`CONTRIBUTING.md`、`ITERATION_GUIDE.md`、`CHANGELOG.md` 和上游映射，统一“需求定义后先分级”的口径。
+
+
+## 二次收敛审查
+
+- 结论：核心调整必要；本轮不是新增复杂度，README 从旧版 232 行收敛到 44 行，WORKFLOW_GUIDE 从旧版 277 行收敛到 185 行。
+- 已收敛：回退 PR 模板变更；删除 WORKFLOW_GUIDE 中与 PRD / CONTRIBUTING 重复的 ID 追溯和维护检查清单细节，只保留主线、交接契约和等级实践。
+- 保留理由：需求分级是新增门禁，必须同步 README、WORKFLOW_GUIDE、`pm-requirement-define`、`pm-prd-write`、命令入口、模板和迭代指南，否则会继续出现“需求定义 ready 后直接写 PRD”的旧口径。
+
+
+## pm-requirement-grade 边界审查
+
+- 结论：存在单点并入后的边界混淆风险，尤其是 L2 简版、L3 评审清单和上线观察记录容易被误解为 PRD / spec / 测试 / 指标复盘标准。
+- 已处理：将 `pm-requirement-grade` 明确收敛为“风险分级 + 交付路由 / 门禁包”，新增下游边界表；所有 grade 私有模板和 references 增加定位说明。
+- 保留原则：grade 可以判断“是否需要 PRD/spec/QA/观察”和“门禁重点”，但不能在本 skill 内展开完整 PRD、研发实现、测试用例集或效果因果复盘。
 
 ## 验证记录
 
-- `bash scripts/validate-skills.sh`：通过，6 个 skill。
-- `python3 scripts/validate-docs.py`：通过，33 个 Markdown 文件、链接、表格和工作流约定。
+- `bash scripts/validate-skills.sh`：通过，7 个 skill。
+- `python3 scripts/validate-docs.py`：通过，45 个 Markdown 文件、链接、表格和工作流约定。
 - `git diff --check`：通过。
-- 深度质询触发回归：12 个预置案例仍保持分类完整。
-- 最终审查与验证已完成；本轮提交、远程推送和本地 Codex skills 同步作为本次收尾动作执行。

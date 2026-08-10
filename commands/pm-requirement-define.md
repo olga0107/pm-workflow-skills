@@ -1,6 +1,6 @@
 # pm-requirement-define
 
-把模糊想法、用户问题或零散提需推进为可写 PRD 的产品需求定义。
+把模糊想法、用户问题或零散提需推进为可进入需求分级与后续交付路由的产品需求定义。
 
 ## 使用方式
 
@@ -14,6 +14,6 @@
 8. 划定一级范围并扫描会影响方向或投入的重大约束
 9. 输出 `ready`、`needs-decision` 或 `needs-input`
 
-达到 `ready` 后转 `pm-prd-write`。
+达到 `ready` 后先转 `pm-requirement-grade` 做 L0/L1/L2/L3/H 分级；只有分级结论要求 PRD 时再转 `pm-prd-write`。
 
 用户可以明确说“挑战一下这个方案”或“进入深度质询”；未明确要求时，skill 应先说明判断理由和预计问题范围，不静默开始多轮追问。

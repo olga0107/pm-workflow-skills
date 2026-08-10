@@ -6,6 +6,12 @@
 
 ### Changed
 
+- 收敛 `pm-requirement-grade` 的职责边界，将其定位为风险分级与交付路由 / 门禁包，明确不替代 `pm-requirement-define`、`pm-prd-write`、研发 spec、测试方案或 `pm-metrics-review`。
+- 统一重写 README 与 WORKFLOW_GUIDE，补齐从证据补强、需求定义、分级门禁到 PRD / 更新 / 复盘的完整主线，以及上下游交接契约。
+- 将 `pm-requirement-define` 的入口描述调整为先进入需求分级与后续交付路由，避免与 `pm-requirement-grade` 的职责重叠。
+- 更新 `pm-prd-write` 的输入契约，显式接收分级结论、AI Coding / 协作 / PRD 门槛和 spec / QA / 灰度要求。
+- 同步修订 `CONTRIBUTING.md`、`ITERATION_GUIDE.md` 和 `commands/pm-requirement-define.md`，统一交接标准与命令入口。
+
 - 为 `pm-requirement-define` 增加可选深度质询模式：先分类缺口，再判断不需要、单问题试探或用户确认后深度质询；补充硬 / 软触发、停止条件、决策记录和禁止事项。
 - 新增深度质询协议与触发回归案例，更新需求定义模板、完整性检查、示例、命令入口、产品方案六问、README 和迭代指南，明确协作方与 AI 的正确使用方式。
 - 扩展 `pm-competitor-analyze`，支持单品机制拆解、快速 / 深度路径选择，以及可回溯的 `raw/ → notes/ → merged.md` 深度采集方法。

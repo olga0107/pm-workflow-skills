@@ -2,7 +2,7 @@
 
 > 本文件记录上游能力与当前仓库的取舍，不是上游仓库的逐字翻译。
 >
-> 最近维护：2026-08-05 · 当前仓库基线：`c841325` · 完整运行关系见 [`WORKFLOW_GUIDE.md`](../WORKFLOW_GUIDE.md)
+> 最近维护：2026-08-10 · 完整运行关系见 [`WORKFLOW_GUIDE.md`](../WORKFLOW_GUIDE.md)
 
 ## Upstream 能力
 
@@ -23,7 +23,8 @@
 | Upstream | 本仓库 | 处理方式 |
 |---|---|---|
 | `product-brainstorming` | `pm-requirement-define` | 与需求澄清合并，统一完成问题、目标、方向、范围和边界定义 |
-| 无完全等价 upstream | `pm-requirement-define` | 吸收原需求诊断能力，作为 PRD 前统一入口 |
+| 无完全等价 upstream | `pm-requirement-define` | 吸收原需求诊断能力，作为需求分级前的产品决策入口 |
+| 无完全等价 upstream | `pm-requirement-grade` | 新增团队协作风险分级与交付路由门禁，输出 L0/L1/L2/L3/H 对应产物 |
 | `write-spec` | `pm-prd-write` | 扩展为决策记录层与研发交付层完整 PRD |
 | `stakeholder-update` | `pm-update-write` | 简化命名，覆盖更新说明、变更通知和更新日志 |
 | `synthesize-research` | `pm-research-synthesize` | 增加材料编码、证据强度、反例、分群和机会转化 |
@@ -46,7 +47,8 @@
 - 使用中文执行工作流，skill 采用 `pm-对象/交付物-动作` 命名
 - 合并高重合度的产品脑暴与需求澄清，减少用户选择成本
 - 用“产品方案六问”统一需求定义和 PRD 的论证逻辑
-- `pm-prd-write` 承接已确认的产品决策，并覆盖研发实现、原型追溯、测试验收和上线验证
+- `pm-requirement-grade` 作为需求定义之后、交付之前的统一风险门禁，决定 L0/L1/L2/L3/H 与 AI Coding 自助边界
+- `pm-prd-write` 承接已确认的产品决策和分级结论，并覆盖研发实现、原型追溯、测试验收和上线验证
 - 研究综合、竞品分析和指标复盘作为可独立使用的证据增强层，在需求定义前或过程中按缺口调用
 - 分析型 skills 必须提供证据方法、模板和示例，而不是只有输出目录
 - 不保留脱离项目事实后只能生成泛化清单的管理型 skills
@@ -59,6 +61,7 @@
 |---|---|
 | `pm-brainstorm-zh` | `pm-requirement-define` |
 | `pm-requirement-intake-zh` | `pm-requirement-define` |
+| 需求分级 / AI Coding 门禁（后续新增） | `pm-requirement-grade` |
 | `pm-write-spec-zh` | `pm-prd-write` |
 | `pm-stakeholder-update-zh` | `pm-update-write` |
 | `pm-research-synthesis-zh` | `pm-research-synthesize` |

@@ -6,15 +6,19 @@
 
 ```mermaid
 flowchart LR
-  A["原始想法 / 反馈 / 数据 / 事故"] --> B{"证据是否足以决策?"}
-  B -- "用户证据不足" --> R["pm-research-synthesize"]
-  B -- "外部解法不足" --> C["pm-competitor-analyze"]
-  B -- "规模/效果/异常不清" --> M["pm-metrics-review"]
-  R --> D["pm-requirement-define"]
+  A["原始想法 / 反馈 / 事故"] --> D["pm-requirement-define"]
+  E["已有研究 / 竞品 / 数据材料"] --> B{"材料是否已足以支持产品决策?"}
+  B -- "需要先综合材料" --> R["pm-research-synthesize"]
+  B -- "需要先对比外部解法" --> C["pm-competitor-analyze"]
+  B -- "需要先复盘规模/效果/异常" --> M["pm-metrics-review"]
+  R --> D
   C --> D
   M --> D
-  B -- "问题/目标/方向未定" --> D
-  D --> G["pm-requirement-grade"]
+  B -- "已可进入决策" --> D
+  D -- "用户证据不足" --> R
+  D -- "外部解法/机制不清" --> C
+  D -- "规模/效果/异常不清" --> M
+  D -- "问题/目标/方向/范围 ready" --> G["pm-requirement-grade"]
   G --> L0["L0 变更记录"]
   G --> L1["L1 AI Coding 任务边界 + 门禁"]
   G --> L2["L2 协作简报 / 门禁"]
@@ -28,7 +32,7 @@ flowchart LR
   U --> M
 ```
 
-默认主线是：`pm-requirement-define` → `pm-requirement-grade` → 按等级交付。研究、竞品和指标是证据增强 skill，只在会影响决策时使用；更新说明和指标复盘是交付后的同步与验证 skill。
+默认主线是：先用 `pm-requirement-define` 判断这个想法是否已经足以做产品决策；如果缺少会改变问题、目标、方向、范围或投入判断的证据，再按缺口路由到研究、竞品或指标 skill，形成证据包后回到 `pm-requirement-define`。需求定义达到 `ready` 后，再进入 `pm-requirement-grade` 并按等级交付。研究、竞品和指标是证据增强 skill，不是每个需求的固定上游；更新说明和指标复盘是交付后的同步与验证 skill。
 
 ## 1. Skill 职责地图
 
@@ -46,7 +50,7 @@ flowchart LR
 
 开始前先把用户输入分成四类：
 
-1. **原始诉求**：只有一句想法、老板要求、用户反馈或竞品截图。进入 `pm-requirement-define`；如证据明显不足，先路由到研究、竞品或指标。
+1. **原始诉求**：只有一句想法、老板要求、用户反馈或竞品截图。先进入 `pm-requirement-define` 做前置判断；如缺口会影响决策，再按缺口路由到研究、竞品或指标，并带着证据包回到需求定义。
 2. **证据材料**：已有访谈 / 数据 / 竞品材料，但还没有产品结论。先用对应证据 skill 综合，再交回 `pm-requirement-define`。
 3. **已确认需求**：问题、目标、方向、一级范围和非目标基本清楚。进入 `pm-requirement-grade`，先定交付等级，再决定是否写 PRD。
 4. **已确认变更或上线结果**：结论已经确定，只需要同步或复盘。分别进入 `pm-update-write` 或 `pm-metrics-review`。

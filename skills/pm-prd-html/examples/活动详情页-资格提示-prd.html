@@ -1,0 +1,351 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>活动详情页提前说明圈内优先报名资格 · PRD HTML</title>
+<style>
+:root{--ink:#202120;--muted:#6b716d;--faint:#969b98;--line:#e4e6e3;--paper:#fbfbfa;--panel:#fff;--accent:#1e5c4a;--accent-soft:#edf4f0;--nav-width:264px;--content-width:1480px}
+*{box-sizing:border-box}html{scroll-behavior:smooth;scroll-padding-top:78px}body{margin:0;background:var(--paper);color:var(--ink);font-family:Inter,-apple-system,BlinkMacSystemFont,"Segoe UI","PingFang SC","Microsoft YaHei",sans-serif;font-size:15px;line-height:1.72;text-rendering:optimizeLegibility}a{color:inherit}button{font:inherit}button:focus-visible,a:focus-visible,summary:focus-visible{outline:2px solid var(--accent);outline-offset:3px}
+.doc-nav{position:fixed;z-index:10;inset:0 auto 0 0;width:var(--nav-width);background:#fff;border-right:1px solid var(--line);display:flex;flex-direction:column;transition:width .18s ease;overflow:hidden}.nav-head{display:flex;align-items:center;gap:10px;padding:21px 18px 17px;border-bottom:1px solid var(--line);white-space:nowrap}.nav-brand{font-size:13px;font-weight:780;letter-spacing:.08em;color:#27342f}.nav-toggle{margin-left:auto;width:28px;height:28px;border:0;border-radius:5px;background:transparent;cursor:pointer;color:var(--muted);font-size:20px;line-height:1}.nav-toggle:hover{background:#f1f3f1;color:var(--ink)}.nav-body{padding:18px 12px 28px;overflow:auto}.nav-group{margin:0 0 24px}.nav-group h2{margin:0 10px 7px;font-size:10px;line-height:1.3;text-transform:uppercase;letter-spacing:.12em;color:#939894}.doc-link{display:flex;align-items:flex-start;gap:8px;padding:7px 10px;border-radius:5px;text-decoration:none;color:#4f5752;font-size:13px;line-height:1.35}.doc-link:hover{background:#f4f6f4;color:#29322d}.doc-link.active{background:var(--accent-soft);color:#164637;font-weight:700}.nav-index{flex:0 0 20px;color:#9aa09c;font-variant-numeric:tabular-nums}.nav-note{margin:18px 10px 0;font-size:11px;color:#929792;line-height:1.55}body.nav-collapsed .doc-nav{width:60px}body.nav-collapsed .doc-main{margin-left:60px}body.nav-collapsed .nav-brand,body.nav-collapsed .nav-text,body.nav-collapsed .nav-group h2,body.nav-collapsed .nav-note{display:none}body.nav-collapsed .nav-head{padding:21px 16px}body.nav-collapsed .nav-toggle{margin-left:0}body.nav-collapsed .doc-link{justify-content:center;padding:9px 0}body.nav-collapsed .nav-index{width:auto}
+.doc-main{margin-left:var(--nav-width);min-width:0;transition:margin-left .18s ease}.topbar{position:sticky;top:0;z-index:5;height:58px;background:rgba(251,251,250,.94);backdrop-filter:blur(12px);border-bottom:1px solid rgba(228,230,227,.9);padding:0 34px;display:flex;align-items:center;justify-content:space-between;gap:20px}.mobile-nav-toggle{display:none;width:30px;height:30px;border:0;border-radius:5px;background:transparent;color:var(--muted);cursor:pointer}.topbar-title{font-size:13px;font-weight:720;letter-spacing:.01em;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}.topbar-meta{font-size:12px;color:var(--muted);white-space:nowrap}.content{max-width:var(--content-width);margin:0 auto;padding:46px 44px 96px}.hero{display:flex;justify-content:space-between;gap:28px;align-items:flex-start;padding:3px 0 34px;border-bottom:1px solid var(--line)}.eyebrow{margin-bottom:9px;font-size:10px;line-height:1.2;letter-spacing:.13em;color:var(--accent);font-weight:800;text-transform:uppercase}h1{max-width:880px;margin:0 0 12px;font-size:36px;line-height:1.16;letter-spacing:-.035em}h2{margin:0;font-size:26px;line-height:1.25;letter-spacing:-.018em}h3{margin:0 0 8px;font-size:17px;line-height:1.4}h4{margin:0 0 6px;font-size:11px;line-height:1.4;letter-spacing:.08em;color:#757c77;text-transform:uppercase}p{margin:0 0 12px}.muted{color:var(--muted)}.badges{display:none}.badge{display:none}
+.section{margin-top:0;padding:42px 0;border-bottom:1px solid var(--line);background:transparent}.section-head{display:flex;align-items:flex-start;justify-content:space-between;gap:24px;margin-bottom:22px}.section-head>div{max-width:820px}.section-head .muted{margin:7px 0 0;max-width:700px;font-size:14px}.section-kicker{margin-bottom:8px;font-size:10px;color:var(--accent);font-weight:800;letter-spacing:.12em;text-transform:uppercase}.overview-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));border-top:1px solid var(--line);border-left:1px solid var(--line)}.overview-item{min-height:116px;padding:18px 20px 20px;border-right:1px solid var(--line);border-bottom:1px solid var(--line);background:#fff}.overview-item h3{font-size:14px}.overview-item p,.overview-item li{font-size:14px;line-height:1.65}.overview-item ul{margin:0;padding-left:19px}.review-list{margin:0;padding:0;list-style:none;border-top:1px solid var(--line)}.review-list li{position:relative;padding:11px 0 11px 22px;border-bottom:1px solid var(--line);font-size:14px}.review-list li::before{content:"";position:absolute;top:20px;left:4px;width:7px;height:7px;border:1.5px solid #636b66;border-radius:50%}.facts{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:0;border-top:1px solid var(--line);border-left:1px solid var(--line)}.fact{min-height:100px;padding:14px 16px;border-right:1px solid var(--line);border-bottom:1px solid var(--line);background:#fff}.fact strong{display:block;font-size:19px;line-height:1.2;margin-top:4px}.fact span{display:block;color:var(--muted);font-size:12px}
+.flow{display:flex;align-items:stretch;gap:0;overflow:auto;padding:0;border-top:1px solid var(--line);border-bottom:1px solid var(--line);background:#fff}.flow-node{position:relative;flex:1 0 160px;padding:18px 28px 18px 18px;font-size:14px;line-height:1.45;color:#252b27}.flow-node::before{content:counter(flow);counter-increment:flow;display:block;margin-bottom:12px;font-size:11px;font-weight:800;letter-spacing:.1em;color:var(--accent)}.flow{counter-reset:flow}.flow-arrow{display:flex;align-items:center;flex:0 0 26px;margin-left:-24px;color:#808781;font-size:17px;z-index:1}.flow-node:last-child{padding-right:18px}.flow-node:last-of-type{background:#f5f8f6}
+.prototype-review{display:grid;grid-template-columns:216px minmax(440px,1fr) 294px;align-items:stretch;border:1px solid #dfe3df;background:#fff;min-height:735px}.state-rail{position:sticky;top:78px;align-self:start;max-height:calc(100vh - 96px);overflow:auto;padding:15px 12px 17px;border-right:1px solid var(--line);background:#fafbfa}.state-rail h3{padding:2px 7px 12px;margin:0 0 8px;border-bottom:1px solid var(--line);font-size:13px}.state-btn{display:block;width:100%;border:0;border-left:2px solid transparent;border-radius:0;background:transparent;padding:10px 8px 10px 11px;margin:0;text-align:left;cursor:pointer;color:#474f4a;transition:background .12s ease,color .12s ease}.state-btn:hover{background:#f0f3f1}.state-btn.active{border-left-color:#1b1d1b;background:var(--accent-soft);color:#183e32;font-weight:760}.state-btn span{display:block;font-size:13px;line-height:1.35}.state-btn small{display:block;margin-top:3px;color:#7b827d;font-size:11px;line-height:1.35;font-weight:400}.prototype-pane{min-width:0;padding:20px 22px 22px;background:#fff}.pane-head{display:flex;justify-content:space-between;gap:10px;align-items:flex-start;padding-bottom:15px;margin-bottom:15px;border-bottom:1px solid var(--line)}.pane-head h3{font-size:17px}.pane-head .muted{margin:4px 0 0;font-size:13px}.state-code{font-family:ui-monospace,SFMono-Regular,Menlo,monospace;font-size:10px;color:#78807b;white-space:nowrap}.device-wrap{display:flex;justify-content:center;align-items:flex-start;min-height:675px;padding:24px 20px;background:#f6f7f6;border:1px solid #ebecea}.device{width:min(390px,100%);padding:10px;border:2px solid #242424;border-radius:30px;background:#fff;box-shadow:0 0 0 1px #ababab}.device::before{content:"";display:block;width:72px;height:5px;border-radius:5px;background:#202020;margin:2px auto 8px}.device-screen{overflow:hidden;border:1px solid #222;border-radius:20px;background:#fff;min-height:700px}.device-screen svg{display:block;width:100%;height:auto;background:#fff}.context-pane{padding:20px 18px;background:#fcfcfb;border-left:1px solid var(--line)}.context-pane h3{padding-bottom:8px;margin:0;border-bottom:0;font-size:16px}.context-pane>.muted{display:block;padding-bottom:15px;border-bottom:1px solid var(--line);font-size:12px}.context-block{padding:14px 0;border-bottom:1px solid #e8eae7}.context-block:last-child{border-bottom:0}.context-block p,.context-block li{font-size:13px;line-height:1.6;color:#38413b}.context-block ul{margin:0;padding-left:18px}.trace{display:flex;flex-wrap:wrap;gap:5px}.trace code{font-size:10px;padding:3px 5px;background:#f1f3f1;border:1px solid #e1e4e1;border-radius:4px;color:#58625c}
+.index-table{min-width:760px}.table-wrap{overflow:auto;margin:0}.index-table th:first-child{min-width:150px}.prd-body{max-width:1120px}.prd-body h2{scroll-margin-top:78px;border-top:1px solid var(--line);padding-top:31px;margin:34px 0 17px;font-size:23px}.prd-body h3{margin:26px 0 9px;padding-top:0;font-size:17px}.prd-body h4{margin:21px 0 7px;color:#4f5752;text-transform:none;letter-spacing:0;font-size:14px}.prd-body table{width:100%;border-collapse:collapse;font-size:13px;line-height:1.58}.prd-body th,.prd-body td{border:1px solid var(--line);padding:9px 11px;text-align:left;vertical-align:top}.prd-body th{background:#f5f6f4;color:#353b37;font-weight:760}.prd-body ul,.prd-body ol{margin:8px 0 15px;padding-left:24px}.prd-body li{margin:5px 0}.prd-body blockquote{border-left:2px solid #afb6b0;margin:15px 0;padding:8px 13px;color:#59615c;background:#f8f9f8;font-size:13px}.prd-body pre{overflow:auto;background:#232624;color:#f3f4f3;border-radius:5px;padding:14px;font-size:12px;line-height:1.5}.prd-body code{font-family:ui-monospace,SFMono-Regular,Menlo,monospace;font-size:.9em;background:#f0f2f0;padding:2px 4px;border-radius:3px}.prd-body pre code{background:transparent;padding:0}.md-image-ref{color:#7b827d;font-size:12px}.chapter-detail{border-top:1px solid var(--line)}.chapter-detail:last-child{border-bottom:1px solid var(--line)}.chapter-detail summary{position:relative;list-style:none;cursor:pointer;padding:16px 36px 16px 2px;font-size:15px;font-weight:760;color:#2d342f}.chapter-detail summary::-webkit-details-marker{display:none}.chapter-detail summary::after{content:"＋";position:absolute;right:6px;top:14px;color:#64706a;font-weight:400;font-size:18px}.chapter-detail[open] summary::after{content:"−"}.chapter-body{padding:0 0 28px}.chapter-body>h2:first-child{margin-top:0;border-top:0;padding-top:0}.checks{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:0;border-top:1px solid var(--line);border-left:1px solid var(--line)}.check{min-height:122px;padding:16px 18px;border-right:1px solid var(--line);border-bottom:1px solid var(--line);background:#fff}.check strong{display:block;margin-bottom:5px;font-size:14px}.check p{font-size:13px;line-height:1.6}.footer{padding:28px 0 0;color:#8e948f;font-size:11px;text-align:center}
+@media (max-width:1200px){.content{padding-left:30px;padding-right:30px}.prototype-review{grid-template-columns:196px minmax(360px,1fr)}.context-pane{grid-column:1/-1;border-top:1px solid var(--line);border-left:0;display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:0;padding:0 18px}.context-pane>h3,.context-pane>.muted{grid-column:1/-1}.context-block{padding:16px;border-bottom:0;border-right:1px solid #e8eae7}.context-block:last-child{border-right:0}.flow-node{flex-basis:145px}}
+@media (max-width:820px){:root{--nav-width:0px}.doc-nav{width:0;border:0;box-shadow:4px 0 18px rgba(0,0,0,.08)}body.nav-open .doc-nav{width:264px}.doc-main,body.nav-collapsed .doc-main{margin-left:0}.topbar{height:54px;padding:0 16px}.mobile-nav-toggle{display:block}.topbar-meta{display:none}.content{padding:28px 16px 64px}.hero{display:block;padding-bottom:27px}h1{font-size:30px}.section{padding:34px 0}.section-head{margin-bottom:18px}.overview-grid,.facts,.checks{grid-template-columns:1fr}.flow-node{flex-basis:180px}.prototype-review{display:block;border-left:0;border-right:0;margin:0 -16px}.state-rail{position:static;max-height:none;border-right:0;border-bottom:1px solid var(--line);padding:12px 16px;display:flex;gap:4px;overflow:auto}.state-rail h3{display:none}.state-btn{flex:0 0 140px;border-left:0;border-bottom:2px solid transparent;padding:8px 10px}.state-btn.active{border-left:0;border-bottom-color:#1b1d1b}.prototype-pane{padding:18px 16px}.device-wrap{padding:18px 10px;min-height:0}.context-pane{display:block;padding:0 16px;border-top:1px solid var(--line)}.context-pane>h3{padding-top:18px}.context-block{padding:14px 0;border-bottom:1px solid #e8eae7;border-right:0}.prd-body h2{font-size:21px}.chapter-detail summary{padding-left:0}.index-table{min-width:680px}}
+.review-block{margin-top:22px;padding-top:2px}.review-head{display:flex;align-items:baseline;justify-content:space-between;gap:16px;border-bottom:1px solid var(--line)}.review-head h4{margin:0;padding:9px 0 8px}.review-head span{font-size:11px;color:var(--faint)}.review-list li{padding-right:72px}.source-ref{position:absolute;right:0;top:11px;color:var(--muted);font-size:10px;text-decoration:none;white-space:nowrap}.source-ref:hover{text-decoration:underline;color:var(--accent)}
+.prototype-review{min-height:0}.state-rail{max-height:calc(100vh - 120px)}.device-wrap{min-height:clamp(540px,calc(100vh - 250px),650px);padding:18px 20px;overflow:auto}.device{width:min(350px,100%)}.device-screen{display:flex;justify-content:center;min-height:0}.device-screen svg{width:auto;height:clamp(500px,calc(100vh - 300px),650px);max-width:100%}
+.index-table{width:100%;min-width:760px;border-collapse:separate;border-spacing:0;border:1px solid var(--line);background:#fff;font-size:13px;line-height:1.58}.index-table th,.index-table td{border-right:1px solid var(--line);border-bottom:1px solid var(--line);padding:11px 12px;text-align:left;vertical-align:top}.index-table th:last-child,.index-table td:last-child{border-right:0}.index-table tr:last-child td{border-bottom:0}.index-table th{background:#f3f5f3;color:#353b37;font-weight:760;white-space:nowrap}.index-table tbody tr:nth-child(even){background:#fafbfa}.index-table tbody tr:hover{background:#f1f5f2}.index-table code{font-family:ui-monospace,SFMono-Regular,Menlo,monospace;font-size:11px;color:#4e5a53}
+@media (max-width:820px){.device-wrap{min-height:0;overflow:visible}.device-screen svg{width:100%;height:auto;max-height:none}.device{width:min(350px,100%)}.review-head{display:block}.review-head span{display:block;padding-bottom:8px}}
+</style>
+</head>
+<body>
+<nav class="doc-nav" aria-label="PRD章节导航">
+  <div class="nav-head"><div class="nav-brand">PRD 阅读版</div><button class="nav-toggle" id="nav-toggle" aria-label="收起章节导航" title="收起 / 展开">‹</button></div>
+  <div class="nav-body">
+    <div class="nav-group"><h2>文档</h2><a class="doc-link active" data-target="doc-overview" href="#doc-overview" title="文档信息"><span class="nav-index">01</span><span class="nav-text">文档信息</span></a><a class="doc-link" data-target="overview" href="#overview" title="评审入口"><span class="nav-index">02</span><span class="nav-text">评审入口</span></a><a class="doc-link" data-target="flow" href="#flow" title="用户主线"><span class="nav-index">03</span><span class="nav-text">用户主线</span></a><a class="doc-link" data-target="prototype-review" href="#prototype-review" title="原型评审"><span class="nav-index">04</span><span class="nav-text">原型评审</span></a><a class="doc-link" data-target="state-index" href="#state-index" title="需求索引"><span class="nav-index">05</span><span class="nav-text">需求索引</span></a><a class="doc-link" data-target="prd-full" href="#prd-full" title="规格详情"><span class="nav-index">06</span><span class="nav-text">规格详情</span></a><a class="doc-link" data-target="consistency" href="#consistency" title="一致性检查"><span class="nav-index">07</span><span class="nav-text">一致性检查</span></a></div>
+    <div class="nav-group"><h2>6. 规格详情</h2><a class="doc-link" data-target="prd-2-本示例的章节适用性" href="#prd-2-本示例的章节适用性" title="本示例的章节适用性"><span class="nav-index">6.1</span><span class="nav-text">本示例的章节适用性</span></a><a class="doc-link" data-target="prd-3-0-文档信息与一页结论" href="#prd-3-0-文档信息与一页结论" title="文档信息与一页结论"><span class="nav-index">6.2</span><span class="nav-text">文档信息与一页结论</span></a><a class="doc-link" data-target="prd-4-1-决策依据" href="#prd-4-1-决策依据" title="决策依据"><span class="nav-index">6.3</span><span class="nav-text">决策依据</span></a><a class="doc-link" data-target="prd-5-2-方案总览-体验结构与原型" href="#prd-5-2-方案总览-体验结构与原型" title="方案总览、体验结构与原型"><span class="nav-index">6.4</span><span class="nav-text">方案总览、体验结构与原型</span></a><a class="doc-link" data-target="prd-6-3-交付范围与功能需求" href="#prd-6-3-交付范围与功能需求" title="交付范围与功能需求"><span class="nav-index">6.5</span><span class="nav-text">交付范围与功能需求</span></a><a class="doc-link" data-target="prd-7-4-规则-数据与质量边界" href="#prd-7-4-规则-数据与质量边界" title="规则、数据与质量边界"><span class="nav-index">6.6</span><span class="nav-text">规则、数据与质量边界</span></a><a class="doc-link" data-target="prd-8-5-影响-依赖与发布" href="#prd-8-5-影响-依赖与发布" title="影响、依赖与发布"><span class="nav-index">6.7</span><span class="nav-text">影响、依赖与发布</span></a><a class="doc-link" data-target="prd-9-6-验收与追溯" href="#prd-9-6-验收与追溯" title="验收与追溯"><span class="nav-index">6.8</span><span class="nav-text">验收与追溯</span></a><a class="doc-link" data-target="prd-10-7-效果验证" href="#prd-10-7-效果验证" title="效果验证"><span class="nav-index">6.9</span><span class="nav-text">效果验证</span></a><a class="doc-link" data-target="prd-11-8-风险-待确认项-研发-spec-交接与附录" href="#prd-11-8-风险-待确认项-研发-spec-交接与附录" title="风险、待确认项、研发 spec 交接与附录"><span class="nav-index">6.10</span><span class="nav-text">风险、待确认项、研发 spec 交接与附录</span></a></div>
+  </div>
+</nav>
+<div class="doc-main">
+  <div class="topbar"><button class="mobile-nav-toggle" id="mobile-nav-toggle" aria-label="打开章节导航">☰</button><div class="topbar-title">活动详情页提前说明圈内优先报名资格</div><div class="topbar-meta">阅读版 · 完整规格可展开</div></div>
+  <main class="content">
+    <header class="hero" id="doc-overview">
+      <div><div class="eyebrow">PRD 协作评审版</div><h1>活动详情页提前说明圈内优先报名资格</h1><p class="muted">源文档：PRD示例.md</p></div>
+    </header>
+    <section class="section" id="overview">
+      <div class="section-head"><div><h2>评审入口</h2></div></div>
+      <div class="overview-grid"><article class="overview-item"><h3>问题</h3><p>用户在活动详情页直接尝试报名，无法提前理解圈内优先阶段和等待条件。</p></article><article class="overview-item"><h3>目标</h3><p>让用户在点击前理解当前是否可报名，同时保留点击时的实时资格校验。</p></article><article class="overview-item"><h3>范围</h3><p>活动详情页报名链路、资格展示状态、相关埋点和 FAQ。</p></article><article class="overview-item"><h3>非目标</h3><p>不改变资格、名额、排序、通知和活动创建规则。</p></article></div>
+      <div class="review-block"><div class="review-head"><h4>评审关注</h4><span>摘自正式 PRD 的风险 / 待确认项</span></div><ul class="review-list"><li>详情展示状态与点击时的实时资格不一致时如何收口 <a class="source-ref" href="#prd-4-0-2-一页结论">PRD 0.2</a></li><li>公开报名时间字段是否统一；无字段时使用什么兜底文案 <a class="source-ref" href="#prd-12-8-1-风险-假设与待确认项">PRD 8.1</a></li><li>用户是否会把“可报名”理解为已有名额 <a class="source-ref" href="#prd-12-8-1-风险-假设与待确认项">PRD 8.1</a></li></ul></div>
+    </section>
+    <section class="section" id="flow"><div class="section-head"><div><h2>用户主线</h2></div></div><div class="flow"><span class="flow-node">进入活动详情</span><span class="flow-arrow">→</span><span class="flow-node">读取资格展示状态</span><span class="flow-arrow">→</span><span class="flow-node">可报名 / 等待 / 暂无法确认 / 最终状态</span><span class="flow-arrow">→</span><span class="flow-node">点击时实时校验</span><span class="flow-arrow">→</span><span class="flow-node">报名结果</span></div></section>
+    <section class="section" id="prototype-review">
+      <div class="section-head"><div><h2>原型评审</h2></div></div>
+      <div class="prototype-review">
+        <aside class="state-rail"><h3>场景 / 页面状态</h3><button class="state-btn" data-state="UI-STATE-01"><span>活动已关闭 / 已结束</span><small>已结束 / 不可报名</small></button><button class="state-btn" data-state="UI-STATE-02"><span>圈内成员可优先报名</span><small>当前可优先报名</small></button><button class="state-btn" data-state="UI-STATE-03"><span>圈外用户等待公开</span><small>等待公开报名</small></button><button class="state-btn" data-state="UI-STATE-04"><span>身份暂无法确认</span><small>暂无法确认资格</small></button><button class="state-btn" data-state="UI-STATE-05"><span>已报名</span><small>已报名成功</small></button></aside>
+        <section class="prototype-pane"><div class="pane-head"><div><h3 id="stage-title">当前页面状态</h3><p class="muted" id="stage-subtitle"></p></div><span class="state-code" id="state-pill"></span></div><div class="device-wrap"><div class="device"><div class="device-screen" id="svg-host"></div></div></div></section>
+        <aside class="context-pane"><h3 id="inspect-title"></h3><div class="muted" id="inspect-subtitle"></div><div class="context-block"><h4>用户任务</h4><p id="inspect-task"></p></div><div class="context-block"><h4>用户看到</h4><ul id="inspect-visible"></ul></div><div class="context-block"><h4>主要动作</h4><p id="inspect-action"></p></div><div class="context-block"><h4>系统结果 / 下一状态</h4><p id="inspect-next"></p></div><div class="context-block"><h4>追溯关系</h4><div class="trace" id="inspect-trace"></div></div></aside>
+      </div>
+    </section>
+    <section class="section" id="state-index"><div class="section-head"><div><h2>需求索引</h2><p class="muted">从页面状态进入对应的需求、规则和验收。</p></div></div><div class="table-wrap"><table class="index-table"><thead><tr><th>页面状态</th><th>用户任务</th><th>主要动作</th><th>结果 / 下一状态</th><th>依据</th></tr></thead><tbody><tr><td><strong>活动已关闭 / 已结束</strong><br><span class="muted">已结束 / 不可报名</span></td><td>判断是否还能报名</td><td>查看活动信息</td><td>终止态</td><td><a href="#ref-FR-02"><code>FR-02</code></a> <a href="#ref-RULE-01"><code>RULE-01</code></a> <a href="#ref-AC-04"><code>AC-04</code></a></td></tr><tr><td><strong>圈内成员可优先报名</strong><br><span class="muted">当前可优先报名</span></td><td>了解资格并报名</td><td>立即报名</td><td>报名成功 / 实时校验失败</td><td><a href="#ref-FR-02"><code>FR-02</code></a> <a href="#ref-RULE-03"><code>RULE-03</code></a> <a href="#ref-RULE-04"><code>RULE-04</code></a> <a href="#ref-AC-01"><code>AC-01</code></a></td></tr><tr><td><strong>圈外用户等待公开</strong><br><span class="muted">等待公开报名</span></td><td>了解何时可以继续</td><td>等待开放</td><td>公开报名阶段</td><td><a href="#ref-FR-02"><code>FR-02</code></a> <a href="#ref-RULE-03"><code>RULE-03</code></a> <a href="#ref-AC-02"><code>AC-02</code></a></td></tr><tr><td><strong>身份暂无法确认</strong><br><span class="muted">暂无法确认资格</span></td><td>理解当前结果并恢复操作</td><td>刷新资格</td><td>重新请求详情 / 实时校验</td><td><a href="#ref-FR-01"><code>FR-01</code></a> <a href="#ref-FR-02"><code>FR-02</code></a> <a href="#ref-AC-03"><code>AC-03</code></a></td></tr><tr><td><strong>已报名</strong><br><span class="muted">已报名成功</span></td><td>确认自己无需重复操作</td><td>查看报名结果</td><td>报名结果页</td><td><a href="#ref-FR-02"><code>FR-02</code></a> <a href="#ref-RULE-02"><code>RULE-02</code></a> <a href="#ref-AC-04"><code>AC-04</code></a></td></tr></tbody></table></div></section>
+    <section class="section" id="prd-full"><div class="section-head"><div><h2>规格详情</h2><p class="muted">按原 PRD 章节展开查看。</p></div></div><div class="prd-body"><blockquote>虚构示例，用于展示精简后的章节结构、原型关联和追溯粒度。业务规则、文件路径和指标不可直接用于真实项目。</blockquote>
+<details class="chapter-detail" open><summary>目录</summary><div class="chapter-body"><h2 id="prd-1-目录">目录</h2>
+<ol><li>文档信息与一页结论</li><li>决策依据</li><li>方案总览、体验结构与原型</li><li>交付范围与功能需求</li><li>规则、数据与质量边界</li><li>影响、依赖与发布</li><li>验收与追溯</li><li>效果验证</li><li>风险、待确认项、研发 spec 交接与附录</li></ol>
+</div></details><details class="chapter-detail" open><summary>本示例的章节适用性</summary><div class="chapter-body"><h2 id="prd-2-本示例的章节适用性">本示例的章节适用性</h2>
+<p>本示例保留全部章节，不代表所有 PRD 都必须如此：</p>
+<div class="table-wrap"><table><thead><tr><th>章节</th><th>为什么本例需要</th></tr></thead><tbody>
+<tr><td>0、1、3、6</td><td>核心必填章节</td></tr>
+<tr><td>2. 方案总览、体验结构与原型</td><td>涉及客户端页面、两类用户状态和三个设计资产</td></tr>
+<tr><td>4. 规则、数据与质量边界</td><td>涉及资格状态、兜底、埋点、性能和可访问性</td></tr>
+<tr><td>5. 影响、依赖与发布</td><td>涉及客户端兼容、服务端依赖和灰度放量</td></tr>
+<tr><td>7. 效果验证</td><td>需要验证无效点击和客服咨询是否下降</td></tr>
+<tr><td>8. 风险、待确认项、研发 spec 交接与附录</td><td>存在字段依赖、理解风险、补充资料和技术方案交接</td></tr>
+</tbody></table></div>
+<p>如果是单页面静态文案调整，通常可以省略第 4、5、7、8 章；如果是纯服务端规则修复且没有页面或流程变化，可以省略第 2 章。省略原因应记录在 0.1。</p>
+</div></details><details class="chapter-detail"><summary>0. 文档信息与一页结论</summary><div class="chapter-body"><h2 id="prd-3-0-文档信息与一页结论">0. 文档信息与一页结论</h2>
+<h3 id="prd-4-0-1-文档信息">0.1 文档信息</h3>
+<div class="table-wrap"><table><thead><tr><th>字段</th><th>内容</th></tr></thead><tbody>
+<tr><td>需求名称</td><td>活动详情页提前说明圈内优先报名资格</td></tr>
+<tr><td>文档状态</td><td>评审中</td></tr>
+<tr><td>负责人及参与角色</td><td>产品：李明；设计、客户端、服务端、测试、运营、数据</td></tr>
+<tr><td>目标版本</td><td>v3.8.0</td></tr>
+<tr><td>创建与更新时间</td><td>2026-07-13</td></tr>
+<tr><td>需求定义来源</td><td><code>pm-requirement-define</code>：圈子活动资格理解问题</td></tr>
+<tr><td>输出形态</td><td>标准 PRD；可按需摘出评审简版</td></tr>
+<tr><td>关联资料</td><td>客服工单分析、报名漏斗、活动详情原型、服务端资格规则</td></tr>
+<tr><td>省略章节及原因</td><td>无；本例用于展示所有条件章节的完整写法</td></tr>
+</tbody></table></div>
+<h3 id="prd-4-0-2-一页结论">0.2 一页结论</h3>
+<ul><li>一句话方案：在圈子活动详情页报名区，根据用户身份提前展示优先报名资格，减少无效报名尝试和资格咨询。</li><li>已确认目标与方案：让用户点击前理解当前是否可报名；复用服务端现有资格判定，不改变报名资格规则。</li><li>关键取舍与非目标：本期不改活动列表、规则正文和名额分配机制。</li><li>本次交付范围与版本：iOS、Android 详情页、资格展示状态、相关埋点和 FAQ，随 v3.8.0 发布。</li><li>效果判断标准：资格限制返回率和资格咨询量下降，符合资格用户报名转化不明显受损。</li><li>用户主路径与页面影响：入口 → 活动详情 → 查看资格 → 报名 / 等待；本次只改活动详情页。</li><li>关键信息结构变化：在报名区域附近新增资格说明，活动最终状态仍优先展示。</li><li>PRD / spec 边界：PRD 确认资格展示状态、页面表现、实时校验原则和验收；具体接口字段、状态枚举命名、兼容实现和监控实现交给研发 spec。</li><li>最大风险：详情展示状态与用户点击时的实时资格可能不一致。</li></ul>
+<h3 id="prd-4-0-3-修订记录">0.3 修订记录</h3>
+<div class="table-wrap"><table><thead><tr><th>日期</th><th>版本</th><th>变化或决策</th><th>原因</th><th>负责人</th></tr></thead><tbody>
+<tr><td>2026-07-13</td><td>0.9</td><td>补充原型资产、状态兜底和灰度阈值</td><td>研发评审前闭环</td><td>李明</td></tr>
+</tbody></table></div>
+</div></details><details class="chapter-detail"><summary>1. 决策依据</summary><div class="chapter-body"><h2 id="prd-4-1-决策依据">1. 决策依据</h2>
+<h3 id="prd-5-1-1-问题-目标与成功假设">1.1 问题、目标与成功假设</h3>
+<div class="table-wrap"><table><thead><tr><th>问题与证据摘要</th><th>目标 ID / 目标状态</th><th>目标人群与场景</th><th>方向级成功假设</th></tr></thead><tbody>
+<tr><td>近四周资格相关咨询 128 条；圈外用户优先期点击后资格限制返回率 41%</td><td>OBJ-01：用户点击报名按钮前理解当前资格和开放条件</td><td>进入圈子活动详情页的圈内成员与圈外用户</td><td>提前解释资格会减少无效点击和咨询，不降低符合资格用户报名转化</td></tr>
+</tbody></table></div>
+<h3 id="prd-5-1-2-已确认方向-范围与取舍">1.2 已确认方向、范围与取舍</h3>
+<ul><li>已确认方向：在详情页报名区展示个体化资格状态，并复用服务端现有身份与活动阶段判断。</li><li>选择依据：距离决策动作最近、可解释个人资格、无需改变资格规则。</li><li>上游未选方向：规则正文统一提示无法匹配个人身份；列表全链路提示投入较高且缺少入口侧证据。</li><li>一级范围：活动详情页报名链路、登录用户、圈内优先期和公开报名阶段。</li><li>非目标：不改变资格、名额、排序、通知和活动创建规则。</li><li>重大约束：页面提示不能代替报名接口实时校验；旧客户端必须继续可报名。</li></ul>
+<h3 id="prd-5-1-3-关键决策记录">1.3 关键决策记录</h3>
+<div class="table-wrap"><table><thead><tr><th>决策项</th><th>已确认结论</th><th>依据 / 来源</th><th>决策人</th><th>日期</th></tr></thead><tbody>
+<tr><td>展示位置</td><td>放在详情页报名状态区域</td><td>最接近用户决策点</td><td>产品、设计</td><td>2026-07-10</td></tr>
+<tr><td>资格主源</td><td>服务端报名接口仍为最终主源</td><td>防止身份和阶段变化</td><td>产品、服务端</td><td>2026-07-10</td></tr>
+</tbody></table></div>
+</div></details><details class="chapter-detail"><summary>2. 方案总览、体验结构与原型</summary><div class="chapter-body"><h2 id="prd-5-2-方案总览-体验结构与原型">2. 方案总览、体验结构与原型</h2>
+<h3 id="prd-6-2-1-方案闭环与目标流程">2.1 方案闭环与目标流程</h3>
+<p>页面加载时取得活动阶段、用户身份和报名状态，生成资格展示状态；用户阅读提示后决定等待或报名；点击报名时服务端再次实时校验。</p>
+<div class="table-wrap"><table><thead><tr><th>场景 ID</th><th>阶段</th><th>角色 / 系统</th><th>前置输入</th><th>动作</th><th>系统反馈</th><th>下一步 / 临界点</th></tr></thead><tbody>
+<tr><td>SCN-01</td><td>进入详情</td><td>登录用户 / 客户端</td><td>活动、身份、报名状态</td><td>请求展示状态</td><td>返回最终状态、已报名、成员可报名、圈外等待、身份未知或普通报名状态</td><td>展示 UI-01 / UI-02</td></tr>
+<tr><td>SCN-02</td><td>点击报名</td><td>用户 / 服务端</td><td>实时活动与身份</td><td>提交报名</td><td>成功或资格限制</td><td>以实时结果为准</td></tr>
+</tbody></table></div>
+<h3 id="prd-6-2-2-产品动线与页面影响">2.2 产品动线与页面影响</h3>
+<p>本次没有新增页面，页面地图整体不变；变化集中在活动详情页的资格信息和主操作状态。</p>
+<div class="table-wrap"><table><thead><tr><th>动线 ID</th><th>场景 ID</th><th>入口 / 起点</th><th>用户目的与关键动作</th><th>页面 / 状态转移</th><th>关键分支</th><th>结果 / 出口</th><th>返回、失败、取消或重试</th></tr></thead><tbody>
+<tr><td>FLOW-01</td><td>SCN-01</td><td>活动列表、搜索、圈子页或外部链接</td><td>进入详情并判断能否报名</td><td>进入活动详情，展示资格状态</td><td>圈内 / 圈外；优先 / 公开阶段</td><td>点击报名或等待开放</td><td>无权限时展示“活动不可访问”；详情数据不完整时展示加载失败并提供“重新加载”；点击时允许实时重试</td></tr>
+<tr><td>FLOW-02</td><td>SCN-02</td><td>活动详情</td><td>点击报名并获得结果</td><td>提交服务端实时校验</td><td>成功 / 资格失败 / 接口失败</td><td>报名结果或详情页反馈</td><td>业务失败留在详情页展示服务端原因；网络失败提示结果未确认并允许重试</td></tr>
+</tbody></table></div>
+<h3 id="prd-6-2-3-页面信息结构">2.3 页面信息结构</h3>
+<p>本次只列变化区域，不重复活动详情页既有全部字段。</p>
+<pre><code>活动详情页
+├── 活动基础信息区（保持不变）
+├── 报名资格信息区（新增）
+├── 主操作区（状态变化）
+└── 活动规则与辅助信息区（保持不变）</code></pre>
+<div class="table-wrap"><table><thead><tr><th>页面 ID</th><th>信息结构 ID</th><th>区域目的</th><th>本次变化</th><th>展示条件 / 状态</th><th>数据 / 规则来源</th></tr></thead><tbody>
+<tr><td>PAGE-01 活动详情</td><td>IA-01 资格信息区</td><td>让用户在操作前理解当前资格</td><td>新增资格提示和开放时间</td><td>按活动最终状态、报名状态、活动阶段和用户身份展示</td><td><span id="ref-RULE-01"></span>RULE-01 至 <span id="ref-RULE-03"></span>RULE-03</td></tr>
+<tr><td>PAGE-01 活动详情</td><td>IA-02 主操作区</td><td>引导用户执行可行操作</td><td>报名按钮或等待开放状态变化</td><td>最终活动状态优先</td><td>RULE-03</td></tr>
+</tbody></table></div>
+<h3 id="prd-6-2-4-原型范围与页面状态规划">2.4 原型范围与页面状态规划</h3>
+<p>本例涉及页面状态和报名主操作，需要原型；页面容器不变，但报名区存在多个用户可见状态。原型由“页面 × 状态”规划驱动，完整行为规则仍以第 3、4 章为准；确认后可交给 <code>pm-prd-html</code> 生成一份按阅读任务重组、完整规格可按需回看、带固定侧栏和黑白灰线框 SVG 的单文件 HTML。</p>
+<div class="table-wrap"><table><thead><tr><th>原型状态 ID</th><th>页面 ID</th><th>状态名称</th><th>用户任务</th><th>需要表达的信息 / 反馈</th><th>主操作</th><th>下一状态</th><th>是否独立原型</th><th>关联功能 / 规则 / 验收</th></tr></thead><tbody>
+<tr><td>UI-STATE-01</td><td>PAGE-01</td><td>活动已关闭 / 已结束</td><td>判断是否还能报名</td><td>最终状态说明、不可报名原因</td><td>查看活动信息 / 返回</td><td>终止态</td><td>是</td><td><span id="ref-FR-02"></span>FR-02 / RULE-01 / <span id="ref-AC-04"></span>AC-04</td></tr>
+<tr><td>UI-STATE-02</td><td>PAGE-01</td><td>圈内成员可优先报名</td><td>了解资格并报名</td><td>可优先报名说明、报名按钮</td><td>点击报名</td><td>报名成功 / 实时校验失败</td><td>是</td><td>FR-02 / RULE-03、<span id="ref-RULE-04"></span>RULE-04 / <span id="ref-AC-01"></span>AC-01</td></tr>
+<tr><td>UI-STATE-03</td><td>PAGE-01</td><td>圈外用户等待公开报名</td><td>了解何时可以报名</td><td>等待公开报名时间、不可用按钮</td><td>等待 / 刷新</td><td>公开报名后可报名</td><td>是</td><td>FR-02 / RULE-03 / <span id="ref-AC-02"></span>AC-02</td></tr>
+<tr><td>UI-STATE-04</td><td>PAGE-01</td><td>成员身份无法确认</td><td>理解当前不能确认的原因</td><td>暂无法确认提示、刷新或校验入口</td><td>刷新 / 点击报名校验</td><td>状态恢复 / 业务失败</td><td>是</td><td>FR-02 / RULE-03、RULE-04 / <span id="ref-AC-03"></span>AC-03</td></tr>
+<tr><td>UI-STATE-05</td><td>PAGE-01</td><td>已报名</td><td>确认自己无需重复操作</td><td>已报名提示、结果入口</td><td>查看报名结果</td><td>已报名态</td><td>是</td><td>FR-02 / <span id="ref-RULE-02"></span>RULE-02 / AC-04</td></tr>
+</tbody></table></div>
+<p>独立原型判断：以上状态的可见信息、主操作或用户下一步存在实质差异，因此独立展示；普通报名状态沿用既有页面结构，不另造一套页面。</p>
+<h4 id="prd-6-原型约束">原型约束</h4>
+<ul><li>端类型与页面尺寸：沿用活动详情页现有 H5 页面形态；</li><li>目标用户：圈内成员、圈外用户和身份暂不可确认用户；</li><li>需要复用：活动详情页既有报名区、按钮和错误反馈形态；</li><li>不应暴露：<code>eligibility_display_state</code> 等内部状态枚举；</li><li>关键约束：文案只能说明用户当前能做什么和何时可以继续，不承诺名额；报名结果仍以点击时服务端校验为准。</li></ul>
+<h3 id="prd-6-2-5-原型与设计资产索引">2.5 原型与设计资产索引</h3>
+<div class="table-wrap"><table><thead><tr><th>资产 ID</th><th>类型</th><th>精确链接 / 文件路径 / Frame</th><th>版本或更新时间</th><th>状态</th><th>负责人</th><th>覆盖场景 / 页面 / 功能</th></tr></thead><tbody>
+<tr><td>UI-01</td><td>Figma</td><td><code>活动详情页 / Frame: 圈内成员-可优先报名</code></td><td>2026-07-12</td><td>已确认</td><td>王华</td><td>SCN-01 / FR-02</td></tr>
+<tr><td>UI-02</td><td>Figma</td><td><code>活动详情页 / Frame: 圈外用户-等待公开报名</code></td><td>2026-07-12</td><td>已确认</td><td>王华</td><td>SCN-01 / FR-02</td></tr>
+<tr><td>UI-03</td><td>流程图</td><td><code>design/activity-priority-signup-flow.fig / Page: Main flow</code></td><td>2026-07-11</td><td>评审中</td><td>李明</td><td>SCN-01、SCN-02 / <span id="ref-FR-01"></span>FR-01</td></tr>
+</tbody></table></div>
+<p>真实文档应把上述描述替换为可直接打开的具体 Frame / Node 链接或仓库文件路径。若需要单文件协作评审，<code>pm-prd-html</code> 以这些资产为参考，生成黑白灰内嵌 SVG 原型和流程图；Figma 仍可作为设计主源，不把 HTML 反向当作新的业务主源。</p>
+<h3 id="prd-6-2-6-场景-原型关联">2.6 场景—原型关联</h3>
+<div class="table-wrap"><table><thead><tr><th>场景 ID / 流程步骤</th><th>功能 ID</th><th>原型资产与节点</th><th>关键交互 / 状态</th><th>备注</th></tr></thead><tbody>
+<tr><td>SCN-01 / 展示资格</td><td>FR-02</td><td>UI-01</td><td>圈内成员展示可报名提示，按钮可用</td><td>文案不承诺名额</td></tr>
+<tr><td>SCN-01 / 展示资格</td><td>FR-02</td><td>UI-02</td><td>圈外用户展示开放时间，按钮不可用</td><td>时间缺失使用兜底文案</td></tr>
+<tr><td>SCN-02 / 实时校验</td><td>FR-01</td><td>UI-03 / 报名校验节点</td><td>展示状态与实时结果冲突时以结果提示收口</td><td>无新增弹窗样式</td></tr>
+</tbody></table></div>
+</div></details><details class="chapter-detail"><summary>3. 交付范围与功能需求</summary><div class="chapter-body"><h2 id="prd-6-3-交付范围与功能需求">3. 交付范围与功能需求</h2>
+<h3 id="prd-7-3-1-交付范围与版本">3.1 交付范围与版本</h3>
+<div class="table-wrap"><table><thead><tr><th>版本</th><th>目标</th><th>包含功能 / 页面 / 端</th><th>暂不包含</th><th>验证重点</th></tr></thead><tbody>
+<tr><td>v3.8.0</td><td>提前解释资格</td><td>iOS、Android 详情页；展示状态；埋点；FAQ</td><td>列表、Web、资格规则</td><td>展示准确率和无效点击变化</td></tr>
+</tbody></table></div>
+<h3 id="prd-7-3-2-功能清单">3.2 功能清单</h3>
+<div class="table-wrap"><table><thead><tr><th>功能 ID</th><th>功能点</th><th>所属页面</th><th>对应目标 / 场景</th><th>优先级</th><th>版本</th><th>原型 ID</th><th>依赖</th></tr></thead><tbody>
+<tr><td>FR-01</td><td>生成并返回资格展示状态</td><td>PAGE-01</td><td>OBJ-01 / SCN-01、SCN-02</td><td>P0</td><td>v3.8.0</td><td>UI-03</td><td>身份与活动阶段数据</td></tr>
+<tr><td>FR-02</td><td>展示差异化资格提示</td><td>PAGE-01</td><td>OBJ-01 / SCN-01</td><td>P0</td><td>v3.8.0</td><td>UI-01、UI-02</td><td>FR-01</td></tr>
+<tr><td><span id="ref-FR-03"></span>FR-03</td><td>资格提示与报名埋点</td><td>PAGE-01</td><td>OBJ-01 / SCN-01、SCN-02</td><td>P1</td><td>v3.8.0</td><td>不适用</td><td>数据事件评审</td></tr>
+</tbody></table></div>
+<h3 id="prd-7-3-2-1-系统能力需求表">3.2.1 系统能力需求表</h3>
+<p>本表从产品角度列出详情页需要的系统能力，不定义具体接口路径、请求 / 响应字段或实现方案。</p>
+<div class="table-wrap"><table><thead><tr><th>能力 ID</th><th>系统能力</th><th>支撑的页面 / 流程</th><th>触发时机</th><th>PRD 需要确认的产品结果</th><th>失败或不可用时的用户兜底</th><th>关联功能 / 规则</th><th>spec 需补齐</th></tr></thead><tbody>
+<tr><td>CAP-01</td><td>资格展示状态判断能力</td><td>PAGE-01 报名区</td><td>用户进入或刷新活动详情页</td><td>页面得到唯一可渲染的资格展示状态，且不由客户端本地推断资格</td><td>身份未知时展示不确定提示，不展示肯定性可报名</td><td>FR-01、FR-02 / RULE-01 至 RULE-04</td><td>API 字段、状态枚举命名、兼容实现</td></tr>
+<tr><td>CAP-02</td><td>报名实时校验能力</td><td>点击报名链路</td><td>用户点击可用报名按钮</td><td>点击时按最新活动、身份、报名和名额状态校验，结果覆盖详情旧状态</td><td>业务失败留在详情页展示原因；网络失败提示结果未确认</td><td>FR-01、FR-02 / RULE-04</td><td>接口方法、错误码、幂等和并发策略</td></tr>
+<tr><td>CAP-03</td><td>提示曝光与报名结果串联能力</td><td>埋点与效果验证</td><td>提示进入可见区域、点击报名、收到结果</td><td>能判断提示是否降低无效点击和客服咨询</td><td>埋点失败不影响页面和报名</td><td>FR-03 / MET-01 至 MET-03</td><td>事件字段、去重、看板和告警</td></tr>
+</tbody></table></div>
+<h3 id="prd-7-3-3-功能需求明细">3.3 功能需求明细</h3>
+<p>本节按照“需求结论 → 行为步骤 → 条件分支 → 异常与边界 → 追溯”编写。规则表和原型用于补充，不代替正文。</p>
+<h4 id="prd-7-fr-01-生成资格展示状态">FR-01 生成资格展示状态</h4>
+<p><strong>需求结论</strong></p>
+<p>登录用户每次请求圈子活动详情时，服务端同时返回一个唯一的资格展示状态，客户端直接按该状态渲染，不在本地重新计算资格。这个状态只用于解释当前页面应如何展示；用户真正点击报名时，报名接口必须再次根据最新活动阶段、成员身份、报名状态和名额情况校验，详情页状态不能直接作为报名凭证。</p>
+<p><strong>行为说明</strong></p>
+<ol><li>用户首次进入详情页、主动刷新页面或页面因其他操作重新请求详情数据时，服务端重新计算资格展示状态；页面停留期间不额外轮询。</li><li>对圈子活动，服务端使用活动最终状态、当前报名阶段、用户是否已报名、用户圈内成员身份和公开报名时间参与判断，并在详情响应中返回唯一的 <code>eligibility_display_state</code>；非圈子活动不返回该新增状态字段，客户端继续使用既有报名状态渲染。</li><li>客户端收到状态前，报名区域展示加载占位，不提前显示“可报名”或“不可报名”；收到状态后一次性替换为 FR-02 对应内容。</li><li>用户点击可用的报名按钮时，客户端提交报名请求；服务端按点击时的最新数据重新校验。若实时结果与详情页展示不一致，以报名结果为准，页面随后刷新详情状态。</li></ol>
+<p><strong>状态判定与优先级</strong></p>
+<div class="table-wrap"><table><thead><tr><th>优先级</th><th>进入条件</th><th>返回状态</th><th>状态含义</th></tr></thead><tbody>
+<tr><td>1</td><td>活动已取消、已结束或已超过报名截止时间</td><td><code>closed</code></td><td>当前不允许继续报名；具体结束原因由活动状态决定</td></tr>
+<tr><td>2</td><td>活动仍可访问，当前用户已经报名成功</td><td><code>registered</code></td><td>用户无需再次报名</td></tr>
+<tr><td>3</td><td>圈内优先报名阶段，用户为圈内成员</td><td><code>member_available</code></td><td>当前具备优先报名资格，但仍不代表名额锁定</td></tr>
+<tr><td>4</td><td>圈内优先报名阶段，用户明确不是圈内成员</td><td><code>non_member_waiting</code></td><td>当前不能报名，等待公开报名</td></tr>
+<tr><td>5</td><td>圈内优先报名阶段，但成员身份无法确认</td><td><code>identity_unknown</code></td><td>页面无法可靠判断资格，需要重试或在点击时实时校验</td></tr>
+<tr><td>6</td><td>已进入公开报名阶段，且活动未关闭、用户未报名</td><td><code>normal_registration</code></td><td>不再区分圈内身份，用户可以提交报名</td></tr>
+</tbody></table></div>
+<p>只要命中更高优先级状态，就不再计算低优先级状态。例如活动已截止时，即使用户是圈内成员，也必须返回 <code>closed</code>。</p>
+<p><strong>异常与恢复</strong></p>
+<div class="table-wrap"><table><thead><tr><th>异常条件</th><th>用户看到什么</th><th>系统 / 数据处理</th><th>恢复方式</th></tr></thead><tbody>
+<tr><td>详情请求整体失败</td><td>页面级错误提示“活动信息加载失败”，不展示报名按钮</td><td>不生成资格展示状态，不写入报名数据</td><td>用户点击“重新加载”后重新请求详情</td></tr>
+<tr><td>仅成员身份获取失败</td><td>返回 <code>identity_unknown</code>，页面不展示肯定性资格结论</td><td>记录身份查询失败；不修改成员关系和报名状态</td><td>用户可刷新资格，也可点击报名交由报名接口实时校验</td></tr>
+<tr><td>页面展示后活动阶段或身份变化</td><td>页面可能短暂保留旧展示</td><td>报名接口使用最新数据校验，不信任旧展示状态</td><td>返回明确报名结果，客户端刷新详情并更新展示</td></tr>
+</tbody></table></div>
+<p><strong>保持不变与边界</strong></p>
+<ul><li>本功能不改变报名资格、成员关系、名额计算和报名结果规则，只增加详情页展示所需的派生状态。</li><li>非圈子活动不返回 <code>eligibility_display_state</code>，继续使用普通活动详情中的报名状态和既有报名按钮。</li><li>旧客户端忽略新增字段，仍通过报名接口获得最终结果。</li></ul>
+<p><strong>追溯：</strong>PAGE-01 / IA-01、IA-02；UI-03；RULE-01 至 RULE-04；AC-01 至 AC-04。</p>
+<h4 id="prd-7-fr-02-根据资格状态展示说明和报名操作">FR-02 根据资格状态展示说明和报名操作</h4>
+<p><strong>需求结论</strong></p>
+<p>活动详情页在活动基础信息与报名按钮之间增加资格说明区，让用户在点击前知道当前是否可报名、为什么以及下一步能做什么。资格说明、按钮状态和点击结果必须由同一个 <code>eligibility_display_state</code> 驱动，不能出现文案提示“可报名”但按钮不可用，或提示“等待开放”但按钮仍可提交的矛盾状态。</p>
+<p><strong>页面行为与分支</strong></p>
+<div class="table-wrap"><table><thead><tr><th>展示状态</th><th>资格说明区</th><th>主按钮与可操作性</th><th>用户操作后的结果</th><th>状态切换与优先级</th></tr></thead><tbody>
+<tr><td><code>member_available</code></td><td>显示“当前为圈内优先报名阶段，你可优先报名”；不使用“已获得名额”等承诺性文案</td><td>显示“立即报名”，可点击</td><td>点击后提交实时报名校验；成功进入报名结果页，失败留在详情页并展示服务端原因</td><td>活动关闭时切换为 <code>closed</code>；活动未关闭但用户已报名时切换为 <code>registered</code></td></tr>
+<tr><td><code>non_member_waiting</code></td><td>有公开报名时间时显示“当前为圈内优先报名，MM月DD日 HH:mm 后开放报名”；无时间时显示“当前为圈内优先报名，公开报名后你可参与”</td><td>显示“等待开放”，不可点击</td><td>不发起报名请求</td><td>到达公开报名阶段并刷新后切换为 <code>normal_registration</code>；活动关闭优先切换为 <code>closed</code></td></tr>
+<tr><td><code>identity_unknown</code></td><td>显示“暂时无法确认你的报名资格，请刷新后重试”；提供“刷新资格”文字操作</td><td>显示“报名”，可点击，但不展示“可优先报名”</td><td>“刷新资格”重新请求详情；点击“报名”直接进入实时报名校验，成功或失败均以接口结果收口</td><td>身份恢复后切换为成员或非成员状态；活动关闭仍最高优先</td></tr>
+<tr><td><code>normal_registration</code></td><td>不展示圈内优先说明，资格说明区整体收起</td><td>显示“立即报名”，可点击</td><td>点击后提交实时报名校验；成功进入结果页，失败留在详情页并显示原因</td><td>用户报名成功后切换为 <code>registered</code>；活动关闭切换为 <code>closed</code></td></tr>
+<tr><td><code>registered</code></td><td>显示“你已报名”，不再展示资格限制说明</td><td>显示“已报名”，不可点击</td><td>不重复提交报名请求</td><td>活动关闭时页面同时展示活动最终状态，但保留已报名结果入口</td></tr>
+<tr><td><code>closed</code></td><td>根据原因显示“报名已截止”“活动已结束”或“活动已取消”</td><td>显示对应最终状态，不可点击</td><td>不发起报名请求</td><td>最高优先级，不再展示资格提示</td></tr>
+</tbody></table></div>
+<p><strong>点击反馈与恢复</strong></p>
+<ol><li>可点击按钮提交后立即进入加载状态并禁止重复点击，直到报名请求返回。</li><li>报名成功时进入报名结果页；返回详情页后应展示 <code>registered</code>。</li><li>因资格、活动阶段或名额变化失败时，用户停留在详情页，页面展示服务端返回的明确失败原因，并自动刷新详情状态；不得只提示“操作失败”。</li><li>因网络错误或超时失败时，页面提示“网络异常，报名结果尚未确认，请重试”；按钮恢复可点击。客户端不得在未收到成功结果时展示已报名。</li><li>用户离开后重新进入详情页，以新详情请求结果为准，不复用上次页面中的资格状态。</li></ol>
+<p><strong>保持不变与边界</strong></p>
+<ul><li>不修改活动列表卡片、活动规则正文、名额计算和消息提醒。</li><li>资格区只解释当前状态，不承诺最终名额；原型 UI-01、UI-02 只定义布局和视觉，以上行为与优先级以本节为准。</li></ul>
+<p><strong>追溯：</strong>PAGE-01 / IA-01、IA-02；UI-01、UI-02；RULE-01 至 RULE-04；AC-01 至 AC-04。</p>
+<h4 id="prd-7-fr-03-记录资格说明和报名链路事件">FR-03 记录资格说明和报名链路事件</h4>
+<p><strong>需求结论</strong></p>
+<p>埋点用于判断资格说明是否被真实看到、用户是否继续报名以及最终结果，不能影响页面展示和报名主流程。每条事件都必须带同一次页面访问和报名请求的关联标识，保证曝光、点击和结果可以组成漏斗，并避免页面重复渲染造成重复曝光。</p>
+<p><strong>事件定义</strong></p>
+<div class="table-wrap"><table><thead><tr><th>事件</th><th>精确触发时机</th><th>单次触发规则</th><th>必填参数</th><th>失败处理</th></tr></thead><tbody>
+<tr><td><code>priority_eligibility_hint_view</code></td><td><code>member_available</code>、<code>non_member_waiting</code> 或 <code>identity_unknown</code> 的资格说明实际进入可见区域时</td><td>同一 <code>page_view_id</code> 下，同一展示状态只记一次；状态变化后可记录新状态</td><td><code>page_view_id</code>、<code>activity_id</code>、<code>eligibility_display_state</code>、<code>activity_phase</code>、<code>membership_status</code>、<code>entry_source</code>、<code>client_version</code></td><td>上报失败不影响页面；由埋点 SDK 重试，不重复生成业务动作</td></tr>
+<tr><td><code>activity_signup_click</code></td><td>用户点击可用报名按钮且客户端准备发起报名请求时</td><td>每次有效点击记一次；按钮加载期间的重复点击不记录</td><td>上述公共参数、<code>request_id</code>、按钮文案</td><td>上报失败不阻止报名请求</td></tr>
+<tr><td><code>activity_signup_result</code></td><td>客户端收到该 <code>request_id</code> 对应的报名成功、业务失败或网络失败结果时</td><td>一个 <code>request_id</code> 只记一次最终结果</td><td>上述公共参数、<code>request_id</code>、<code>result</code>、<code>failure_code</code>；成功时 <code>failure_code</code> 为空</td><td>上报失败不改变报名结果；进入埋点错误日志</td></tr>
+</tbody></table></div>
+<p><code>membership_status</code> 只记录 <code>member</code>、<code>non_member</code>、<code>unknown</code>，不上传成员证明或其他身份原始数据。<code>result</code> 取值为 <code>success</code>、<code>business_failure</code>、<code>network_failure</code>；业务失败必须记录可聚合的 <code>failure_code</code>，不能只传自由文本。</p>
+<p><strong>验收方式</strong></p>
+<p>测试环境按一次页面访问执行“看到提示 → 点击报名 → 收到结果”，使用 <code>page_view_id</code> 和 <code>request_id</code> 核对三类事件能够串联；重复触发页面渲染不得产生第二条同状态曝光，连续点击被按钮防重拦截时不得产生额外点击事件。关闭或模拟埋点上报失败后，页面展示和报名结果必须保持正常。</p>
+<p><strong>保持不变与边界</strong></p>
+<ul><li>不回填历史事件；旧客户端仍上报原有报名点击和结果事件，新参数允许为空。</li><li>本功能不采集新的个人敏感信息，不以埋点成功作为报名成功条件。</li></ul>
+<p><strong>追溯：</strong>SCN-01、SCN-02；MET-01、MET-02、MET-03；<span id="ref-AC-05"></span>AC-05。</p>
+</div></details><details class="chapter-detail"><summary>4. 规则、数据与质量边界</summary><div class="chapter-body"><h2 id="prd-7-4-规则-数据与质量边界">4. 规则、数据与质量边界</h2>
+<h3 id="prd-8-4-1-业务规则">4.1 业务规则</h3>
+<div class="table-wrap"><table><thead><tr><th>规则 ID</th><th>规则</th><th>页面与系统结果</th><th>冲突优先级</th></tr></thead><tbody>
+<tr><td>RULE-01</td><td>活动取消、结束或超过报名截止时间时，不再判断成员资格</td><td>返回 <code>closed</code>，按钮不可用，并展示具体最终状态</td><td>最高</td></tr>
+<tr><td>RULE-02</td><td>活动可报名且用户已报名时，不允许重复报名</td><td>返回 <code>registered</code>，展示已报名状态和结果入口</td><td>低于活动最终状态，高于资格阶段</td></tr>
+<tr><td>RULE-03</td><td>优先报名阶段按成员身份区分 <code>member_available</code>、<code>non_member_waiting</code> 和 <code>identity_unknown</code>；公开报名阶段返回 <code>normal_registration</code></td><td>页面说明、按钮状态和操作结果必须与返回状态一致</td><td>低于最终状态和已报名状态</td></tr>
+<tr><td>RULE-04</td><td>详情状态只用于展示，报名接口始终按点击时数据重新校验</td><td>若结果冲突，以报名接口结果为准，客户端展示原因并刷新详情</td><td>高于详情页旧状态</td></tr>
+</tbody></table></div>
+<h3 id="prd-8-4-1-1-页面状态与操作矩阵">4.1.1 页面状态与操作矩阵</h3>
+<div class="table-wrap"><table><thead><tr><th>状态对象 / 区域</th><th>进入条件</th><th>用户看到什么</th><th>可执行操作</th><th>禁止或置灰操作</th><th>系统处理与数据结果</th><th>下一状态</th><th>关联规则 / 验收</th></tr></thead><tbody>
+<tr><td>报名区</td><td>活动已取消、结束或超过报名截止时间</td><td>最终状态提示，按钮不可用</td><td>查看活动信息或返回</td><td>报名</td><td>不继续判断成员资格</td><td>终止态</td><td>RULE-01 / AC-04</td></tr>
+<tr><td>报名区</td><td>用户已报名成功</td><td>“你已报名”和结果入口</td><td>查看报名结果</td><td>重复报名</td><td>不创建重复报名</td><td>已报名态</td><td>RULE-02 / AC-04</td></tr>
+<tr><td>报名区</td><td>圈内优先报名阶段且用户为圈内成员</td><td>可优先报名说明，按钮可用</td><td>点击报名</td><td>无</td><td>点击时重新实时校验</td><td>报名成功 / 失败后刷新</td><td>RULE-03、RULE-04 / AC-01</td></tr>
+<tr><td>报名区</td><td>圈内优先报名阶段且用户不是圈内成员</td><td>等待公开报名说明，按钮不可用</td><td>等待或刷新</td><td>报名</td><td>不发起报名请求</td><td>公开报名后可报名</td><td>RULE-03 / AC-02</td></tr>
+<tr><td>报名区</td><td>成员身份无法确认</td><td>暂无法确认资格提示，提供刷新或报名校验入口</td><td>刷新资格 / 点击报名校验</td><td>展示肯定性可报名</td><td>报名时以实时校验结果收口</td><td>状态恢复 / 业务失败</td><td>RULE-03、RULE-04 / AC-03</td></tr>
+</tbody></table></div>
+<h3 id="prd-8-4-2-异常与边界">4.2 异常与边界</h3>
+<ul><li>未登录用户不请求个体资格状态；点击报名时先进入登录流程，登录成功后重新请求详情，不复用登录前页面状态。</li><li>详情整体加载失败时不展示报名控制，避免在活动和资格信息不完整时提交。</li><li>仅成员身份失败时使用 <code>identity_unknown</code>，不得把未知身份当作圈内或圈外；用户可以刷新，也可以提交实时报名校验。</li><li>报名请求网络失败或超时时，不假定报名失败或成功；页面提示结果未确认，按钮恢复后允许重试，重新进入页面时通过详情状态确认最终结果。</li><li>连续点击由按钮加载状态拦截，同一个报名请求不得重复创建报名记录或重复上报结果事件。</li><li>旧客户端忽略新增展示字段，服务端报名校验和数据结果保持不变。</li></ul>
+<h3 id="prd-8-4-3-数据与埋点">4.3 数据与埋点</h3>
+<div class="table-wrap"><table><thead><tr><th>字段 / 事件</th><th>定义与取值</th><th>生成 / 触发时机</th><th>使用规则</th><th>历史与兼容</th><th>数据源</th></tr></thead><tbody>
+<tr><td><code>eligibility_display_state</code></td><td><code>closed</code>、<code>registered</code>、<code>member_available</code>、<code>non_member_waiting</code>、<code>identity_unknown</code>、<code>normal_registration</code></td><td>每次成功返回圈子活动详情时重新计算</td><td>客户端只按枚举渲染；未知枚举按 <code>identity_unknown</code> 处理并记录错误</td><td>新字段不回填，旧端忽略</td><td>活动详情服务</td></tr>
+<tr><td><code>priority_eligibility_hint_view</code></td><td>资格说明实际可见</td><td>指定三类提示进入可见区域</td><td>同一 <code>page_view_id</code>、同一状态只记一次</td><td>新事件，不回填</td><td>客户端埋点</td></tr>
+<tr><td><code>activity_signup_click</code></td><td>一次有效报名点击</td><td>按钮进入加载态并准备发请求时</td><td>保留既有事件名和原有公共字段，新增 <code>page_view_id</code>、<code>eligibility_display_state</code>、<code>request_id</code> 等参数；加载期间重复点击不记录</td><td>既有事件不回填，新参数仅对新版本生效</td><td>客户端埋点</td></tr>
+<tr><td><code>activity_signup_result</code></td><td>报名成功、业务失败或网络失败</td><td>收到一次请求的最终结果时</td><td>保留既有事件名和原有结果字段，新增 <code>page_view_id</code>、<code>eligibility_display_state</code>、<code>request_id</code>、<code>failure_code</code>；同一 <code>request_id</code> 只记一次</td><td>既有事件不回填，新参数仅对新版本生效</td><td>客户端、报名服务</td></tr>
+</tbody></table></div>
+<h3 id="prd-8-4-4-非功能与质量要求">4.4 非功能与质量要求</h3>
+<div class="table-wrap"><table><thead><tr><th>维度</th><th>要求 / 阈值</th><th>适用范围</th><th>验证方式</th></tr></thead><tbody>
+<tr><td>性能</td><td>新增状态不得增加额外串行请求；详情接口 P95 增量不超过 30ms</td><td>活动详情</td><td>灰度监控</td></tr>
+<tr><td>可访问性</td><td>提示文本可被读屏读取，不只依赖颜色表达资格</td><td>UI-01、UI-02</td><td>客户端验收</td></tr>
+<tr><td>可观测性</td><td>展示状态缺失率和接口错误率可按版本查看</td><td>灰度期</td><td>数据看板</td></tr>
+</tbody></table></div>
+</div></details><details class="chapter-detail"><summary>5. 影响、依赖与发布</summary><div class="chapter-body"><h2 id="prd-8-5-影响-依赖与发布">5. 影响、依赖与发布</h2>
+<h3 id="prd-9-5-1-联动影响与兼容">5.1 联动影响与兼容</h3>
+<div class="table-wrap"><table><thead><tr><th>影响面</th><th>结论</th><th>具体变化</th><th>历史或旧版本处理</th><th>负责人</th></tr></thead><tbody>
+<tr><td>报名资格规则</td><td>无影响</td><td>只增加展示状态</td><td>继续实时校验</td><td>服务端</td></tr>
+<tr><td>管理后台 / 消息 / 搜索</td><td>无影响</td><td>无新增能力</td><td>不适用</td><td>产品确认</td></tr>
+<tr><td>埋点</td><td>有影响</td><td>新增展示事件和参数</td><td>历史数据不回填</td><td>数据</td></tr>
+<tr><td>运营客服</td><td>有影响</td><td>更新 FAQ 和截图</td><td>旧 FAQ 下线</td><td>运营</td></tr>
+</tbody></table></div>
+<h3 id="prd-9-5-2-依赖">5.2 依赖</h3>
+<div class="table-wrap"><table><thead><tr><th>依赖项</th><th>前置产物</th><th>负责人</th><th>最晚时间</th><th>阻塞影响</th><th>状态</th></tr></thead><tbody>
+<tr><td>公开报名时间统一字段</td><td>接口字段确认</td><td>服务端</td><td>开发前</td><td>影响具体时间文案</td><td>待确认</td></tr>
+<tr><td>原型 UI-01、UI-02</td><td>已确认 Frame</td><td>设计</td><td>开发前</td><td>阻塞客户端实现</td><td>已完成</td></tr>
+</tbody></table></div>
+<h3 id="prd-9-5-3-发布方案">5.3 发布方案</h3>
+<ul><li>先灰度 10% 圈子活动详情流量 2 天，再逐步放量。</li><li>监控详情接口错误率、状态缺失率、报名成功率和提示曝光覆盖率。</li><li>报名成功率较基线下降超过 5% 或接口错误率增加 0.2 个百分点时停止放量。</li><li>回滚时关闭展示配置，不改变服务端报名资格校验。</li></ul>
+</div></details><details class="chapter-detail"><summary>6. 验收与追溯</summary><div class="chapter-body"><h2 id="prd-9-6-验收与追溯">6. 验收与追溯</h2>
+<h3 id="prd-10-6-1-端到端追溯矩阵">6.1 端到端追溯矩阵</h3>
+<div class="table-wrap"><table><thead><tr><th>目标 ID</th><th>场景 ID</th><th>功能 ID</th><th>原型 ID / 节点</th><th>规则 ID</th><th>验收 ID</th><th>状态</th></tr></thead><tbody>
+<tr><td>OBJ-01</td><td>SCN-01</td><td>FR-01、FR-02</td><td>UI-01、UI-02</td><td>RULE-01 至 RULE-04</td><td>AC-01 至 AC-04</td><td>原型已确认</td></tr>
+<tr><td>OBJ-01</td><td>SCN-02</td><td>FR-01</td><td>UI-03 / 报名校验节点</td><td>RULE-03、RULE-04</td><td>AC-03</td><td>流程图评审中，不阻塞接口开发</td></tr>
+<tr><td>OBJ-01</td><td>SCN-01、SCN-02</td><td>FR-03</td><td>不适用</td><td>不适用</td><td>AC-05</td><td>事件待数据评审</td></tr>
+</tbody></table></div>
+<h3 id="prd-10-6-2-研发验收标准">6.2 研发验收标准</h3>
+<h4 id="prd-10-ac-01-圈内成员看到可执行的优先报名状态">AC-01 圈内成员看到可执行的优先报名状态</h4>
+<ul><li><strong>Given：</strong>活动处于圈内优先报名阶段、未关闭，登录用户为圈内成员且尚未报名。</li><li><strong>When：</strong>用户进入活动详情页，详情请求成功返回 <code>member_available</code>。</li><li><strong>Then：</strong>资格区展示“当前为圈内优先报名阶段，你可优先报名”，按钮显示“立即报名”且可点击；点击后按钮进入加载态并只提交一次请求。报名成功进入结果页，返回详情后展示 <code>registered</code>。</li></ul>
+<h4 id="prd-10-ac-02-圈外用户得到明确的等待条件">AC-02 圈外用户得到明确的等待条件</h4>
+<ul><li><strong>Given：</strong>活动处于圈内优先报名阶段、未关闭，登录用户明确不是圈内成员且尚未报名。</li><li><strong>When：</strong>用户进入详情页，详情返回 <code>non_member_waiting</code>。</li><li><strong>Then：</strong>有公开报名时间时展示具体时间，无时间字段时展示不含具体时间的兜底文案；按钮显示“等待开放”、不可点击，且不产生报名请求。进入公开报名阶段并刷新后，状态切换为 <code>normal_registration</code>，按钮变为“立即报名”。</li></ul>
+<h4 id="prd-10-ac-03-未知身份和实时结果能够明确收口">AC-03 未知身份和实时结果能够明确收口</h4>
+<ul><li><strong>Given：</strong>优先报名阶段的成员身份查询失败，或页面展示后身份、活动阶段、名额发生变化。</li><li><strong>When：</strong>详情返回 <code>identity_unknown</code>，用户刷新资格或点击报名；或者用户从其他可报名状态点击报名。</li><li><strong>Then：</strong>未知身份时页面不得展示“可优先报名”；刷新操作重新请求详情，报名操作由报名接口实时校验。业务失败时用户留在详情页并看到可理解的具体原因，页面自动刷新状态；网络失败时提示结果尚未确认、按钮恢复可点击，未收到成功结果前不得展示已报名。</li></ul>
+<h4 id="prd-10-ac-04-最终状态-已报名和非圈子活动不受资格提示干扰">AC-04 最终状态、已报名和非圈子活动不受资格提示干扰</h4>
+<ul><li><strong>Given：</strong>分别准备活动已截止 / 已结束 / 已取消、用户已报名、非圈子活动三组数据。</li><li><strong>When：</strong>用户进入详情页。</li><li><strong>Then：</strong>最终活动状态优先展示对应“报名已截止”“活动已结束”或“活动已取消”，按钮不可点击；已报名用户展示“你已报名”和结果入口，不重复提交；非圈子活动不展示圈内资格说明，并继续使用普通活动的报名状态和报名接口。</li></ul>
+<h4 id="prd-10-ac-05-埋点可串联-可去重且不阻塞主流程">AC-05 埋点可串联、可去重且不阻塞主流程</h4>
+<ul><li><strong>Given：</strong>测试环境能够查看客户端事件，并可模拟埋点上报失败。</li><li><strong>When：</strong>同一次页面访问中展示资格提示、触发重复渲染、点击一次报名并收到结果；随后模拟埋点上报失败重复执行主流程。</li><li><strong>Then：</strong>同一 <code>page_view_id</code> 和展示状态只有一条曝光；一次有效点击对应一条带相同 <code>request_id</code> 的点击和结果事件；加载期间重复点击不产生额外事件；事件参数符合 FR-03，三类事件可串联。埋点失败时页面展示、报名请求和报名结果均不受影响。</li></ul>
+</div></details><details class="chapter-detail"><summary>7. 效果验证</summary><div class="chapter-body"><h2 id="prd-10-7-效果验证">7. 效果验证</h2>
+<div class="table-wrap"><table><thead><tr><th>指标 ID</th><th>对应目标</th><th>类型</th><th>口径</th><th>基线</th><th>目标 / 阈值</th><th>周期</th></tr></thead><tbody>
+<tr><td>MET-01</td><td>OBJ-01</td><td>行为</td><td>圈外用户优先期报名点击中资格限制返回占比</td><td>41%</td><td>下降 30%</td><td>上线后 2 周</td></tr>
+<tr><td>MET-02</td><td>OBJ-01</td><td>结果</td><td>资格相关客服工单周均量</td><td>32 条</td><td>下降 20%</td><td>上线后 4 周</td></tr>
+<tr><td>MET-03</td><td>OBJ-01</td><td>护栏</td><td>符合资格用户详情访问至报名成功率</td><td>上线前补数</td><td>不下降超过 3%</td><td>上线后 2 周</td></tr>
+</tbody></table></div>
+<p>按活动规模、入口和用户身份分层，排除大型运营活动变化。MET-01、MET-02 达标且 MET-03 稳定时全量保留；护栏受损时暂停放量并复盘展示与按钮状态。</p>
+<h3 id="prd-11-输出前一致性审查">输出前一致性审查</h3>
+<div class="table-wrap"><table><thead><tr><th>检查域</th><th>检查结果</th><th>处理说明</th></tr></thead><tbody>
+<tr><td>术语与角色</td><td>一致</td><td>全文统一使用“圈内成员”“圈外用户”“活动详情页”，未混用“会员”“非会员”等其他称呼</td></tr>
+<tr><td>状态、动作与结果</td><td>一致</td><td>FR-01 的展示状态、FR-02 的页面操作与 AC-01 至 AC-04 的期望结果相同；报名成功仍以实时校验结果为准</td></tr>
+<tr><td>数值、单位与口径</td><td>一致</td><td>优先期、公开报名时间和效果观察周期使用相同时间口径；MET-01 至 MET-03 的分母和周期无冲突</td></tr>
+<tr><td>追溯关系</td><td>一致</td><td>OBJ-01、SCN-01、FR-01 至 FR-03、RULE-01、AC-01 至 AC-05 和 MET-01 至 MET-03 均有回链</td></tr>
+<tr><td>事实状态</td><td>1 项待确认</td><td>公开报名时间字段尚未统一，保留为 8.1 待确认项，不在正文假定字段一定存在</td></tr>
+</tbody></table></div>
+</div></details><details class="chapter-detail"><summary>8. 风险、待确认项、研发 spec 交接与附录</summary><div class="chapter-body"><h2 id="prd-11-8-风险-待确认项-研发-spec-交接与附录">8. 风险、待确认项、研发 spec 交接与附录</h2>
+<h3 id="prd-12-8-1-风险-假设与待确认项">8.1 风险、假设与待确认项</h3>
+<div class="table-wrap"><table><thead><tr><th>类型</th><th>内容</th><th>是否阻塞</th><th>验证 / 缓解方式</th><th>负责人</th><th>最晚时间</th></tr></thead><tbody>
+<tr><td>待确认</td><td>公开报名时间字段是否统一</td><td>阻塞具体时间文案</td><td>接口评审；无字段则使用兜底文案</td><td>服务端</td><td>开发前</td></tr>
+<tr><td>风险</td><td>用户把“可报名”理解为已有名额</td><td>不阻塞</td><td>不使用“已获得名额”，测试理解度</td><td>产品、设计</td><td>设计验收前</td></tr>
+<tr><td>效果假设</td><td>提前解释资格能减少无效尝试</td><td>不阻塞</td><td>用 MET-01、MET-02 联合验证</td><td>数据</td><td>上线后 4 周</td></tr>
+</tbody></table></div>
+<h3 id="prd-12-8-2-待研发-spec-补齐事项">8.2 待研发 spec 补齐事项</h3>
+<p>本节只列需要研发方案继续补齐的实现事项，不反向覆盖 PRD 已确认的页面表现和业务规则。</p>
+<div class="table-wrap"><table><thead><tr><th>类别</th><th>PRD 已确认的产品能力 / 结果</th><th>spec 需补齐事项</th><th>是否阻塞产品评审</th><th>是否阻塞研发实现</th><th>负责人 / 下一步</th></tr></thead><tbody>
+<tr><td>接口能力</td><td>详情页需要获得可渲染的资格展示状态；报名仍由点击时实时校验</td><td>API 路径、方法、请求响应字段、错误码、状态枚举命名、鉴权和兼容策略</td><td>否</td><td>是</td><td>服务端输出接口 spec</td></tr>
+<tr><td>客户端兼容</td><td>新版本展示资格说明，旧版本报名能力保持不变</td><td>旧端字段忽略策略、未知状态兜底、版本灰度开关</td><td>否</td><td>是</td><td>客户端 / 服务端评审</td></tr>
+<tr><td>埋点与监控</td><td>需要判断提示曝光、报名点击和报名结果是否串联</td><td>事件字段、去重实现、看板和告警细节</td><td>否</td><td>是</td><td>数据 / 客户端确认</td></tr>
+</tbody></table></div>
+<h3 id="prd-12-8-3-附录与资料索引">8.3 附录与资料索引</h3>
+<div class="table-wrap"><table><thead><tr><th>资料</th><th>链接 / 路径</th><th>版本 / 日期</th><th>用途</th></tr></thead><tbody>
+<tr><td>需求定义</td><td><code>docs/requirements/activity-priority-define.md</code></td><td>2026-07-10</td><td>产品决策来源</td></tr>
+<tr><td>原型与流程</td><td>UI-01 至 UI-03，见 2.2</td><td>2026-07-12</td><td>页面和交互主源</td></tr>
+<tr><td>技术方案</td><td><code>docs/tech/activity-eligibility-state.md</code></td><td>待产出</td><td>接口、兼容、埋点和监控实现；不覆盖 PRD 规则</td></tr>
+</tbody></table></div></div></details></div></section>
+    <section class="section" id="consistency"><div class="section-head"><div><h2>一致性检查</h2></div></div><div class="checks"><div class="check"><strong>信息完整性</strong><span class="muted">正式 PRD 原章节已内嵌，未用摘要替代正文。</span></div><div class="check"><strong>原型边界</strong><span class="muted">原型只表达用户可见 UI，颜色已降为黑白灰。</span></div><div class="check"><strong>交付依赖</strong><span class="muted">CSS、脚本、SVG 均内嵌，无 PNG 或外部资源。</span></div></div></section>
+  </main>
+</div>
+<script>
+const STATES=[{"id": "UI-STATE-01", "label": "活动已关闭 / 已结束", "page": "PAGE-01 活动详情", "state_label": "已结束 / 不可报名", "screen_title": "活动已结束", "message": "本场活动已结束", "action": "查看活动信息", "task": "判断是否还能报名", "visible": ["最终状态说明", "不可报名原因", "报名按钮不可用"], "next": "终止态", "trace": ["FR-02", "RULE-01", "AC-04"], "svg": "<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 390 700\" role=\"img\" aria-label=\"活动已结束\">\n      <rect width=\"390\" height=\"700\" fill=\"#f7f7f7\"/>\n      <rect x=\"0\" y=\"0\" width=\"390\" height=\"78\" fill=\"#ffffff\"/>\n      <text x=\"24\" y=\"32\" font-size=\"12\" fill=\"#727272\">9:41</text><text x=\"345\" y=\"32\" font-size=\"12\" fill=\"#727272\">● ● ▰</text>\n      <text x=\"24\" y=\"62\" font-size=\"22\" font-weight=\"700\" fill=\"#1e1e1e\">活动详情</text>\n      <rect x=\"20\" y=\"98\" width=\"350\" height=\"116\" rx=\"18\" fill=\"#efefef\"/>\n      <text x=\"40\" y=\"168\" font-size=\"21\" fill=\"#1e1e1e\" font-weight=\"700\">活动已结束</text>\n      <text x=\"40\" y=\"194\" font-size=\"12\" fill=\"#727272\">本场活动已结束，报名入口已关闭。</text>\n      <rect x=\"20\" y=\"232\" width=\"350\" height=\"204\" rx=\"18\" fill=\"#ffffff\" stroke=\"#c4c4c4\"/>\n      <text x=\"40\" y=\"304\" font-size=\"18\" fill=\"#1e1e1e\" font-weight=\"700\">本场活动已结束</text>\n      <rect x=\"40\" y=\"382\" width=\"310\" height=\"1\" fill=\"#dfdfdf\"/>\n      <rect x=\"20\" y=\"456\" width=\"350\" height=\"58\" rx=\"16\" fill=\"#202020\"/>\n      <text x=\"195\" y=\"492\" text-anchor=\"middle\" font-size=\"15\" fill=\"#ffffff\" font-weight=\"700\">查看活动信息</text>\n      \n      <rect x=\"20\" y=\"610\" width=\"350\" height=\"1\" fill=\"#dfdfdf\"/>\n    </svg>"}, {"id": "UI-STATE-02", "label": "圈内成员可优先报名", "page": "PAGE-01 活动详情", "state_label": "当前可优先报名", "screen_title": "可优先报名", "message": "当前可优先报名", "action": "立即报名", "task": "了解资格并报名", "visible": ["优先报名说明", "报名按钮可用", "点击时实时校验"], "next": "报名成功 / 实时校验失败", "trace": ["FR-02", "RULE-03", "RULE-04", "AC-01"], "svg": "<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 390 700\" role=\"img\" aria-label=\"可优先报名\">\n      <rect width=\"390\" height=\"700\" fill=\"#f7f7f7\"/>\n      <rect x=\"0\" y=\"0\" width=\"390\" height=\"78\" fill=\"#ffffff\"/>\n      <text x=\"24\" y=\"32\" font-size=\"12\" fill=\"#727272\">9:41</text><text x=\"345\" y=\"32\" font-size=\"12\" fill=\"#727272\">● ● ▰</text>\n      <text x=\"24\" y=\"62\" font-size=\"22\" font-weight=\"700\" fill=\"#1e1e1e\">活动详情</text>\n      <rect x=\"20\" y=\"98\" width=\"350\" height=\"116\" rx=\"18\" fill=\"#efefef\"/>\n      <text x=\"40\" y=\"168\" font-size=\"21\" fill=\"#1e1e1e\" font-weight=\"700\">可优先报名</text>\n      <text x=\"40\" y=\"194\" font-size=\"12\" fill=\"#727272\">当前为圈内优先报名阶段，你可优先报名。</text>\n      <rect x=\"20\" y=\"232\" width=\"350\" height=\"204\" rx=\"18\" fill=\"#ffffff\" stroke=\"#c4c4c4\"/>\n      <text x=\"40\" y=\"304\" font-size=\"18\" fill=\"#1e1e1e\" font-weight=\"700\">当前可优先报名</text>\n      <rect x=\"40\" y=\"382\" width=\"310\" height=\"1\" fill=\"#dfdfdf\"/>\n      <rect x=\"20\" y=\"456\" width=\"350\" height=\"58\" rx=\"16\" fill=\"#202020\"/>\n      <text x=\"195\" y=\"492\" text-anchor=\"middle\" font-size=\"15\" fill=\"#ffffff\" font-weight=\"700\">立即报名</text>\n      \n      <rect x=\"20\" y=\"610\" width=\"350\" height=\"1\" fill=\"#dfdfdf\"/>\n    </svg>"}, {"id": "UI-STATE-03", "label": "圈外用户等待公开", "page": "PAGE-01 活动详情", "state_label": "等待公开报名", "screen_title": "等待公开报名", "message": "等待公开报名", "action": "等待开放", "task": "了解何时可以继续", "visible": ["公开报名条件", "报名按钮不可用", "不发起报名请求"], "next": "公开报名阶段", "trace": ["FR-02", "RULE-03", "AC-02"], "svg": "<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 390 700\" role=\"img\" aria-label=\"等待公开报名\">\n      <rect width=\"390\" height=\"700\" fill=\"#f7f7f7\"/>\n      <rect x=\"0\" y=\"0\" width=\"390\" height=\"78\" fill=\"#ffffff\"/>\n      <text x=\"24\" y=\"32\" font-size=\"12\" fill=\"#727272\">9:41</text><text x=\"345\" y=\"32\" font-size=\"12\" fill=\"#727272\">● ● ▰</text>\n      <text x=\"24\" y=\"62\" font-size=\"22\" font-weight=\"700\" fill=\"#1e1e1e\">活动详情</text>\n      <rect x=\"20\" y=\"98\" width=\"350\" height=\"116\" rx=\"18\" fill=\"#efefef\"/>\n      <text x=\"40\" y=\"168\" font-size=\"21\" fill=\"#1e1e1e\" font-weight=\"700\">等待公开报名</text>\n      <text x=\"40\" y=\"194\" font-size=\"12\" fill=\"#727272\">当前为圈内优先报名阶段，公开报名后可继续。</text>\n      <rect x=\"20\" y=\"232\" width=\"350\" height=\"204\" rx=\"18\" fill=\"#ffffff\" stroke=\"#c4c4c4\"/>\n      <text x=\"40\" y=\"304\" font-size=\"18\" fill=\"#1e1e1e\" font-weight=\"700\">等待公开报名</text>\n      <rect x=\"40\" y=\"382\" width=\"310\" height=\"1\" fill=\"#dfdfdf\"/>\n      <rect x=\"20\" y=\"456\" width=\"350\" height=\"58\" rx=\"16\" fill=\"#d9d9d9\"/>\n      <text x=\"195\" y=\"492\" text-anchor=\"middle\" font-size=\"15\" fill=\"#606060\" font-weight=\"700\">等待开放</text>\n      \n      <rect x=\"20\" y=\"610\" width=\"350\" height=\"1\" fill=\"#dfdfdf\"/>\n    </svg>"}, {"id": "UI-STATE-04", "label": "身份暂无法确认", "page": "PAGE-01 活动详情", "state_label": "暂无法确认资格", "screen_title": "暂无法确认资格", "message": "暂无法确认资格", "action": "刷新资格", "task": "理解当前结果并恢复操作", "visible": ["不展示肯定性可报名状态", "刷新入口", "实时校验兜底"], "next": "重新请求详情 / 实时校验", "trace": ["FR-01", "FR-02", "AC-03"], "svg": "<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 390 700\" role=\"img\" aria-label=\"暂无法确认资格\">\n      <rect width=\"390\" height=\"700\" fill=\"#f7f7f7\"/>\n      <rect x=\"0\" y=\"0\" width=\"390\" height=\"78\" fill=\"#ffffff\"/>\n      <text x=\"24\" y=\"32\" font-size=\"12\" fill=\"#727272\">9:41</text><text x=\"345\" y=\"32\" font-size=\"12\" fill=\"#727272\">● ● ▰</text>\n      <text x=\"24\" y=\"62\" font-size=\"22\" font-weight=\"700\" fill=\"#1e1e1e\">活动详情</text>\n      <rect x=\"20\" y=\"98\" width=\"350\" height=\"116\" rx=\"18\" fill=\"#efefef\"/>\n      <text x=\"40\" y=\"168\" font-size=\"21\" fill=\"#1e1e1e\" font-weight=\"700\">暂无法确认资格</text>\n      <text x=\"40\" y=\"194\" font-size=\"12\" fill=\"#727272\">请刷新后重试，或直接提交报名校验。</text>\n      <rect x=\"20\" y=\"232\" width=\"350\" height=\"204\" rx=\"18\" fill=\"#ffffff\" stroke=\"#c4c4c4\"/>\n      <text x=\"40\" y=\"304\" font-size=\"18\" fill=\"#1e1e1e\" font-weight=\"700\">暂无法确认资格</text>\n      <rect x=\"40\" y=\"382\" width=\"310\" height=\"1\" fill=\"#dfdfdf\"/>\n      <rect x=\"20\" y=\"456\" width=\"350\" height=\"58\" rx=\"16\" fill=\"#202020\"/>\n      <text x=\"195\" y=\"492\" text-anchor=\"middle\" font-size=\"15\" fill=\"#ffffff\" font-weight=\"700\">刷新资格</text>\n      \n      <rect x=\"20\" y=\"610\" width=\"350\" height=\"1\" fill=\"#dfdfdf\"/>\n    </svg>"}, {"id": "UI-STATE-05", "label": "已报名", "page": "PAGE-01 活动详情", "state_label": "已报名成功", "screen_title": "你已报名", "message": "无需重复报名", "action": "查看报名结果", "task": "确认自己无需重复操作", "visible": ["已报名状态", "结果入口", "报名按钮不再重复提交"], "next": "报名结果页", "trace": ["FR-02", "RULE-02", "AC-04"], "svg": "<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 390 700\" role=\"img\" aria-label=\"你已报名\">\n      <rect width=\"390\" height=\"700\" fill=\"#f7f7f7\"/>\n      <rect x=\"0\" y=\"0\" width=\"390\" height=\"78\" fill=\"#ffffff\"/>\n      <text x=\"24\" y=\"32\" font-size=\"12\" fill=\"#727272\">9:41</text><text x=\"345\" y=\"32\" font-size=\"12\" fill=\"#727272\">● ● ▰</text>\n      <text x=\"24\" y=\"62\" font-size=\"22\" font-weight=\"700\" fill=\"#1e1e1e\">活动详情</text>\n      <rect x=\"20\" y=\"98\" width=\"350\" height=\"116\" rx=\"18\" fill=\"#efefef\"/>\n      <text x=\"40\" y=\"168\" font-size=\"21\" fill=\"#1e1e1e\" font-weight=\"700\">你已报名</text>\n      <text x=\"40\" y=\"194\" font-size=\"12\" fill=\"#727272\">当前活动已存在你的报名记录。</text>\n      <rect x=\"20\" y=\"232\" width=\"350\" height=\"204\" rx=\"18\" fill=\"#ffffff\" stroke=\"#c4c4c4\"/>\n      <text x=\"40\" y=\"304\" font-size=\"18\" fill=\"#1e1e1e\" font-weight=\"700\">无需重复报名</text>\n      <rect x=\"40\" y=\"382\" width=\"310\" height=\"1\" fill=\"#dfdfdf\"/>\n      <rect x=\"20\" y=\"456\" width=\"350\" height=\"58\" rx=\"16\" fill=\"#202020\"/>\n      <text x=\"195\" y=\"492\" text-anchor=\"middle\" font-size=\"15\" fill=\"#ffffff\" font-weight=\"700\">查看报名结果</text>\n      \n      <rect x=\"20\" y=\"610\" width=\"350\" height=\"1\" fill=\"#dfdfdf\"/>\n    </svg>"}];
+const body=document.body;
+const navToggle=document.getElementById('nav-toggle');
+const mobileNavToggle=document.getElementById('mobile-nav-toggle');
+mobileNavToggle.addEventListener('click',()=>body.classList.toggle('nav-open'));
+navToggle.addEventListener('click',()=>{body.classList.toggle('nav-collapsed');navToggle.textContent=body.classList.contains('nav-collapsed')?'›':'‹';});
+const render=(s)=>{
+  document.querySelectorAll('.state-btn').forEach(b=>b.classList.toggle('active',b.dataset.state===s.id));
+  document.getElementById('svg-host').innerHTML=s.svg;
+  document.getElementById('state-pill').textContent=s.id;
+  document.getElementById('stage-title').textContent=s.page;
+  document.getElementById('stage-subtitle').textContent=s.state_label;
+  document.getElementById('inspect-title').textContent=s.label;
+  document.getElementById('inspect-subtitle').textContent=s.page+' · '+s.state_label;
+  document.getElementById('inspect-task').textContent=s.task||'';
+  document.getElementById('inspect-action').textContent=s.action||'';
+  document.getElementById('inspect-next').textContent=s.next||'';
+  document.getElementById('inspect-visible').innerHTML=(s.visible||[]).map(x=>'<li>'+x+'</li>').join('');
+  document.getElementById('inspect-trace').innerHTML=(s.trace||[]).map(x=>'<code>'+x+'</code>').join('');
+};
+document.querySelectorAll('.state-btn').forEach(b=>b.addEventListener('click',()=>render(STATES.find(s=>s.id===b.dataset.state))));
+const revealTarget=(href)=>{const target=document.querySelector(href);const detail=target&&target.closest('details');if(detail) detail.open=true;};
+document.querySelectorAll('a[href^="#"]').forEach(a=>a.addEventListener('click',()=>revealTarget(a.getAttribute('href'))));
+document.querySelectorAll('.doc-link').forEach(a=>a.addEventListener('click',()=>{document.querySelectorAll('.doc-link').forEach(x=>x.classList.remove('active'));a.classList.add('active');if(window.innerWidth<720) body.classList.remove('nav-open');}));
+render(STATES[0]);
+</script>
+</body></html>

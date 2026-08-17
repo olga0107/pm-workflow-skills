@@ -1,0 +1,39 @@
+{
+  "title":"新版评价填写｜状态变化",
+  "subtitle":"结构示意，不代表最终布局；现有页面壳来自截图，交互规则来自正式 PRD",
+  "delivery_role":"inline",
+  "target_width":1100,
+  "columns":2,
+  "board_width":520,
+  "min_board_height":470,
+  "boards":[
+    {"id":"form-incomplete","step":"1","title":"四项未完成","layout":{"row":0,"column":0},"nav":"训练营满意度评价","blocks":[
+      {"type":"text","text":"取消独立总体评价；四项评分均为 1–5 分","bold":true},
+      {"type":"scale","label":"课程内容","values":[1,2,3,4,5]},
+      {"type":"scale","label":"老师讲解","values":[1,2,3,4,5]},
+      {"type":"scale","label":"班主任服务","values":[1,2,3,4,5]},
+      {"type":"scale","label":"画面质量","values":[1,2,3,4,5]},
+      {"type":"button","text":"确认提交（需完成四项）","enabled":false}
+    ]},
+    {"id":"form-low","step":"2","title":"任一项选 1–3 分","layout":{"row":1,"column":0},"nav":"训练营满意度评价","blocks":[
+      {"type":"scale","label":"课程内容","values":[1,2,3,4,5],"selected":2},
+      {"type":"chips","label":"当前维度的低分原因｜可多选、非必填","items":["没效果/没学会","实操案例不够","课程太长"],"selected":["实操案例不够"]},
+      {"type":"annotation","label":"改高分","text":"当前维度改为 4–5 分时，清除该维度已选原因；其他维度不受影响。"},
+      {"type":"button","text":"等待其余评分完成","enabled":false}
+    ]},
+    {"id":"form-ready","step":"3","title":"四项完成后可提交","layout":{"row":1,"column":1},"nav":"训练营满意度评价","blocks":[
+      {"type":"scale","label":"课程内容","values":[1,2,3,4,5],"selected":4},
+      {"type":"scale","label":"老师讲解","values":[1,2,3,4,5],"selected":4},
+      {"type":"scale","label":"班主任服务","values":[1,2,3,4,5],"selected":5},
+      {"type":"scale","label":"画面质量","values":[1,2,3,4,5],"selected":4},
+      {"type":"input","label":"文字反馈｜选填","placeholder":"还有什么想法？请尽情地说说吧～","multiline":true},
+      {"type":"button","text":"确认提交"}
+    ]}
+  ],
+  "entry_board_ids":["form-incomplete"],
+  "links":[
+    {"from":"form-incomplete","to":"form-low","label":"任一项选择 1–3 分"},
+    {"from":"form-incomplete","to":"form-ready","label":"四项完成且均为 4–5 分"},
+    {"from":"form-low","to":"form-ready","label":"完成其余评分"}
+  ]
+}

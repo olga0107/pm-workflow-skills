@@ -1,0 +1,50 @@
+{
+  "mode":"interaction",
+  "validation_level":"enhanced",
+  "source":"formal-prd.md",
+  "document":"traditional-prd.md",
+  "primary_artifact":{"type":"traditional_prd","surface":"feishu","reader_spine":["background_problem","goal","scope","solution","detail","acceptance"],"technical_depth":"collaboration_only","secondary_artifacts":[]},
+  "audience":["产品","设计","研发","测试"],
+  "review_task":"确认 APP 用户从双入口打开、重新校验、核对方案、二次确认到成功或统一拦截的全部页面状态、跳转分支和外部出口",
+  "mainline":"Push 或站内消息 → 重新校验 → 唯一方案 → 二次确认 → 提交中 → CRM 明确成功或统一拦截",
+  "interaction_model":"interaction-model.json",
+  "prototype_plan":"prototype-plan.json",
+  "review_questions":[
+    {"id":"Q-01","question":"用户从入口到成功或统一拦截的主路径是什么","source_anchors":["S2","S3","S4"],"relation_kind":"sequence","representation":"flowchart","scope":"主路径、暂不调整、返回确认和统一拦截；详细原因下钻","rationale":"用紧凑流程在正文中建立共同心智","validation":"在正文宽度下无需放大即可复述主路径","visual_id":"VIS-MAIN"},
+    {"id":"Q-02","question":"Push 和站内消息打开后如何重新校验并进入不同页面","source_anchors":["S2","S3 Push","S3 站内消息","S4"],"relation_kind":"spatial","representation":"wireframe","scope":"两个入口、校验中、方案可用和统一拦截","rationale":"同时呈现页面信息与入口汇合关系","validation":"检查双入口均进入校验且结果分支与正文一致","visual_id":"VIS-ENTRY"},
+    {"id":"Q-03","question":"暂不调整和我再看看两条不提交分支分别回到哪里","source_anchors":["S3 调整上课时间页","S6"],"relation_kind":"sequence","representation":"wireframe","scope":"方案页、二次确认、暂不调整结果和返回方案页","rationale":"两条相反动作容易被遗漏或混成同一返回","validation":"动作标签唯一，且两条分支均未进入提交中","visual_id":"VIS-ALT"},
+    {"id":"Q-04","question":"二次确认后如何进入提交中、成功或统一拦截","source_anchors":["S2","S3 成功页","S3 拦截页","S4","S6"],"relation_kind":"sequence","representation":"wireframe","scope":"确认、提交中、成功和所有非成功结果","rationale":"就近展示按钮、处理中禁用、成功与失败反馈","validation":"只有 CRM 明确成功进入成功页，其他结果统一拦截","visual_id":"VIS-SUBMIT"},
+    {"id":"Q-05","question":"全部入口、判断原因、页面状态和结果出口是否覆盖完整","source_anchors":["S2","S3","S4","S6"],"relation_kind":"state","representation":"state","scope":"打开校验的全部原因、提交阶段全部结果、成功和拦截页所有出口","rationale":"复杂分支需要独立可缩放全景查漏","validation":"交互模型可达性与 31 条迁移检查，并查看放大画板","visual_id":"VIS-FULL"}
+  ],
+  "reader_test":{"reader_type":"author","reader_context":"完成本地成稿后关闭事实源，仅依据传统 PRD 连续回读","questions":[
+    {"question_id":"Q-01","result":"pass","reader_answer":"两个入口汇合到重新校验；有效进入唯一方案，确认提交后只有 CRM 明确成功进入成功页，其余统一拦截","gap":"无"},
+    {"question_id":"Q-02","result":"pass","reader_answer":"Push 与站内消息均进入重新校验；关闭 Push 不影响站内消息；校验有效进调整页，其余进拦截页","gap":"无"},
+    {"question_id":"Q-03","result":"pass","reader_answer":"暂不调整结束本次任务且课程不变、消息保留；我再看看返回方案页继续核对","gap":"无"},
+    {"question_id":"Q-04","result":"pass","reader_answer":"二次确认后进入提交中并禁止重复操作；CRM 明确成功进入成功页，其他结果进入无重试的拦截页","gap":"无"},
+    {"question_id":"Q-05","result":"pass","reader_answer":"完整全景列出打开校验的十类非有效原因、提交阶段六类非成功原因和成功或拦截后的全部出口","gap":"无"}
+  ],"ambiguities":[],"hidden_assumptions":[],"contradictions":[]},
+  "render_check":{"target":"本地 Markdown、PNG 预览与 whiteboard-cli SVG 解析","checked_at":"2026-08-14T16:00:00+08:00","checks":{"document_structure":"pass","visual_legibility":"pass","cross_references":"pass","asset_integrity":"pass","information_hierarchy":"pass","terminology_layering":"pass","inline_readability":"pass","zoom_readability":"pass"},"issues":[]},
+  "modules":[
+    {"id":"MOD-01","title":"双入口与打开校验","fact_ids":["FACT-01","FACT-02"],"visual_ids":["VIS-MAIN","VIS-ENTRY","VIS-FULL"]},
+    {"id":"MOD-02","title":"核对方案与不提交分支","fact_ids":["FACT-03","FACT-04"],"visual_ids":["VIS-ALT","VIS-FULL"]},
+    {"id":"MOD-03","title":"提交与结果反馈","fact_ids":["FACT-05","FACT-06"],"visual_ids":["VIS-SUBMIT","VIS-FULL"]},
+    {"id":"MOD-04","title":"兼容与上线边界","fact_ids":["FACT-07"],"visual_ids":[]}
+  ],
+  "facts":[
+    {"id":"FACT-01","statement":"一次有效触达同时生成 Push 与站内消息，关闭 Push 后站内消息仍保留","source_anchor":"S2；S3 站内消息；S6","document_anchor":"5.1 双入口与打开校验","needs_visual":true,"visual_ids":["VIS-ENTRY","VIS-FULL"]},
+    {"id":"FACT-02","statement":"每次打开任一入口均重新校验；所有已处理、课程变化、流程异常、无法确认或技术异常均统一拦截","source_anchor":"S4","document_anchor":"5.1 双入口与打开校验","needs_visual":true,"visual_ids":["VIS-ENTRY","VIS-FULL"]},
+    {"id":"FACT-03","statement":"调整页只展示一个方案，并明确仅可自主调整一次且班主任不变","source_anchor":"S3 调整上课时间页；S6","document_anchor":"5.2 核对方案与不提交分支","needs_visual":true,"visual_ids":["VIS-ALT"]},
+    {"id":"FACT-04","statement":"暂不调整不提交且消息保留；我再看看返回方案页，同样不提交","source_anchor":"S3 调整上课时间页；S6","document_anchor":"5.2 核对方案与不提交分支","needs_visual":true,"visual_ids":["VIS-ALT","VIS-FULL"]},
+    {"id":"FACT-05","statement":"提交期间禁止重复操作；只有 CRM 明确成功才展示成功页","source_anchor":"S2；S4；S6","document_anchor":"5.3 二次确认、提交与结果反馈","needs_visual":true,"visual_ids":["VIS-SUBMIT","VIS-FULL"]},
+    {"id":"FACT-06","statement":"全部非成功结果进入统一拦截且不支持重试；联系班主任无有效入口时降级统一客服","source_anchor":"S3 拦截页；S4；S6","document_anchor":"5.3 二次确认、提交与结果反馈","needs_visual":true,"visual_ids":["VIS-SUBMIT","VIS-FULL"]},
+    {"id":"FACT-07","statement":"不支持新增页面的 APP 版本不得生成无法打开的入口，具体降级方式由研发方案确定","source_anchor":"S5","document_anchor":"6. 通用规则与上线影响","needs_visual":false,"visual_ids":[]}
+  ],
+  "states":[],
+  "visuals":[
+    {"id":"VIS-MAIN","question":"用户从入口到主要结果的主路径是什么","type":"flowchart","role":"overview","coverage":"focused","delivery_role":"inline","review_question_id":"Q-01","relation_kind":"sequence","scope":"只保留建立共同心智的主线和关键分歧","rationale":"紧凑主流程适合正文快速扫描","validation":"正文宽度下标题、动作和结果清楚","source_anchors":["S2","S3","S4"],"path":"diagrams/mainline.mmd","placement":"4.1 用户主流程"},
+    {"id":"VIS-ENTRY","question":"双入口如何汇合到校验并进入方案或拦截","type":"wireframe","role":"local","coverage":"focused","delivery_role":"inline","review_question_id":"Q-02","relation_kind":"spatial","scope":"Push、站内消息、校验中、方案可用和拦截状态","rationale":"页面结构与跳转关系需要就近说明","validation":"SVG 检查无溢出、遮挡或重叠，并实际查看 PNG","source_anchors":["S2","S3","S4"],"path":"diagrams/entry-storyboard.svg","placement":"5.1 双入口与打开校验"},
+    {"id":"VIS-ALT","question":"两条不提交分支分别回到哪里","type":"wireframe","role":"local","coverage":"focused","delivery_role":"inline","state_ids":["S-ADJUST","S-CONFIRM","S-DEFERRED"],"transition_ids":["T-16","T-17","T-19"],"review_question_id":"Q-03","relation_kind":"sequence","scope":"暂不调整与我再看看，不包含提交结果","rationale":"拆开相反方向连线，避免动作标签重叠","validation":"两条分支均从明确动作到明确结果","source_anchors":["S3 调整上课时间页","S6"],"path":"diagrams/alternative-storyboard.svg","spec_path":"diagrams/alternative-storyboard-spec.json","placement":"5.2 核对方案与不提交分支"},
+    {"id":"VIS-SUBMIT","question":"确认后如何进入提交中、成功或拦截","type":"wireframe","role":"local","coverage":"focused","delivery_role":"inline","state_ids":["S-ADJUST","S-CONFIRM","S-SUBMITTING","S-SUCCESS","S-BLOCKED"],"transition_ids":["T-16","T-18","T-20","T-21","T-22","T-23","T-24","T-25","T-26"],"review_question_id":"Q-04","relation_kind":"sequence","scope":"确认、提交中和两类结果，不重复打开校验","rationale":"关键页面、按钮状态和反馈需要连续呈现","validation":"SVG 检查无溢出、遮挡或重叠，并实际查看 PNG","source_anchors":["S2","S3","S4","S6"],"path":"diagrams/submit-storyboard.svg","spec_path":"diagrams/submit-storyboard-spec.json","placement":"5.3 二次确认、提交与结果反馈"},
+    {"id":"VIS-FULL","question":"全部交互分支是否覆盖完整","type":"state","role":"deep_dive","coverage":"complete","delivery_role":"zoomable","review_question_id":"Q-05","relation_kind":"state","scope":"全部入口、打开校验原因、确认返回、提交结果与外部出口","rationale":"独立全景用于查漏，不缩小替代正文局部解释","validation":"交互模型 14 状态、31 迁移全部可达；放大预览可追踪","source_anchors":["S2","S3","S4","S6"],"path":"diagrams/complete-branch-map.mmd","placement":"5.4 完整分支总览"}
+  ]
+}

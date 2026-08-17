@@ -1,0 +1,54 @@
+{
+  "schema_version": "1.0",
+  "source_prd": "/Users/olga0107/Documents/ChatGPT/pm-skill案例整理&优化/案例验证/01-满意度评价体系重构/04-原版正式PRD-评审草案.md",
+  "readiness": {
+    "product_semantics": "partial",
+    "visual_context": "existing_ui",
+    "decision": "generate",
+    "missing_facts": []
+  },
+  "evidence": [
+    {
+      "id": "E-SCREEN",
+      "type": "screenshot",
+      "path": "/Users/olga0107/Documents/ChatGPT/pm-skill案例整理&优化/案例验证/01-满意度评价体系重构/raw/01-现状总体评价.png",
+      "authority": "observational",
+      "role": "current_ui",
+      "status": "confirmed",
+      "scope": "现状评价浮层",
+      "sensitive_data": "checked",
+      "observations": [
+        {"id": "OBS-01", "kind": "observed", "statement": "存在五档评价和提交按钮"}
+      ]
+    }
+  ],
+  "surfaces": [
+    {
+      "id": "PAGE-1",
+      "purpose": "评价",
+      "source_anchors": ["截图"],
+      "evidence_ids": ["E-SCREEN"],
+      "design_reuse": {"strategy": "reference_only", "source_ids": ["E-SCREEN"], "rationale": "照图生成"},
+      "regions": [],
+      "state_ids": [],
+      "action_ids": []
+    }
+  ],
+  "outputs": [
+    {
+      "id": "PROTO-1",
+      "reader_question": "用户如何提交评价并得到成功结果",
+      "kind": "interaction_storyboard",
+      "surface_ids": ["PAGE-1"],
+      "state_ids": ["S-READY", "S-SUCCESS"],
+      "transition_ids": ["T-SUBMIT"],
+      "evidence_ids": ["E-SCREEN"],
+      "source_anchors": ["截图"],
+      "coverage": "focused",
+      "delivery_role": "inline",
+      "placement": "方案详情",
+      "strategy": "reference_only",
+      "status": "planned"
+    }
+  ]
+}

@@ -1,0 +1,68 @@
+{
+  "schema_version": "1.0",
+  "source_prd": "/Users/olga0107/Documents/ChatGPT/pm-skill案例整理&优化/案例验证/01-满意度评价体系重构/04-原版正式PRD-评审草案.md",
+  "readiness": {
+    "product_semantics": "partial",
+    "visual_context": "existing_ui",
+    "decision": "annotate_only",
+    "missing_facts": [
+      {"fact": "选中、提交、失败与关闭后的产品结果", "blocking": true}
+    ]
+  },
+  "evidence": [
+    {
+      "id": "E-PRD",
+      "type": "formal_prd",
+      "path": "/Users/olga0107/Documents/ChatGPT/pm-skill案例整理&优化/案例验证/01-满意度评价体系重构/04-原版正式PRD-评审草案.md",
+      "authority": "product_behavior",
+      "status": "draft",
+      "scope": "已有需求描述"
+    },
+    {
+      "id": "E-SCREEN",
+      "type": "screenshot",
+      "path": "/Users/olga0107/Documents/ChatGPT/pm-skill案例整理&优化/案例验证/01-满意度评价体系重构/raw/01-现状总体评价.png",
+      "authority": "observational",
+      "role": "current_ui",
+      "status": "confirmed",
+      "scope": "现状评价浮层",
+      "sensitive_data": "checked",
+      "observations": [
+        {"id": "OBS-01", "kind": "observed", "statement": "评价任务位于底部浮层"},
+        {"id": "OBS-02", "kind": "observed", "statement": "存在题干、五档选择和主提交按钮"},
+        {"id": "OBS-03", "kind": "unknown", "statement": "无法判断提交失败和关闭后的行为"}
+      ]
+    }
+  ],
+  "surfaces": [
+    {
+      "id": "PAGE-CURRENT",
+      "purpose": "记录现状页面结构，不生成目标交互",
+      "source_anchors": ["现状截图"],
+      "evidence_ids": ["E-SCREEN"],
+      "design_reuse": {
+        "strategy": "reference_only",
+        "source_ids": ["E-SCREEN"],
+        "rationale": "输入只足以记录现状，不足以定义目标交互"
+      },
+      "regions": [],
+      "state_ids": [],
+      "action_ids": []
+    }
+  ],
+  "outputs": [
+    {
+      "id": "PROTO-ANNOTATED",
+      "reader_question": "现状评价任务由哪些可见区域组成，哪些行为仍未知",
+      "kind": "annotated_screenshot",
+      "surface_ids": ["PAGE-CURRENT"],
+      "evidence_ids": ["E-SCREEN"],
+      "source_anchors": ["现状截图"],
+      "coverage": "focused",
+      "delivery_role": "inline",
+      "placement": "背景现状 / 当前界面",
+      "strategy": "reference_only",
+      "status": "planned"
+    }
+  ]
+}

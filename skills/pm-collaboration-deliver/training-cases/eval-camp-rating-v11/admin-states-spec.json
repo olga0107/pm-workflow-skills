@@ -1,0 +1,39 @@
+{
+  "title":"训练营满意度后台｜查询与导出",
+  "subtitle":"沿用现有后台页面壳，只表达本期字段口径和操作反馈",
+  "delivery_role":"inline",
+  "target_width":1000,
+  "columns":2,
+  "board_width":390,
+  "min_board_height":450,
+  "boards":[
+    {"id":"admin-filter","step":"1","title":"设置筛选条件","device":"desktop","nav":"运营管理 / 满意度 / 训练营满意度","blocks":[
+      {"type":"tabs","items":["评价时间","结营时间","接待人","表单版本"],"selected":"评价时间"},
+      {"type":"annotation","label":"字段边界","text":"接待人与销售归属人分别展示；评价时间与结营时间组合查询取交集。"},
+      {"type":"button","text":"查询"}
+    ]},
+    {"id":"admin-results","step":"2","title":"查看查询结果","device":"desktop","nav":"训练营满意度","blocks":[
+      {"type":"card","title":"新版评价","body":"四维评分分别展示；总体评价为空；标明新版。"},
+      {"type":"card","title":"旧版评价","body":"保留原总体评价与旧表口径；不重算。"},
+      {"type":"card","title":"接待人","body":"接待表优先，延期用户表兜底，均无则为空。"},
+      {"type":"button","text":"导出"}
+    ]},
+    {"id":"admin-failed","step":"3A","title":"查询失败","device":"desktop","nav":"训练营满意度","blocks":[
+      {"type":"state","title":"未取得结果","body":"保留当前筛选条件，不改变任何评价数据。"},
+      {"type":"button","text":"重新查询"}
+    ]},
+    {"id":"export-result","step":"3B","title":"导出结果","device":"desktop","nav":"训练营满意度","blocks":[
+      {"type":"state","title":"成功","body":"导出字段和记录范围与当前列表口径一致。"},
+      {"type":"state","title":"失败","body":"不改变评价数据和筛选条件，可重新发起导出。"},
+      {"type":"button","text":"重新导出","style":"secondary"}
+    ]}
+  ],
+  "entry_board_ids":["admin-filter"],
+  "links":[
+    {"from":"admin-filter","to":"admin-results","label":"查询成功"},
+    {"from":"admin-filter","to":"admin-failed","label":"查询失败"},
+    {"from":"admin-failed","to":"admin-filter","label":"重新查询","kind":"retry"},
+    {"from":"admin-results","to":"export-result","label":"按当前条件导出"},
+    {"from":"export-result","to":"admin-results","label":"失败后保留条件","kind":"retry"}
+  ]
+}

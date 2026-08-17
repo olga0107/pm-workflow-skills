@@ -1,0 +1,50 @@
+{
+  "title": "开始下载｜从可操作到进度可见",
+  "subtitle": "聚焦任务故事板 · 结构示意，不代表最终布局",
+  "delivery_role": "inline",
+  "target_width": 1200,
+  "columns": 3,
+  "board_width": 300,
+  "min_board_height": 390,
+  "entry_board_ids": ["available"],
+  "boards": [
+    {
+      "id": "available",
+      "step": 1,
+      "title": "可下载",
+      "nav": "课程资料",
+      "blocks": [
+        {"type": "card", "title": "训练营资料包", "body": "PDF · 28 MB", "fields": [{"label": "状态", "value": "未下载"}]},
+        {"type": "annotation", "label": "用户任务", "text": "确认资料后发起下载"},
+        {"type": "button", "text": "下载"}
+      ]
+    },
+    {
+      "id": "queued",
+      "step": 2,
+      "title": "排队中",
+      "nav": "课程资料",
+      "blocks": [
+        {"type": "state", "title": "正在排队", "body": "当前已有 2 个任务正在下载"},
+        {"type": "annotation", "label": "即时反馈", "text": "任务已建立；等待下载名额"},
+        {"type": "button", "text": "取消下载", "style": "secondary"}
+      ]
+    },
+    {
+      "id": "downloading",
+      "step": 3,
+      "title": "下载中",
+      "nav": "课程资料",
+      "blocks": [
+        {"type": "progress", "label": "下载进度", "value": 42, "caption": "离开页面后继续下载"},
+        {"type": "annotation", "label": "可用操作", "text": "可暂停或取消当前任务"},
+        {"type": "button", "text": "暂停", "style": "secondary"},
+        {"type": "button", "text": "取消下载", "style": "secondary"}
+      ]
+    }
+  ],
+  "links": [
+    {"from": "available", "to": "queued", "label": "点击下载"},
+    {"from": "queued", "to": "downloading", "label": "取得下载名额"}
+  ]
+}

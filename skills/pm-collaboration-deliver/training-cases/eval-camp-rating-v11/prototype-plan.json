@@ -1,0 +1,178 @@
+{
+  "schema_version": "1.0",
+  "source_prd": "../../../交付产物/0617满意度评价体系重构/03-PRD-评审稿.md",
+  "interaction_model": "interaction-model.json",
+  "readiness": {
+    "product_semantics": "interaction_complete",
+    "visual_context": "existing_ui",
+    "decision": "generate",
+    "missing_facts": []
+  },
+  "evidence": [
+    {
+      "id": "E-PRD",
+      "type": "formal_prd",
+      "path": "../../../交付产物/0617满意度评价体系重构/03-PRD-评审稿.md",
+      "authority": "product_behavior",
+      "status": "confirmed",
+      "scope": "新旧表单并行、四维评分、替代锁定、积分、后台查询导出"
+    },
+    {
+      "id": "E-SCREEN-01",
+      "type": "screenshot",
+      "path": "../../../案例验证/02-无干扰重测-满意度评价/input/images/01-现状总体评价.png",
+      "authority": "observational",
+      "role": "current_ui",
+      "status": "confirmed",
+      "scope": "现有 APP 总体评价页面壳",
+      "sensitive_data": "checked",
+      "observations": [
+        {"id": "OBS-01", "kind": "observed", "statement": "页面以单卡片评分和底部主按钮组织内容"},
+        {"id": "OBS-02", "kind": "unknown", "statement": "截图无法证明新版页面是否继续展示总体评分"}
+      ]
+    },
+    {
+      "id": "E-SCREEN-02",
+      "type": "screenshot",
+      "path": "../../../案例验证/02-无干扰重测-满意度评价/input/images/02-现状细项评价未填写.png",
+      "authority": "observational",
+      "role": "current_ui",
+      "status": "confirmed",
+      "scope": "现有细项评价未填写状态",
+      "sensitive_data": "checked",
+      "observations": [
+        {"id": "OBS-03", "kind": "observed", "statement": "四个评价维度按纵向卡片顺序排列"},
+        {"id": "OBS-04", "kind": "unknown", "statement": "截图无法证明低分原因和提交门槛"}
+      ]
+    },
+    {
+      "id": "E-SCREEN-03",
+      "type": "screenshot",
+      "path": "../../../案例验证/02-无干扰重测-满意度评价/input/images/03-现状细项评价已填写.png",
+      "authority": "observational",
+      "role": "current_ui",
+      "status": "confirmed",
+      "scope": "现有细项评价填写态与低分标签",
+      "sensitive_data": "checked",
+      "observations": [
+        {"id": "OBS-05", "kind": "observed", "statement": "低分后在对应维度附近出现可选择原因"},
+        {"id": "OBS-06", "kind": "unknown", "statement": "截图无法证明改为高分后的清除规则"}
+      ]
+    },
+    {
+      "id": "E-SCREEN-04",
+      "type": "screenshot",
+      "path": "../../../案例验证/02-无干扰重测-满意度评价/input/images/04-现状低分结果.png",
+      "authority": "observational",
+      "role": "current_ui",
+      "status": "confirmed",
+      "scope": "现有低分结果反馈样式",
+      "sensitive_data": "checked",
+      "observations": [
+        {"id": "OBS-07", "kind": "observed", "statement": "低分提交后展示人工联系反馈"},
+        {"id": "OBS-08", "kind": "unknown", "statement": "截图无法证明低分触发阈值"}
+      ]
+    },
+    {
+      "id": "E-SCREEN-05",
+      "type": "screenshot",
+      "path": "../../../案例验证/02-无干扰重测-满意度评价/input/images/05-后台线框图.png",
+      "authority": "observational",
+      "role": "current_ui",
+      "status": "confirmed",
+      "scope": "现有后台筛选区、列表与新增字段注释",
+      "sensitive_data": "checked",
+      "observations": [
+        {"id": "OBS-09", "kind": "observed", "statement": "后台由筛选区、结果表格和导出操作组成"},
+        {"id": "OBS-10", "kind": "unknown", "statement": "截图无法证明接待人回溯优先级和导出口径"}
+      ]
+    }
+  ],
+  "surfaces": [
+    {
+      "id": "SURF-OLD-ENTRY", "purpose": "旧版 APP 用户进入既有评价流程", "source_anchors": ["1.2 保持不变", "2.2 FLOW-01"], "evidence_ids": ["E-PRD", "E-SCREEN-01"],
+      "design_reuse": {"strategy": "reuse_confirmed", "source_ids": ["E-SCREEN-01"], "rationale": "入口与触发条件不变"},
+      "regions": [{"id": "IA-OLD-ENTRY", "purpose": "展示既有评价入口", "priority": "primary", "visible_content": "总体评价提示与进入操作", "source_anchors": ["1.2"]}],
+      "state_ids": ["S-OLD-ENTRY"], "action_ids": ["A-OPEN-OLD"]
+    },
+    {
+      "id": "SURF-NEW-ENTRY", "purpose": "新版 APP、H5 与小程序进入统一评价", "source_anchors": ["2.1 SCN-01"], "evidence_ids": ["E-PRD", "E-SCREEN-02"],
+      "design_reuse": {"strategy": "adapt_existing", "source_ids": ["E-SCREEN-02"], "rationale": "沿用现有视觉壳，入口直接承接四维表单"},
+      "regions": [{"id": "IA-NEW-ENTRY", "purpose": "建立评价任务预期", "priority": "primary", "visible_content": "评价说明与进入操作", "source_anchors": ["2.1"]}],
+      "state_ids": ["S-NEW-ENTRY"], "action_ids": ["A-OPEN-NEW"]
+    },
+    {
+      "id": "SURF-ROUTER", "purpose": "按版本、资格和当前评价状态路由", "source_anchors": ["2.2 FLOW-01", "3.2 RULE-04"], "evidence_ids": ["E-PRD"],
+      "design_reuse": {"strategy": "plan_only", "source_ids": ["E-PRD"], "rationale": "系统判断本身不新增可见页面"},
+      "regions": [{"id": "IA-ROUTER", "purpose": "完成状态判定", "priority": "primary", "visible_content": "无独立可见内容", "source_anchors": ["2.2"]}],
+      "state_ids": ["S-ROUTING"], "action_ids": []
+    },
+    {
+      "id": "SURF-OLD-FORM", "purpose": "兼容旧版总体评价与细项评价", "source_anchors": ["2.2 FLOW-01", "5.1 旧版 APP"], "evidence_ids": ["E-PRD", "E-SCREEN-01", "E-SCREEN-02"],
+      "design_reuse": {"strategy": "reuse_confirmed", "source_ids": ["E-SCREEN-01", "E-SCREEN-02"], "rationale": "旧版客户端继续使用现有表单"},
+      "regions": [{"id": "IA-OLD-FORM", "purpose": "完成旧版评价", "priority": "primary", "visible_content": "总体评价与既有细项", "source_anchors": ["5.1"]}],
+      "state_ids": ["S-OLD-FORM"], "action_ids": []
+    },
+    {
+      "id": "SURF-NEW-FORM", "purpose": "在同一页完成四维评价并支持失败恢复", "source_anchors": ["3.1 FR-01", "3.2 RULE-02", "5.1 H5/小程序"], "evidence_ids": ["E-PRD", "E-SCREEN-02", "E-SCREEN-03"],
+      "design_reuse": {"strategy": "adapt_existing", "source_ids": ["E-SCREEN-02", "E-SCREEN-03"], "rationale": "保留四维纵向卡片结构，补全低分、高分和提交状态"},
+      "regions": [
+        {"id": "IA-DIMENSIONS", "purpose": "完成四项评分", "priority": "primary", "visible_content": "课程内容、老师讲解、班主任服务、画面质量", "source_anchors": ["3.1 FR-01"]},
+        {"id": "IA-LOW-REASON", "purpose": "补充低分原因", "priority": "secondary", "visible_content": "当前低分维度的多选原因", "source_anchors": ["3.2 RULE-02"]},
+        {"id": "IA-SUBMIT", "purpose": "提交或重试", "priority": "primary", "visible_content": "按钮可用态、提交中与失败恢复", "source_anchors": ["3.3"]}
+      ],
+      "state_ids": ["S-NEW-INCOMPLETE", "S-NEW-LOW", "S-NEW-READY", "S-SUBMIT-FAILED"],
+      "action_ids": ["A-SELECT-LOW", "A-COMPLETE-HIGH", "A-SELECT-REASON", "A-CHANGE-HIGH", "A-COMPLETE-LOW", "A-CHANGE-TO-LOW", "A-SUBMIT", "A-RETRY-SUBMIT"]
+    },
+    {
+      "id": "SURF-RESULT", "purpose": "解释首次、替代、低分、锁定和提交中的结果", "source_anchors": ["3.2 RULE-04", "3.3", "4.3"], "evidence_ids": ["E-PRD", "E-SCREEN-04"],
+      "design_reuse": {"strategy": "adapt_existing", "source_ids": ["E-SCREEN-04"], "rationale": "沿用现有成功与低分反馈样式，明确积分和锁定差异"},
+      "regions": [{"id": "IA-RESULT", "purpose": "让用户知道评价结果和后续动作", "priority": "primary", "visible_content": "成功、低分联系反馈、学分或已评价提示", "source_anchors": ["3.3"]}],
+      "state_ids": ["S-SUBMITTING", "S-FIRST-NORMAL", "S-FIRST-LOW", "S-REPLACE-NORMAL", "S-REPLACE-LOW", "S-LOCKED"], "action_ids": []
+    },
+    {
+      "id": "SURF-ADMIN", "purpose": "按新旧口径查询并导出训练营评价", "source_anchors": ["3.1 FR-02", "3.2 RULE-08", "5.2"], "evidence_ids": ["E-PRD", "E-SCREEN-05"],
+      "design_reuse": {"strategy": "adapt_existing", "source_ids": ["E-SCREEN-05"], "rationale": "沿用筛选区和列表，增加版本、双时间和实际接待人口径"},
+      "regions": [
+        {"id": "IA-FILTER", "purpose": "设置查询条件", "priority": "primary", "visible_content": "评价时间、结营时间、表单版本、接待人", "source_anchors": ["5.2"]},
+        {"id": "IA-LIST", "purpose": "解释当前评价记录", "priority": "primary", "visible_content": "新旧表单字段、双时间和归属信息", "source_anchors": ["3.1 FR-02"]},
+        {"id": "IA-EXPORT", "purpose": "导出当前筛选结果", "priority": "secondary", "visible_content": "导出、导出中、成功与失败", "source_anchors": ["3.2 RULE-08"]}
+      ],
+      "state_ids": ["S-ADMIN-READY", "S-ADMIN-LOADING", "S-ADMIN-RESULTS", "S-ADMIN-FAILED", "S-EXPORTING", "S-EXPORT-SUCCESS", "S-EXPORT-FAILED"],
+      "action_ids": ["A-QUERY", "A-QUERY-AGAIN", "A-RETRY-QUERY", "A-EXPORT", "A-RETRY-EXPORT"]
+    },
+    {
+      "id": "SURF-EXTERNAL", "purpose": "承接资格或训练营状态异常", "source_anchors": ["3.2 RULE-04", "6.3"], "evidence_ids": ["E-PRD"],
+      "design_reuse": {"strategy": "reuse_confirmed", "source_ids": ["E-PRD"], "rationale": "本期沿用既有异常反馈，不新增文案"},
+      "regions": [{"id": "IA-BLOCKED", "purpose": "阻止无资格写入", "priority": "primary", "visible_content": "既有异常反馈", "source_anchors": ["6.3"]}],
+      "state_ids": ["S-BLOCKED"], "action_ids": []
+    }
+  ],
+  "outputs": [
+    {
+      "id": "PROTO-MAINLINE", "reader_question": "旧版与新版入口如何进入评价并收口", "kind": "page_map",
+      "surface_ids": ["SURF-OLD-ENTRY", "SURF-NEW-ENTRY", "SURF-ROUTER", "SURF-OLD-FORM", "SURF-NEW-FORM", "SURF-RESULT", "SURF-ADMIN"],
+      "evidence_ids": ["E-PRD"], "source_anchors": ["2.2 FLOW-01", "3.2 RULE-04", "5.2"], "coverage": "focused", "delivery_role": "inline", "placement": "产品方案 / 整体流程", "strategy": "adapt_existing", "status": "reviewed"
+    },
+    {
+      "id": "PROTO-OVERVIEW", "reader_question": "全部页面状态、动作、分支和失败恢复如何连续流转", "kind": "page_interaction_overview",
+      "surface_ids": ["SURF-OLD-ENTRY", "SURF-NEW-ENTRY", "SURF-ROUTER", "SURF-OLD-FORM", "SURF-NEW-FORM", "SURF-RESULT", "SURF-ADMIN", "SURF-EXTERNAL"],
+      "evidence_ids": ["E-PRD", "E-SCREEN-01", "E-SCREEN-02", "E-SCREEN-03", "E-SCREEN-04", "E-SCREEN-05"], "source_anchors": ["2.2 FLOW-01", "3.1", "3.2", "3.3", "5.2"], "coverage": "complete", "delivery_role": "zoomable", "placement": "产品方案 / 页面交互总览", "strategy": "adapt_existing", "status": "reviewed", "overview_spec": "page-interaction-overview.json"
+    },
+    {
+      "id": "PROTO-FORM", "reader_question": "四维表单从未完成、低分到可提交如何变化", "kind": "interaction_storyboard",
+      "surface_ids": ["SURF-NEW-FORM"], "state_ids": ["S-NEW-INCOMPLETE", "S-NEW-LOW", "S-NEW-READY"], "transition_ids": ["T-07", "T-08", "T-09", "T-10", "T-11", "T-12"],
+      "evidence_ids": ["E-PRD", "E-SCREEN-02", "E-SCREEN-03"], "source_anchors": ["3.1 FR-01", "3.2 RULE-02"], "coverage": "focused", "delivery_role": "inline", "placement": "需求详情 / 新版表单", "strategy": "adapt_existing", "status": "reviewed"
+    },
+    {
+      "id": "PROTO-SUBMIT", "reader_question": "提交如何进入首次、替代、低分、失败与重试结果", "kind": "interaction_storyboard",
+      "surface_ids": ["SURF-NEW-FORM", "SURF-RESULT"], "state_ids": ["S-NEW-READY", "S-SUBMITTING", "S-SUBMIT-FAILED", "S-FIRST-NORMAL", "S-FIRST-LOW", "S-REPLACE-NORMAL", "S-REPLACE-LOW", "S-LOCKED"], "transition_ids": ["T-13", "T-14", "T-15", "T-16", "T-17", "T-18", "T-19", "T-20"],
+      "evidence_ids": ["E-PRD", "E-SCREEN-04"], "source_anchors": ["3.2 RULE-04", "3.3", "4.3"], "coverage": "focused", "delivery_role": "inline", "placement": "需求详情 / 提交结果", "strategy": "adapt_existing", "status": "reviewed"
+    },
+    {
+      "id": "PROTO-ADMIN", "reader_question": "后台查询、失败恢复和导出如何操作", "kind": "interaction_storyboard",
+      "surface_ids": ["SURF-ADMIN"], "state_ids": ["S-ADMIN-READY", "S-ADMIN-LOADING", "S-ADMIN-RESULTS", "S-ADMIN-FAILED", "S-EXPORTING", "S-EXPORT-SUCCESS", "S-EXPORT-FAILED"], "transition_ids": ["T-21", "T-22", "T-23", "T-24", "T-25", "T-26", "T-27", "T-28", "T-29"],
+      "evidence_ids": ["E-PRD", "E-SCREEN-05"], "source_anchors": ["3.1 FR-02", "3.2 RULE-08", "5.2"], "coverage": "focused", "delivery_role": "inline", "placement": "需求详情 / 后台查询导出", "strategy": "adapt_existing", "status": "reviewed"
+    }
+  ]
+}

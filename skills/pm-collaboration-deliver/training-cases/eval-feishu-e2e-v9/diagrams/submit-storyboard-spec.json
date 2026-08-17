@@ -1,0 +1,21 @@
+{
+  "title": "确认、提交与结果｜交互故事板",
+  "subtitle": "结构示意，不代表最终布局",
+  "delivery_role": "inline",
+  "target_width": 1080,
+  "columns": 2,
+  "entry_board_ids": ["adjust"],
+  "boards": [
+    {"id":"adjust","title":"确认方案","step":"1","layout":{"row":0,"column":0},"nav":"调整上课时间","blocks":[{"type":"card","title":"唯一调整方案","body":"当前安排 → 新开课日期"},{"type":"annotation","text":"仅可自主调整一次；班主任不变"},{"type":"button","text":"确认调整"}]},
+    {"id":"confirm","title":"二次确认","step":"2","layout":{"row":0,"column":1},"nav":"调整上课时间","blocks":[{"type":"state","title":"确认调整上课时间？","body":"请再次核对新的开课日期。"},{"type":"chips","label":"操作","items":["确认调整","我再看看"],"selected":["确认调整"]}]},
+    {"id":"submitting","title":"提交中","step":"3","layout":{"row":1,"column":1},"nav":"调整上课时间","blocks":[{"type":"state","title":"正在调整课程","body":"请稍候；提交期间不可重复操作。"},{"type":"button","text":"确认调整","enabled":false}]},
+    {"id":"blocked","title":"统一拦截","step":"4B","layout":{"row":2,"column":0},"nav":"调整结果","blocks":[{"type":"state","title":"暂时无法在线调整","body":"业务拦截、方案失效、信息缺失、请求失败、超时或结果不明确。"},{"type":"chips","label":"操作","items":["联系班主任","返回学习日历"],"selected":["联系班主任"]},{"type":"annotation","text":"不提供在线重试；无班主任入口时降级至统一客服"}]},
+    {"id":"success","title":"调整成功","step":"4A","layout":{"row":2,"column":1},"nav":"调整结果","blocks":[{"type":"state","title":"课程已调整成功","body":"展示被调整课程和新开课日期；班主任不变。"},{"type":"chips","label":"操作","items":["查看学习日历","返回首页"],"selected":["查看学习日历"]}]}
+  ],
+  "links": [
+    {"from":"adjust","to":"confirm","label":"确认调整"},
+    {"from":"confirm","to":"submitting","label":"确认调整"},
+    {"from":"submitting","to":"success","label":"CRM 明确成功"},
+    {"from":"submitting","to":"blocked","label":"其他所有结果"}
+  ]
+}

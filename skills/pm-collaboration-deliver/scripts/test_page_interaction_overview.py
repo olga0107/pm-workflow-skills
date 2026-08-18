@@ -49,6 +49,14 @@ class PageInteractionOverviewTests(unittest.TestCase):
         self.assertEqual(errors, [])
         self.assertEqual(stats["action_transitions"], 1)
 
+    def test_render_file_check_can_be_skipped(self):
+        (self.base / "overview.svg").unlink()
+        (self.base / "overview.png").unlink()
+        errors, _ = validate(self.overview, self.model, self.base)
+        self.assertTrue(any("render.source_path does not exist" in item for item in errors))
+        errors, _ = validate(self.overview, self.model, self.base, check_files=False)
+        self.assertEqual(errors, [])
+
     def test_missing_action_transition_fails(self):
         self.overview["connectors"] = []
         errors, _ = validate(self.overview, self.model, self.base)
@@ -141,7 +149,15 @@ class PageInteractionOverviewTests(unittest.TestCase):
         self.overview["cards"][1]["screen"] = self.screen()
         self.overview["cards"][1]["visual_ref"] = "overview.svg#c1l"
         errors, _ = validate(self.overview, self.model, self.base)
-        self.assertTrue(any("must be represented by a chip card" in item for item in errors))
+        self.assertTrue(any("must be represented by a chip or system card" in item for item in errors))
+
+    def test_transient_state_may_use_system_card(self):
+        # A routing/decision waypoint is a system node, not a page; system
+        # cards are exempt from screen content just like chip cards.
+        self.make_transient()
+        self.overview["cards"][1]["kind"] = "system"
+        errors, _ = validate(self.overview, self.model, self.base)
+        self.assertEqual(errors, [])
 
     def test_chip_card_cannot_carry_page_state(self):
         self.make_transient()

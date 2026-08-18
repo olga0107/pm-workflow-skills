@@ -924,6 +924,8 @@ def main() -> int:
     args = parser.parse_args()
     if not args.html and not args.svg:
         parser.error("at least one of --html or --svg is required")
+    if args.png and not args.html:
+        parser.error("--png requires --html (PNG is captured from the rendered HTML)")
     try:
         spec = load_spec(args.spec)
         if args.svg:

@@ -49,7 +49,7 @@ def resolve(base: Path, value: str) -> Path:
     return path if path.is_absolute() else base / path
 
 
-def validate(overview: dict[str, Any], model: dict[str, Any], base: Path) -> tuple[list[str], dict[str, int]]:
+def validate(overview: dict[str, Any], model: dict[str, Any], base: Path, check_files: bool = True) -> tuple[list[str], dict[str, int]]:
     errors: list[str] = []
     if overview.get("schema_version") != "1.0":
         errors.append("schema_version must be 1.0")
@@ -97,9 +97,9 @@ def validate(overview: dict[str, Any], model: dict[str, Any], base: Path) -> tup
             if not state:
                 continue
             visibility = state.get("visibility", "page")
-            if visibility == "transient" and card.get("kind") != "chip":
+            if visibility == "transient" and card.get("kind") not in {"chip", "system"}:
                 errors.append(
-                    f"transient state {state_id} must be represented by a chip card, "
+                    f"transient state {state_id} must be represented by a chip or system card, "
                     f"not a {card.get('kind')} card (loading/processing is not a page)")
             if card.get("kind") == "chip" and visibility != "transient":
                 errors.append(
@@ -277,7 +277,7 @@ def validate(overview: dict[str, Any], model: dict[str, Any], base: Path) -> tup
         for field in ("source_path", "preview_path"):
             if not nonempty(render.get(field)):
                 errors.append(f"render.{field} is required")
-            elif not resolve(base, render[field]).is_file():
+            elif check_files and not resolve(base, render[field]).is_file():
                 errors.append(f"render.{field} does not exist: {resolve(base, render[field])}")
 
     stats = {
@@ -294,12 +294,14 @@ def main() -> int:
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--overview", required=True, type=Path)
     parser.add_argument("--model", type=Path)
+    parser.add_argument("--no-file-check", action="store_true",
+                        help="skip on-disk existence checks for render artifacts (structure is still validated)")
     args = parser.parse_args()
     try:
         overview = load(args.overview)
         model_value = args.model or resolve(args.overview.parent, overview.get("interaction_model", ""))
         model = load(model_value)
-        errors, stats = validate(overview, model, args.overview.parent)
+        errors, stats = validate(overview, model, args.overview.parent, check_files=not args.no_file_check)
     except (OSError, ValueError, json.JSONDecodeError) as exc:
         print(f"error: {exc}", file=sys.stderr)
         return 2

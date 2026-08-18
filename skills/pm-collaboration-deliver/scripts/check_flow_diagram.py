@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Semantic checks for a flow_diagram spec (图形与原型表达 §4.3).
+"""Semantic checks for a flow_diagram spec (视觉与原型 流程图章节).
 
     python3 scripts/check_flow_diagram.py --spec /abs/flow.json
 

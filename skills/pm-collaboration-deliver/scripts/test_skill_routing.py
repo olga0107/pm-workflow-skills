@@ -19,12 +19,12 @@ class SkillRoutingTest(unittest.TestCase):
         self.assertIn("交互版先建立完整状态模型，再抽取正文所需子图", text)
 
     def test_primary_artifact_and_information_layers_are_explicit(self) -> None:
-        text = (SKILL_DIR / "references" / "交付物架构与信息分层.md").read_text(encoding="utf-8")
+        text = (SKILL_DIR / "references" / "转译与文档结构.md").read_text(encoding="utf-8")
         self.assertIn("唯一主交付面", text)
         self.assertIn("产品主阅读层", text)
         self.assertIn("协作依赖层", text)
         self.assertIn("研发下钻层", text)
-        traditional = (SKILL_DIR / "references" / "传统PRD转译与模板.md").read_text(encoding="utf-8")
+        traditional = (SKILL_DIR / "references" / "转译与文档结构.md").read_text(encoding="utf-8")
         self.assertIn("需求背景（现状与问题）", traditional)
         self.assertIn("需求目标", traditional)
         self.assertIn("需求范围", traditional)
@@ -44,12 +44,12 @@ class SkillRoutingTest(unittest.TestCase):
         self.assertIn("严格发布", text)
 
     def test_execution_pack_is_not_a_default_prerequisite(self) -> None:
-        text = (SKILL_DIR / "references" / "执行层工作流与门槛.md").read_text(encoding="utf-8")
+        text = (SKILL_DIR / "references" / "质量与门槛.md").read_text(encoding="utf-8")
         self.assertIn("不是生成协作 PRD 的前置表单", text)
         self.assertIn("不必创建执行包", text)
 
     def test_prototype_route_separates_semantics_evidence_and_visual_context(self) -> None:
-        text = (SKILL_DIR / "references" / "原型设计与截图承接.md").read_text(encoding="utf-8")
+        text = (SKILL_DIR / "references" / "视觉与原型.md").read_text(encoding="utf-8")
         self.assertIn("产品语义充分度", text)
         self.assertIn("视觉上下文充分度", text)
         self.assertIn("区分观察与推断", text)
@@ -61,7 +61,7 @@ class SkillRoutingTest(unittest.TestCase):
         self.assertIn("面向人的承接层", skill)
         self.assertIn("当前界面或来源证据 → 调整后原型/关键状态 → 就近交互规则", skill)
         self.assertIn("只有标题和状态文案的圆角框仍是状态网络", skill)
-        traditional = (SKILL_DIR / "references" / "传统PRD转译与模板.md").read_text(encoding="utf-8")
+        traditional = (SKILL_DIR / "references" / "转译与文档结构.md").read_text(encoding="utf-8")
         self.assertIn("执行四次转译，而不是删减章节", traditional)
         self.assertIn("轻量需求默认压缩成四个连续模块", traditional)
 

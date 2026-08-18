@@ -12,7 +12,7 @@ from pathlib import Path
 
 
 ROOT = Path(__file__).resolve().parent
-CHECKER = ROOT / "check_prototype_plan.py"
+CHECKER = ROOT / "audit" / "check_prototype_plan.py"
 ANNOTATOR = ROOT / "annotate_reference_screenshot.py"
 
 

@@ -13,8 +13,7 @@ from pathlib import Path
 
 ROOT = Path(__file__).resolve().parent
 RENDERER = ROOT / "render_wireframe_board.py"
-ASSEMBLER = ROOT / "assemble_visuals.py"
-PACK_CHECKER = ROOT / "check_execution_pack.py"
+PACK_CHECKER = ROOT / "audit" / "check_execution_pack.py"
 THEME = ROOT.parent / "assets" / "black-white-wireframe-theme.json"
 
 
@@ -276,47 +275,6 @@ class VisualToolsTest(unittest.TestCase):
         self.assertEqual(result.returncode, 2)
         self.assertIn("crosses board middle", result.stderr)
         self.assertIn("explicit layout or split", result.stderr)
-
-    def test_assemble_visual_once_with_relative_path(self) -> None:
-        draft = self.work / "draft.md"
-        draft.write_text("# 文档\n\n<!-- visual:form -->\n", encoding="utf-8")
-        image = self.work / "assets" / "form.svg"
-        image.parent.mkdir()
-        image.write_text("<svg/>", encoding="utf-8")
-        mapping = self.write_json(
-            "visuals.json",
-            {"visuals": [{"id": "form", "path": "assets/form.svg",
-                           "alt": "目标评价表单结构示意", "caption": "不代表最终布局"}]},
-        )
-        output = self.work / "delivery" / "reading-view.md"
-        result = subprocess.run(
-            ["python3", str(ASSEMBLER), "--draft", str(draft), "--mapping", str(mapping),
-             "--out", str(output)],
-            capture_output=True,
-            text=True,
-        )
-        self.assertEqual(result.returncode, 0, result.stderr)
-        rendered = output.read_text(encoding="utf-8")
-        self.assertIn("![目标评价表单结构示意](<../assets/form.svg>)", rendered)
-        self.assertNotIn("<!-- visual:", rendered)
-
-    def test_assembly_fails_for_missing_placeholder(self) -> None:
-        draft = self.work / "draft.md"
-        draft.write_text("# 文档\n", encoding="utf-8")
-        image = self.work / "image.svg"
-        image.write_text("<svg/>", encoding="utf-8")
-        mapping = self.write_json(
-            "visuals.json",
-            {"visuals": [{"id": "missing", "path": "image.svg", "alt": "结构示意"}]},
-        )
-        result = subprocess.run(
-            ["python3", str(ASSEMBLER), "--draft", str(draft), "--mapping", str(mapping),
-             "--out", str(self.work / "out.md")],
-            capture_output=True,
-            text=True,
-        )
-        self.assertEqual(result.returncode, 2)
-        self.assertIn("appears 0 times", result.stderr)
 
     def test_execution_pack_requires_complete_state_and_visual_evidence(self) -> None:
         source = self.work / "formal.md"

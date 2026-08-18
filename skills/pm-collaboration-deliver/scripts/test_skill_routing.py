@@ -65,6 +65,16 @@ class SkillRoutingTest(unittest.TestCase):
         self.assertIn("执行四次转译，而不是删减章节", traditional)
         self.assertIn("轻量需求默认压缩成四个连续模块", traditional)
 
+    def test_upstream_handoff_contract_is_explicit(self) -> None:
+        skill = (SKILL_DIR / "SKILL.md").read_text(encoding="utf-8")
+        for term in ("工作边界", "输入契约", "交接契约", "选集不全集", "身份保持", "重述不照抄"):
+            self.assertIn(term, skill)
+        traditional = (SKILL_DIR / "references" / "转译与文档结构.md").read_text(encoding="utf-8")
+        for term in ("上游产物映射", "页面状态与操作矩阵", "系统能力需求表", "稳定 ID", "承接纪律", "选集原则"):
+            self.assertIn(term, traditional)
+        for term in ("术语表", "研发下钻", "视觉下钻", "来源下钻", "同源", "低保真", "内部证据"):
+            self.assertIn(term, traditional)
+
 
 if __name__ == "__main__":
     unittest.main()

@@ -353,6 +353,7 @@ def validate(data: dict[str, Any], base: Path, check_files: bool = True) -> tupl
                         errors.append(f"outputs[{index}] overview_spec file does not exist: {overview_path}")
                     elif model:
                         try:
+                            sys.path.insert(0, str(Path(__file__).resolve().parent.parent))
                             from check_page_interaction_overview import validate as validate_overview
 
                             overview = json.loads(overview_path.read_text(encoding="utf-8"))

@@ -4,6 +4,11 @@
 
 ## [Unreleased]
 
+### Added
+
+- `pm-collaboration-deliver` 蒸馏开源原型能力（multi-screen-wireframe、prd2prototype、visual-plan 等）：资产稳定定位协议与批注覆盖层模板（`annotations-overlay-template.js`）、原型版本与变更信号（v0.1/v0.2/v0.3.x 升号判据、三色徽标、倒序版本记录、隐藏而非删除）、复杂联动三件套、反馈定位三元组与四分类处置流、持久视觉上下文（design-context.md）与可选对抗性自审；`build_screen_html.py` 输出稳定 id 待后续补齐。
+- 合并上游 `Cyrus2333:master`，引入 `pm-prd-html` 及配套的 `pm-prd-write` 体验中间层契约（原型范围与页面状态规划、复杂体验中间层示例）。
+
 ### Changed
 
 - 引入独立于风险等级的“体验交付复杂度”路由：`pm-requirement-grade` 识别多页面、独立状态域、复杂组件、多端和状态组合等信号；`pm-prd-write` 按需补充页面地图、状态架构、组件行为、端与布局矩阵和原型覆盖计划；`pm-prd-html` 只据此编译代表状态、端形态和可核对的覆盖台账，不改变 L0/L1/L2/L3/H 门禁，也不要求简单需求填写空表。

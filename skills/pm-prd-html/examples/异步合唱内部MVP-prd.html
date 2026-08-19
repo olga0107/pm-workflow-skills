@@ -1,0 +1,634 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>异步合唱内部 MVP · PRD HTML</title>
+<style>
+:root{--ink:#202120;--muted:#6b716d;--faint:#969b98;--line:#e4e6e3;--paper:#fbfbfa;--panel:#fff;--accent:#1e5c4a;--accent-soft:#edf4f0;--nav-width:264px;--content-width:1480px}
+*{box-sizing:border-box}html{scroll-behavior:smooth;scroll-padding-top:78px}body{margin:0;background:var(--paper);color:var(--ink);font-family:Inter,-apple-system,BlinkMacSystemFont,"Segoe UI","PingFang SC","Microsoft YaHei",sans-serif;font-size:15px;line-height:1.72;text-rendering:optimizeLegibility}a{color:inherit}button{font:inherit}button:focus-visible,a:focus-visible,summary:focus-visible{outline:2px solid var(--accent);outline-offset:3px}
+.doc-nav{position:fixed;z-index:10;inset:0 auto 0 0;width:var(--nav-width);background:#fff;border-right:1px solid var(--line);display:flex;flex-direction:column;transition:width .18s ease;overflow:hidden}.nav-head{display:flex;align-items:center;gap:10px;padding:21px 18px 17px;border-bottom:1px solid var(--line);white-space:nowrap}.nav-brand{font-size:13px;font-weight:780;letter-spacing:.08em;color:#27342f}.nav-toggle{margin-left:auto;width:28px;height:28px;border:0;border-radius:5px;background:transparent;cursor:pointer;color:var(--muted);font-size:20px;line-height:1}.nav-toggle:hover{background:#f1f3f1;color:var(--ink)}.nav-body{padding:18px 12px 28px;overflow:auto}.nav-group{margin:0 0 24px}.nav-group h2{margin:0 10px 7px;font-size:10px;line-height:1.3;text-transform:uppercase;letter-spacing:.12em;color:#939894}.doc-link{display:flex;align-items:flex-start;gap:8px;padding:7px 10px;border-radius:5px;text-decoration:none;color:#4f5752;font-size:13px;line-height:1.35}.doc-link:hover{background:#f4f6f4;color:#29322d}.doc-link.active{background:var(--accent-soft);color:#164637;font-weight:700}.nav-index{flex:0 0 20px;color:#9aa09c;font-variant-numeric:tabular-nums}.nav-note{margin:18px 10px 0;font-size:11px;color:#929792;line-height:1.55}body.nav-collapsed .doc-nav{width:60px}body.nav-collapsed .doc-main{margin-left:60px}body.nav-collapsed .nav-brand,body.nav-collapsed .nav-text,body.nav-collapsed .nav-group h2,body.nav-collapsed .nav-note{display:none}body.nav-collapsed .nav-head{padding:21px 16px}body.nav-collapsed .nav-toggle{margin-left:0}body.nav-collapsed .doc-link{justify-content:center;padding:9px 0}body.nav-collapsed .nav-index{width:auto}
+.doc-main{margin-left:var(--nav-width);min-width:0;transition:margin-left .18s ease}.topbar{position:sticky;top:0;z-index:5;height:58px;background:rgba(251,251,250,.94);backdrop-filter:blur(12px);border-bottom:1px solid rgba(228,230,227,.9);padding:0 34px;display:flex;align-items:center;justify-content:space-between;gap:20px}.mobile-nav-toggle{display:none;width:30px;height:30px;border:0;border-radius:5px;background:transparent;color:var(--muted);cursor:pointer}.topbar-title{font-size:13px;font-weight:720;letter-spacing:.01em;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}.topbar-meta{font-size:12px;color:var(--muted);white-space:nowrap}.content{max-width:var(--content-width);margin:0 auto;padding:46px 44px 96px}.hero{display:flex;justify-content:space-between;gap:28px;align-items:flex-start;padding:3px 0 34px;border-bottom:1px solid var(--line)}.eyebrow{margin-bottom:9px;font-size:10px;line-height:1.2;letter-spacing:.13em;color:var(--accent);font-weight:800;text-transform:uppercase}h1{max-width:880px;margin:0 0 12px;font-size:36px;line-height:1.16;letter-spacing:-.035em}h2{margin:0;font-size:26px;line-height:1.25;letter-spacing:-.018em}h3{margin:0 0 8px;font-size:17px;line-height:1.4}h4{margin:0 0 6px;font-size:11px;line-height:1.4;letter-spacing:.08em;color:#757c77;text-transform:uppercase}p{margin:0 0 12px}.muted{color:var(--muted)}.badges{display:none}.badge{display:none}
+.section{margin-top:0;padding:42px 0;border-bottom:1px solid var(--line);background:transparent}.section-head{display:flex;align-items:flex-start;justify-content:space-between;gap:24px;margin-bottom:22px}.section-head>div{max-width:820px}.section-head .muted{margin:7px 0 0;max-width:700px;font-size:14px}.section-kicker{margin-bottom:8px;font-size:10px;color:var(--accent);font-weight:800;letter-spacing:.12em;text-transform:uppercase}.overview-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));border-top:1px solid var(--line);border-left:1px solid var(--line)}.overview-item{min-height:116px;padding:18px 20px 20px;border-right:1px solid var(--line);border-bottom:1px solid var(--line);background:#fff}.overview-item h3{font-size:14px}.overview-item p,.overview-item li{font-size:14px;line-height:1.65}.overview-item ul{margin:0;padding-left:19px}.review-list{margin:0;padding:0;list-style:none;border-top:1px solid var(--line)}.review-list li{position:relative;padding:11px 0 11px 22px;border-bottom:1px solid var(--line);font-size:14px}.review-list li::before{content:"";position:absolute;top:20px;left:4px;width:7px;height:7px;border:1.5px solid #636b66;border-radius:50%}.facts{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:0;border-top:1px solid var(--line);border-left:1px solid var(--line)}.fact{min-height:100px;padding:14px 16px;border-right:1px solid var(--line);border-bottom:1px solid var(--line);background:#fff}.fact strong{display:block;font-size:19px;line-height:1.2;margin-top:4px}.fact span{display:block;color:var(--muted);font-size:12px}
+.flow{display:flex;align-items:stretch;gap:0;overflow:auto;padding:0;border-top:1px solid var(--line);border-bottom:1px solid var(--line);background:#fff}.flow-node{position:relative;flex:1 0 160px;padding:18px 28px 18px 18px;font-size:14px;line-height:1.45;color:#252b27}.flow-node::before{content:counter(flow);counter-increment:flow;display:block;margin-bottom:12px;font-size:11px;font-weight:800;letter-spacing:.1em;color:var(--accent)}.flow{counter-reset:flow}.flow-arrow{display:flex;align-items:center;flex:0 0 26px;margin-left:-24px;color:#808781;font-size:17px;z-index:1}.flow-node:last-child{padding-right:18px}.flow-node:last-of-type{background:#f5f8f6}
+.prototype-review{display:grid;grid-template-columns:216px minmax(440px,1fr) 294px;align-items:stretch;border:1px solid #dfe3df;background:#fff;min-height:735px}.state-rail{position:sticky;top:78px;align-self:start;max-height:calc(100vh - 96px);overflow:auto;padding:15px 12px 17px;border-right:1px solid var(--line);background:#fafbfa}.state-rail h3{padding:2px 7px 12px;margin:0 0 8px;border-bottom:1px solid var(--line);font-size:13px}.state-btn{display:block;width:100%;border:0;border-left:2px solid transparent;border-radius:0;background:transparent;padding:10px 8px 10px 11px;margin:0;text-align:left;cursor:pointer;color:#474f4a;transition:background .12s ease,color .12s ease}.state-btn:hover{background:#f0f3f1}.state-btn.active{border-left-color:#1b1d1b;background:var(--accent-soft);color:#183e32;font-weight:760}.state-btn span{display:block;font-size:13px;line-height:1.35}.state-btn small{display:block;margin-top:3px;color:#7b827d;font-size:11px;line-height:1.35;font-weight:400}.prototype-pane{min-width:0;padding:20px 22px 22px;background:#fff}.pane-head{display:flex;justify-content:space-between;gap:10px;align-items:flex-start;padding-bottom:15px;margin-bottom:15px;border-bottom:1px solid var(--line)}.pane-head h3{font-size:17px}.pane-head .muted{margin:4px 0 0;font-size:13px}.state-code{font-family:ui-monospace,SFMono-Regular,Menlo,monospace;font-size:10px;color:#78807b;white-space:nowrap}.device-wrap{display:flex;justify-content:center;align-items:flex-start;min-height:675px;padding:24px 20px;background:#f6f7f6;border:1px solid #ebecea}.device{width:min(390px,100%);padding:10px;border:2px solid #242424;border-radius:30px;background:#fff;box-shadow:0 0 0 1px #ababab}.device::before{content:"";display:block;width:72px;height:5px;border-radius:5px;background:#202020;margin:2px auto 8px}.device-screen{overflow:hidden;border:1px solid #222;border-radius:20px;background:#fff;min-height:700px}.device-screen svg{display:block;width:100%;height:auto;background:#fff}.context-pane{padding:20px 18px;background:#fcfcfb;border-left:1px solid var(--line)}.context-pane h3{padding-bottom:8px;margin:0;border-bottom:0;font-size:16px}.context-pane>.muted{display:block;padding-bottom:15px;border-bottom:1px solid var(--line);font-size:12px}.context-block{padding:14px 0;border-bottom:1px solid #e8eae7}.context-block:last-child{border-bottom:0}.context-block p,.context-block li{font-size:13px;line-height:1.6;color:#38413b}.context-block ul{margin:0;padding-left:18px}.trace{display:flex;flex-wrap:wrap;gap:5px}.trace code{font-size:10px;padding:3px 5px;background:#f1f3f1;border:1px solid #e1e4e1;border-radius:4px;color:#58625c}
+.index-table{min-width:760px}.table-wrap{overflow:auto;margin:0}.index-table th:first-child{min-width:150px}.prd-body{max-width:1120px}.prd-body h2{scroll-margin-top:78px;border-top:1px solid var(--line);padding-top:31px;margin:34px 0 17px;font-size:23px}.prd-body h3{margin:26px 0 9px;padding-top:0;font-size:17px}.prd-body h4{margin:21px 0 7px;color:#4f5752;text-transform:none;letter-spacing:0;font-size:14px}.prd-body table{width:100%;border-collapse:collapse;font-size:13px;line-height:1.58}.prd-body th,.prd-body td{border:1px solid var(--line);padding:9px 11px;text-align:left;vertical-align:top}.prd-body th{background:#f5f6f4;color:#353b37;font-weight:760}.prd-body ul,.prd-body ol{margin:8px 0 15px;padding-left:24px}.prd-body li{margin:5px 0}.prd-body blockquote{border-left:2px solid #afb6b0;margin:15px 0;padding:8px 13px;color:#59615c;background:#f8f9f8;font-size:13px}.prd-body pre{overflow:auto;background:#232624;color:#f3f4f3;border-radius:5px;padding:14px;font-size:12px;line-height:1.5}.prd-body code{font-family:ui-monospace,SFMono-Regular,Menlo,monospace;font-size:.9em;background:#f0f2f0;padding:2px 4px;border-radius:3px}.prd-body pre code{background:transparent;padding:0}.md-image-ref{color:#7b827d;font-size:12px}.chapter-detail{border-top:1px solid var(--line)}.chapter-detail:last-child{border-bottom:1px solid var(--line)}.chapter-detail summary{position:relative;list-style:none;cursor:pointer;padding:16px 36px 16px 2px;font-size:15px;font-weight:760;color:#2d342f}.chapter-detail summary::-webkit-details-marker{display:none}.chapter-detail summary::after{content:"＋";position:absolute;right:6px;top:14px;color:#64706a;font-weight:400;font-size:18px}.chapter-detail[open] summary::after{content:"−"}.chapter-body{padding:0 0 28px}.chapter-body>h2:first-child{margin-top:0;border-top:0;padding-top:0}.checks{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:0;border-top:1px solid var(--line);border-left:1px solid var(--line)}.check{min-height:122px;padding:16px 18px;border-right:1px solid var(--line);border-bottom:1px solid var(--line);background:#fff}.check strong{display:block;margin-bottom:5px;font-size:14px}.check p{font-size:13px;line-height:1.6}.footer{padding:28px 0 0;color:#8e948f;font-size:11px;text-align:center}
+@media (max-width:1200px){.content{padding-left:30px;padding-right:30px}.prototype-review{grid-template-columns:196px minmax(360px,1fr)}.context-pane{grid-column:1/-1;border-top:1px solid var(--line);border-left:0;display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:0;padding:0 18px}.context-pane>h3,.context-pane>.muted{grid-column:1/-1}.context-block{padding:16px;border-bottom:0;border-right:1px solid #e8eae7}.context-block:last-child{border-right:0}.flow-node{flex-basis:145px}}
+@media (max-width:820px){:root{--nav-width:0px}.doc-nav{width:0;border:0;box-shadow:4px 0 18px rgba(0,0,0,.08)}body.nav-open .doc-nav{width:264px}.doc-main,body.nav-collapsed .doc-main{margin-left:0}.topbar{height:54px;padding:0 16px}.mobile-nav-toggle{display:block}.topbar-meta{display:none}.content{padding:28px 16px 64px}.hero{display:block;padding-bottom:27px}h1{font-size:30px}.section{padding:34px 0}.section-head{margin-bottom:18px}.overview-grid,.facts,.checks{grid-template-columns:1fr}.flow-node{flex-basis:180px}.prototype-review{display:block;border-left:0;border-right:0;margin:0 -16px}.state-rail{position:static;max-height:none;border-right:0;border-bottom:1px solid var(--line);padding:12px 16px;display:flex;gap:4px;overflow:auto}.state-rail h3{display:none}.state-btn{flex:0 0 140px;border-left:0;border-bottom:2px solid transparent;padding:8px 10px}.state-btn.active{border-left:0;border-bottom-color:#1b1d1b}.prototype-pane{padding:18px 16px}.device-wrap{padding:18px 10px;min-height:0}.context-pane{display:block;padding:0 16px;border-top:1px solid var(--line)}.context-pane>h3{padding-top:18px}.context-block{padding:14px 0;border-bottom:1px solid #e8eae7;border-right:0}.prd-body h2{font-size:21px}.chapter-detail summary{padding-left:0}.index-table{min-width:680px}}
+.review-block{margin-top:22px;padding-top:2px}.review-head{display:flex;align-items:baseline;justify-content:space-between;gap:16px;border-bottom:1px solid var(--line)}.review-head h4{margin:0;padding:9px 0 8px}.review-head span{font-size:11px;color:var(--faint)}.review-list li{padding-right:72px}.source-ref{position:absolute;right:0;top:11px;color:var(--muted);font-size:10px;text-decoration:none;white-space:nowrap}.source-ref:hover{text-decoration:underline;color:var(--accent)}
+.prototype-review{min-height:0}.state-rail{max-height:calc(100vh - 120px)}.device-wrap{height:clamp(560px,calc(100vh - 210px),720px);min-height:0;padding:18px 20px;overflow:auto}.device{width:min(390px,100%)}.device-screen{height:clamp(480px,calc(100vh - 320px),640px);min-height:0;overflow-y:auto;overflow-x:hidden;scroll-behavior:smooth}.device-screen svg{display:block;width:100%;height:auto;max-width:none}
+.index-table{width:100%;min-width:760px;border-collapse:separate;border-spacing:0;border:1px solid var(--line);background:#fff;font-size:13px;line-height:1.58}.index-table th,.index-table td{border-right:1px solid var(--line);border-bottom:1px solid var(--line);padding:11px 12px;text-align:left;vertical-align:top}.index-table th:last-child,.index-table td:last-child{border-right:0}.index-table tr:last-child td{border-bottom:0}.index-table th{background:#f3f5f3;color:#353b37;font-weight:760;white-space:nowrap}.index-table tbody tr:nth-child(even){background:#fafbfa}.index-table tbody tr:hover{background:#f1f5f2}.index-table code{font-family:ui-monospace,SFMono-Regular,Menlo,monospace;font-size:11px;color:#4e5a53}
+@media (max-width:820px){.device-wrap{height:auto;min-height:0;overflow:visible}.device-screen{height:auto;overflow:visible}.device-screen svg{width:100%;height:auto;max-height:none}.device{width:min(390px,100%)}.review-head{display:block}.review-head span{display:block;padding-bottom:8px}}
+</style>
+</head>
+<body>
+<nav class="doc-nav" aria-label="PRD章节导航">
+  <div class="nav-head"><div class="nav-brand">PRD 阅读版</div><button class="nav-toggle" id="nav-toggle" aria-label="收起章节导航" title="收起 / 展开">‹</button></div>
+  <div class="nav-body">
+    <div class="nav-group"><h2>文档</h2><a class="doc-link active" data-target="doc-overview" href="#doc-overview" title="文档信息"><span class="nav-index">01</span><span class="nav-text">文档信息</span></a><a class="doc-link" data-target="overview" href="#overview" title="评审入口"><span class="nav-index">02</span><span class="nav-text">评审入口</span></a><a class="doc-link" data-target="flow" href="#flow" title="用户主线"><span class="nav-index">03</span><span class="nav-text">用户主线</span></a><a class="doc-link" data-target="prototype-review" href="#prototype-review" title="原型评审"><span class="nav-index">04</span><span class="nav-text">原型评审</span></a><a class="doc-link" data-target="state-index" href="#state-index" title="需求索引"><span class="nav-index">05</span><span class="nav-text">需求索引</span></a><a class="doc-link" data-target="prd-full" href="#prd-full" title="规格详情"><span class="nav-index">06</span><span class="nav-text">规格详情</span></a><a class="doc-link" data-target="consistency" href="#consistency" title="一致性检查"><span class="nav-index">07</span><span class="nav-text">一致性检查</span></a></div>
+    <div class="nav-group"><h2>6. 规格详情</h2><a class="doc-link" data-target="prd-1-本示例重点" href="#prd-1-本示例重点" title="本示例重点"><span class="nav-index">6.1</span><span class="nav-text">本示例重点</span></a><a class="doc-link" data-target="prd-2-评审简版" href="#prd-2-评审简版" title="评审简版"><span class="nav-index">6.2</span><span class="nav-text">评审简版</span></a><a class="doc-link" data-target="prd-3-0-文档信息与一页结论" href="#prd-3-0-文档信息与一页结论" title="文档信息与一页结论"><span class="nav-index">6.3</span><span class="nav-text">文档信息与一页结论</span></a><a class="doc-link" data-target="prd-4-1-决策依据" href="#prd-4-1-决策依据" title="决策依据"><span class="nav-index">6.4</span><span class="nav-text">决策依据</span></a><a class="doc-link" data-target="prd-5-2-方案总览-体验结构与原型" href="#prd-5-2-方案总览-体验结构与原型" title="方案总览、体验结构与原型"><span class="nav-index">6.5</span><span class="nav-text">方案总览、体验结构与原型</span></a><a class="doc-link" data-target="prd-6-3-交付范围与功能需求" href="#prd-6-3-交付范围与功能需求" title="交付范围与功能需求"><span class="nav-index">6.6</span><span class="nav-text">交付范围与功能需求</span></a><a class="doc-link" data-target="prd-7-4-规则-数据与质量边界" href="#prd-7-4-规则-数据与质量边界" title="规则、数据与质量边界"><span class="nav-index">6.7</span><span class="nav-text">规则、数据与质量边界</span></a><a class="doc-link" data-target="prd-8-5-影响-依赖与发布" href="#prd-8-5-影响-依赖与发布" title="影响、依赖与发布"><span class="nav-index">6.8</span><span class="nav-text">影响、依赖与发布</span></a><a class="doc-link" data-target="prd-9-6-验收与追溯" href="#prd-9-6-验收与追溯" title="验收与追溯"><span class="nav-index">6.9</span><span class="nav-text">验收与追溯</span></a><a class="doc-link" data-target="prd-10-7-效果验证" href="#prd-10-7-效果验证" title="效果验证"><span class="nav-index">6.10</span><span class="nav-text">效果验证</span></a><a class="doc-link" data-target="prd-11-8-风险-待确认项-研发-spec-交接与附录" href="#prd-11-8-风险-待确认项-研发-spec-交接与附录" title="风险、待确认项、研发 spec 交接与附录"><span class="nav-index">6.11</span><span class="nav-text">风险、待确认项、研发 spec 交接与附录</span></a></div>
+  </div>
+</nav>
+<div class="doc-main">
+  <div class="topbar"><button class="mobile-nav-toggle" id="mobile-nav-toggle" aria-label="打开章节导航">☰</button><div class="topbar-title">异步合唱内部 MVP</div><div class="topbar-meta">阅读版 · 完整规格可展开</div></div>
+  <main class="content">
+    <header class="hero" id="doc-overview">
+      <div><div class="eyebrow">PRD 协作评审版</div><h1>异步合唱内部 MVP</h1><p class="muted">源文档：PRD示例-异步合唱内部MVP.md</p></div>
+    </header>
+    <section class="section" id="overview">
+      <div class="section-head"><div><h2>评审入口</h2></div></div>
+      <div class="overview-grid"><article class="overview-item"><h3>问题</h3><p>单页同时承载试听、录音、投稿、异步合成和失败兜底，状态关系容易分散。</p></article><article class="overview-item"><h3>目标</h3><p>让用户在一个微信 H5 页面内完成试听、录音、投稿、替换、删除和最新作品播放闭环。</p></article><article class="overview-item"><h3>范围</h3><p>一个 PAGE-01 H5 页面及其 6 个信息区、页面状态、异步合成结果和投稿管理。</p></article><article class="overview-item"><h3>非目标</h3><p>不在 PRD 内定义 API、队列、存储、转码、混音算法等研发实现。</p></article></div>
+      <div class="review-block"><div class="review-head"><h4>评审关注</h4><span>摘自正式 PRD 的风险 / 待确认项</span></div><ul class="review-list"><li>微信录音、上传和服务端素材处理链路是否完成最小预验证 <a class="source-ref" href="#prd-12-8-1-风险-假设与待确认项">PRD 8.1</a></li><li>音频合成质量和耗时是否满足 MVP 体验判断 <a class="source-ref" href="#prd-12-8-1-风险-假设与待确认项">PRD 8.1</a></li><li>合成等待时间过长时，生成中和稍后再听的路径是否清楚 <a class="source-ref" href="#prd-12-8-1-风险-假设与待确认项">PRD 8.1</a></li></ul></div>
+    </section>
+    <section class="section" id="flow"><div class="section-head"><div><h2>用户主线</h2></div></div><div class="flow"><span class="flow-node">进入活动页</span><span class="flow-arrow">→</span><span class="flow-node">试听原唱</span><span class="flow-arrow">→</span><span class="flow-node">录音并试听</span><span class="flow-arrow">→</span><span class="flow-node">提交 / 替换投稿</span><span class="flow-arrow">→</span><span class="flow-node">合成中</span><span class="flow-arrow">→</span><span class="flow-node">成功播放 / 失败兜底</span></div></section>
+    <section class="section" id="prototype-review">
+      <div class="section-head"><div><h2>原型评审</h2></div></div>
+      <div class="prototype-review">
+        <aside class="state-rail"><h3>场景 / 页面状态</h3><button class="state-btn" data-state="UI-STATE-01"><span>初始 / 未录制</span><small>可以开始参与</small></button><button class="state-btn" data-state="UI-STATE-02"><span>录音中</span><small>正在录音</small></button><button class="state-btn" data-state="UI-STATE-03"><span>待试听</span><small>录音完成，等待确认</small></button><button class="state-btn" data-state="UI-STATE-04"><span>已提交 / 合成中</span><small>投稿已提交，正在生成</small></button><button class="state-btn" data-state="UI-STATE-05"><span>合成成功</span><small>最新作品已更新</small></button><button class="state-btn" data-state="UI-STATE-06"><span>合成失败</span><small>本次生成失败</small></button><button class="state-btn" data-state="UI-STATE-07"><span>删除确认 / 删除中</span><small>删除投稿</small></button></aside>
+        <section class="prototype-pane"><div class="pane-head"><div><h3 id="stage-title">当前页面状态</h3><p class="muted" id="stage-subtitle"></p></div><span class="state-code" id="state-pill"></span></div><div class="device-wrap"><div class="device"><div class="device-screen" id="svg-host"></div></div></div></section>
+        <aside class="context-pane"><h3 id="inspect-title"></h3><div class="muted" id="inspect-subtitle"></div><div class="context-block"><h4>用户任务</h4><p id="inspect-task"></p></div><div class="context-block"><h4>页面结构</h4><ul id="inspect-structure"></ul></div><div class="context-block"><h4>用户看到</h4><ul id="inspect-visible"></ul></div><div class="context-block"><h4>本状态变化</h4><ul id="inspect-changes"></ul></div><div class="context-block"><h4>主要动作</h4><p id="inspect-action"></p></div><div class="context-block"><h4>系统结果 / 下一状态</h4><p id="inspect-next"></p></div><div class="context-block"><h4>追溯关系</h4><div class="trace" id="inspect-trace"></div></div></aside>
+      </div>
+    </section>
+    <section class="section" id="state-index"><div class="section-head"><div><h2>需求索引</h2><p class="muted">从页面状态进入对应的需求、规则和验收。</p></div></div><div class="table-wrap"><table class="index-table"><thead><tr><th>页面状态</th><th>用户任务</th><th>主要动作</th><th>结果 / 下一状态</th><th>依据</th></tr></thead><tbody><tr><td><strong>初始 / 未录制</strong><br><span class="muted">可以开始参与</span></td><td>理解玩法并开始参与</td><td>开始录音</td><td>录音中</td><td><a href="#ref-FR-01"><code>FR-01</code></a> <a href="#ref-FR-02"><code>FR-02</code></a> <a href="#ref-FR-04"><code>FR-04</code></a> <a href="#ref-AC-01"><code>AC-01</code></a> <a href="#ref-AC-03"><code>AC-03</code></a></td></tr><tr><td><strong>录音中</strong><br><span class="muted">正在录音</span></td><td>完成本次录音</td><td>停止录音</td><td>待试听 / 录音失败</td><td><a href="#ref-FR-04"><code>FR-04</code></a> <a href="#ref-AC-03"><code>AC-03</code></a></td></tr><tr><td><strong>待试听</strong><br><span class="muted">录音完成，等待确认</span></td><td>判断是否提交</td><td>提交投稿</td><td>未录制 / 提交中</td><td><a href="#ref-FR-04"><code>FR-04</code></a> <a href="#ref-FR-05"><code>FR-05</code></a> <a href="#ref-AC-01"><code>AC-01</code></a> <a href="#ref-AC-03"><code>AC-03</code></a></td></tr><tr><td><strong>已提交 / 合成中</strong><br><span class="muted">投稿已提交，正在生成</span></td><td>理解投稿已生效并等待结果</td><td>等待结果</td><td>合成成功 / 合成失败</td><td><a href="#ref-FR-05"><code>FR-05</code></a> <a href="#ref-FR-07"><code>FR-07</code></a> <a href="#ref-AC-01"><code>AC-01</code></a> <a href="#ref-AC-05"><code>AC-05</code></a></td></tr><tr><td><strong>合成成功</strong><br><span class="muted">最新作品已更新</span></td><td>播放最新作品</td><td>播放最新作品</td><td>后续投稿变化后再次合成中</td><td><a href="#ref-FR-03"><code>FR-03</code></a> <a href="#ref-FR-07"><code>FR-07</code></a> <a href="#ref-AC-01"><code>AC-01</code></a> <a href="#ref-AC-05"><code>AC-05</code></a></td></tr><tr><td><strong>合成失败</strong><br><span class="muted">本次生成失败</span></td><td>理解失败并知道后续路径</td><td>稍后查看</td><td>后续重新合成</td><td><a href="#ref-FR-07"><code>FR-07</code></a> <a href="#ref-FR-08"><code>FR-08</code></a> <a href="#ref-RULE-05"><code>RULE-05</code></a> <a href="#ref-RULE-06"><code>RULE-06</code></a> <a href="#ref-AC-05"><code>AC-05</code></a></td></tr><tr><td><strong>删除确认 / 删除中</strong><br><span class="muted">删除投稿</span></td><td>删除自己的投稿</td><td>确认删除</td><td>合成中 / 返回已提交</td><td><a href="#ref-FR-06"><code>FR-06</code></a> <a href="#ref-RULE-02"><code>RULE-02</code></a> <a href="#ref-AC-04"><code>AC-04</code></a></td></tr></tbody></table></div></section>
+    <section class="section" id="prd-full"><div class="section-head"><div><h2>规格详情</h2><p class="muted">按原 PRD 章节展开查看。</p></div></div><div class="prd-body"><blockquote>虚构化示例，基于一次“单页 + 多信息区 + 异步任务”的内部 MVP 协作反馈整理。用于展示：PRD 与研发 spec 边界、评审简版、单页多模块表达、自动重合成规则和 spec 交接清单。业务规则、歌曲素材、路径和技术方案不可直接用于真实项目。</blockquote>
+<blockquote>本示例刻意展开 P0 功能明细，用于展示标准版粒度；实际项目可按风险裁剪，但不得省略会影响验收的状态、异常、边界和系统能力结果。</blockquote>
+<details class="chapter-detail" open><summary>本示例重点</summary><div class="chapter-body"><h2 id="prd-1-本示例重点">本示例重点</h2>
+<ul><li><strong>输出形态：</strong>内部 MVP 组合，包含评审简版、标准 PRD、系统能力需求表、页面状态与操作矩阵、研发 spec 交接清单和验收矩阵。</li><li><strong>页面表达：</strong>1 个 H5 页面，页面内 6 个信息区；不是 6 个独立页面。</li><li><strong>PRD 粒度：</strong>写清产品能力、系统能力需求、页面状态、操作限制、业务规则、异常兜底和验收；不写 API 路径、请求 / 响应字段、错误码、队列、存储路径或混音算法。</li><li><strong>适用场景：</strong>内部体验、微信 H5 优先、异步合成任务、投稿新增 / 删除会触发系统重新生成最新作品。</li><li><strong>组合结构：</strong>评审简版、标准 PRD、系统能力需求表、页面状态与操作矩阵、研发 spec 交接清单和验收矩阵均保留。</li><li><strong>协作视觉交付：</strong>页面 × 状态规划作为 <code>pm-prd-html</code> 输入；确认后生成一份按阅读任务重组、完整规格可按需回看、带固定侧栏和黑白灰线框 SVG 的单文件 HTML，不另外维护 PNG 或原型文档。</li></ul>
+<hr>
+</div></details><details class="chapter-detail" open><summary>评审简版</summary><div class="chapter-body"><h2 id="prd-2-评审简版">评审简版</h2>
+<h3 id="prd-3-一句话方案">一句话方案</h3>
+<p>为业务同事提供一个微信 H5 优先的异步合唱内部 MVP：用户进入固定歌曲活动页后，可试听原唱、录制并提交自己的声音；系统在新增、替换或删除有效投稿后自动重新合成最新合唱作品，页面展示原唱、最新作品、投稿池和合成状态，用于验证“多人异步参与后生成合唱作品”的核心体验是否成立。</p>
+<h3 id="prd-3-目标与非目标">目标与非目标</h3>
+<div class="table-wrap"><table><thead><tr><th>类型</th><th>内容</th></tr></thead><tbody>
+<tr><td>目标</td><td>验证业务同事能否在微信 H5 内顺利完成录音、提交、自动合成和播放最新作品的闭环。</td></tr>
+<tr><td>目标</td><td>验证合唱成品是否达到“能听出多人一起唱，并具备趣味性”的最低内部体验标准。</td></tr>
+<tr><td>非目标</td><td>不做实时连麦、不做视频、不做多歌曲后台、不做公开传播、不做评论点赞排行、不做专业修音。</td></tr>
+</tbody></table></div>
+<h3 id="prd-3-体验结构">体验结构</h3>
+<p>本期只有 <strong>PAGE-01 异步合唱活动页</strong>。页面内包含 6 个信息区：</p>
+<ol><li>活动与玩法说明区；</li><li>原唱播放器区；</li><li>最新合唱作品区；</li><li>录音与试听区；</li><li>投稿池区；</li><li>合成状态与提示区。</li></ol>
+<p>主链路：进入页面 → 播放原唱 → 开始录音 → 停止录音 → 试听 → 提交 → 系统自动合成 → 播放最新合唱作品。</p>
+<p>删除链路：用户删除自己的有效投稿 → 投稿池更新 → 系统自动重新合成 → 最新作品更新；若合成失败，页面保留上一版可播放作品并提示失败。</p>
+<h3 id="prd-3-核心规则">核心规则</h3>
+<div class="table-wrap"><table><thead><tr><th>规则</th><th>结论</th></tr></thead><tbody>
+<tr><td>投稿有效性</td><td>单个用户默认只保留 1 条有效投稿；再次提交视为替换最新有效投稿。</td></tr>
+<tr><td>删除权限</td><td>用户只能删除自己的有效投稿；他人投稿不展示删除入口，系统也必须拦截。</td></tr>
+<tr><td>自动合成</td><td>新增、替换或删除有效投稿后均自动触发重新合成，用户不需要点击“合成”按钮。</td></tr>
+<tr><td>失败兜底</td><td>合成失败时不误展示为成功；如存在上一版成功作品，继续保留可播放入口。</td></tr>
+</tbody></table></div>
+<h3 id="prd-3-mvp-验收底线">MVP 验收底线</h3>
+<ul><li>至少 2 名业务同事能在微信 H5 中完成录音、提交和播放最新作品。</li><li>新增或替换投稿后，页面进入合成中状态，合成成功后最新作品更新。</li><li>删除自己的投稿后，最新作品不再包含该投稿，并在合成完成后更新。</li><li>微信录音不可用、提交失败、合成失败时均有明确提示，不进入假成功状态。</li></ul>
+<h3 id="prd-3-待研发-spec-补齐">待研发 spec 补齐</h3>
+<ul><li>微信录音授权、素材获取、上传和服务端处理链路。</li><li>录音素材存储、转码、混音、任务队列、重试超时和失败告警方案。</li><li>页面所需活动详情、投稿提交、投稿删除、合成状态查询等能力的接口规格。</li><li>内部体验数据、日志和排查方式。</li></ul>
+<hr>
+</div></details><details class="chapter-detail"><summary>0. 文档信息与一页结论</summary><div class="chapter-body"><h2 id="prd-3-0-文档信息与一页结论">0. 文档信息与一页结论</h2>
+<h3 id="prd-4-0-1-文档信息">0.1 文档信息</h3>
+<div class="table-wrap"><table><thead><tr><th>字段</th><th>内容</th></tr></thead><tbody>
+<tr><td>需求名称</td><td>异步合唱内部 MVP</td></tr>
+<tr><td>文档状态</td><td>示例草稿</td></tr>
+<tr><td>负责人及参与角色</td><td>产品 / 设计 / 前端 / 服务端 / 测试 / 业务同事</td></tr>
+<tr><td>目标版本</td><td>MVP v1</td></tr>
+<tr><td>创建与更新时间</td><td>2026-08-01</td></tr>
+<tr><td>输出形态</td><td>内部 MVP 组合：评审简版 + 标准 PRD + 研发 spec 交接清单</td></tr>
+<tr><td>需求定义来源</td><td><code>pm-requirement-define</code> 输出：异步合唱内部 MVP 需求定义</td></tr>
+<tr><td>关联资料</td><td>当前 H5 Demo、固定歌曲素材、微信 JS-SDK 录音能力预研、音频合成技术方案（待产出）</td></tr>
+<tr><td>省略章节及原因</td><td>第 7 章效果验证压缩为内部体验判断，不做外部增长或转化指标；本期非公开产品。</td></tr>
+</tbody></table></div>
+<h3 id="prd-4-0-2-一页结论">0.2 一页结论</h3>
+<ul><li>一句话方案：建设一个微信 H5 优先的单页异步合唱内部 MVP，让业务同事围绕固定歌曲录制并提交自己的声音，由系统在投稿变化后自动生成最新合唱作品。</li><li>已确认目标与方案：真实跑通录音、提交、投稿池、自动重合成和最新作品播放，验证玩法体验与技术可行性。</li><li>关键取舍与非目标：本期只做音频和固定歌曲；不做实时合唱、视频、多歌曲后台、公开传播、评论点赞排行和专业修音。</li><li>本次交付范围与版本：1 个微信 H5 页面、6 个信息区、投稿新增 / 替换 / 删除规则、合成状态展示和 MVP 验收标准。</li><li>用户主路径与页面影响：用户在同一页面内完成听原唱、录音、试听、提交、等待合成、播放最新作品；不存在多页面流程。</li><li>PRD / spec 边界：PRD 确认页面能力、状态、规则和验收；接口路径、字段、微信素材下载、队列、存储、转码和混音算法由研发 spec 补齐。</li><li>最大风险或待决策项：微信 H5 录音链路和服务端音频处理链路需先完成技术预验证；若不可行，需要降级为上传本地音频或仅保留概念 Demo。</li></ul>
+<h3 id="prd-4-0-3-修订记录">0.3 修订记录</h3>
+<div class="table-wrap"><table><thead><tr><th>日期</th><th>版本</th><th>变化或决策</th><th>原因</th><th>负责人</th></tr></thead><tbody>
+<tr><td>2026-08-01</td><td>0.1</td><td>示例首版</td><td>展示优化后的 PRD/spec 边界和内部 MVP 输出方式</td><td>Codex</td></tr>
+</tbody></table></div>
+<hr>
+</div></details><details class="chapter-detail"><summary>1. 决策依据</summary><div class="chapter-body"><h2 id="prd-4-1-决策依据">1. 决策依据</h2>
+<h3 id="prd-5-1-1-问题-目标与成功假设">1.1 问题、目标与成功假设</h3>
+<div class="table-wrap"><table><thead><tr><th>问题与证据摘要</th><th>目标 ID / 目标状态</th><th>目标人群与场景</th><th>方向级成功假设</th></tr></thead><tbody>
+<tr><td>纯前端 Demo 只能展示录音和模拟合成，不能证明多人声音真实合成后的趣味性。</td><td>OBJ-01 / 业务同事能真实体验异步合唱闭环</td><td>业务同事在内部体验和评审场景中通过微信打开 H5 页面</td><td>如果用户能真实提交录音并听到最新合唱作品，团队就能判断玩法是否值得继续产品化。</td></tr>
+<tr><td>微信 H5 是主要使用环境，浏览器录音能力不能代表真实体验。</td><td>OBJ-02 / 微信主路径可用</td><td>业务同事在微信内完成授权、录音、试听和提交</td><td>微信录音、上传和播放链路可用，是 MVP 成立的前置条件。</td></tr>
+<tr><td>投稿新增或删除后若需要人工触发合成，用户难以理解作品何时更新。</td><td>OBJ-03 / 投稿变化后自动更新最新作品</td><td>多人陆续参与和撤回投稿的内部体验场景</td><td>自动重新合成能让用户聚焦“参与合唱”，而不是理解合成任务。</td></tr>
+</tbody></table></div>
+<h3 id="prd-5-1-2-已确认方向-范围与取舍">1.2 已确认方向、范围与取舍</h3>
+<ul><li>已确认方向：内部可体验 MVP，而不是纯前端概念 Demo，也不是正式对外产品。</li><li>一级范围：固定歌曲活动页、微信 H5 录音、用户投稿、投稿池、自动合成任务、最新作品播放和异常兜底。</li><li>关键取舍：牺牲多歌曲、公开传播和专业后期能力，换取更短周期验证真实合唱体验。</li><li>重大约束：微信录音能力和音频合成能力需要技术预验证；内部素材和用户声音不得默认公开传播。</li></ul>
+<h3 id="prd-5-1-3-关键决策记录">1.3 关键决策记录</h3>
+<div class="table-wrap"><table><thead><tr><th>决策项</th><th>已确认结论</th><th>依据 / 来源</th><th>决策人</th><th>日期</th></tr></thead><tbody>
+<tr><td>页面形态</td><td>1 个 H5 单页，页面内 6 个信息区</td><td>内部 MVP 任务集中，减少跳转成本</td><td>产品</td><td>2026-08-01</td></tr>
+<tr><td>合成触发</td><td>新增、替换、删除有效投稿后自动重新合成</td><td>用户不应理解或操作合成任务</td><td>产品 / 研发</td><td>2026-08-01</td></tr>
+<tr><td>删除方式</td><td>用户只能删除自己的有效投稿，删除后软删除并重新合成</td><td>防误删和便于排查</td><td>产品 / 研发</td><td>2026-08-01</td></tr>
+<tr><td>失败展示</td><td>合成失败时保留上一版成功作品，如有</td><td>避免最新作品区域因失败完全不可用</td><td>产品 / 测试</td><td>2026-08-01</td></tr>
+</tbody></table></div>
+<hr>
+</div></details><details class="chapter-detail"><summary>2. 方案总览、体验结构与原型</summary><div class="chapter-body"><h2 id="prd-5-2-方案总览-体验结构与原型">2. 方案总览、体验结构与原型</h2>
+<h3 id="prd-6-2-1-方案闭环与目标流程">2.1 方案闭环与目标流程</h3>
+<p>用户在一个页面内完成参与：先听原唱，再录制并试听自己的声音；提交成功后，投稿池立即体现自己的有效投稿，系统自动进入合成中；合成成功后，最新作品播放器更新为新版本。删除自己的投稿后，系统按剩余有效投稿重新生成最新作品。</p>
+<div class="table-wrap"><table><thead><tr><th>场景 ID</th><th>阶段 / 时间点</th><th>角色 / 系统</th><th>前置输入</th><th>动作</th><th>系统反馈</th><th>下一步 / 临界点</th></tr></thead><tbody>
+<tr><td>SCN-01</td><td>进入活动</td><td>用户 / 页面</td><td>活动链接可访问</td><td>用户打开 H5 页面</td><td>页面展示活动说明、原唱、最新作品状态、投稿池和录音入口</td><td>活动加载失败时展示重试</td></tr>
+<tr><td>SCN-01</td><td>录音前</td><td>用户</td><td>原唱可播放，微信录音能力可用</td><td>用户播放原唱并点击开始录音</td><td>页面进入录音中，提示正在录制</td><td>微信录音不可用时阻止进入假录音状态</td></tr>
+<tr><td>SCN-01</td><td>录音后</td><td>用户</td><td>已停止录音</td><td>用户试听自己的录音</td><td>页面可播放本次录音，展示重录和提交入口</td><td>用户可重录或提交</td></tr>
+<tr><td>SCN-01</td><td>提交后</td><td>系统</td><td>用户确认提交</td><td>保存或替换用户有效投稿，并触发自动合成</td><td>页面展示提交成功、投稿池更新和合成中</td><td>合成成功后更新最新作品；失败时提示</td></tr>
+<tr><td>SCN-02</td><td>删除投稿</td><td>用户 / 系统</td><td>用户已有有效投稿</td><td>用户删除自己的投稿</td><td>投稿池移除该投稿，触发自动重新合成</td><td>合成成功后最新作品不再包含该投稿</td></tr>
+</tbody></table></div>
+<h3 id="prd-6-2-2-产品动线与页面影响">2.2 产品动线与页面影响</h3>
+<p>本需求没有跨页面跳转，主路径发生在 <strong>PAGE-01 单页内</strong>。页面 / 状态转移列描述的是同一页面内的信息区状态变化。</p>
+<div class="table-wrap"><table><thead><tr><th>动线 ID</th><th>场景 ID</th><th>入口 / 起点</th><th>用户目的与关键动作</th><th>页面 / 状态转移</th><th>关键分支</th><th>结果 / 出口</th><th>返回、失败、取消或重试</th></tr></thead><tbody>
+<tr><td>FLOW-01</td><td>SCN-01</td><td>PAGE-01 活动页</td><td>听原唱、录音、试听并提交</td><td>未录制 → 录音中 → 待试听 → 提交中 → 已提交 / 合成中 → 最新作品可播放</td><td>微信录音不可用、提交失败、合成失败</td><td>用户听到最新合唱作品</td><td>提交失败保留本地试听结果；合成失败保留上一版作品</td></tr>
+<tr><td>FLOW-02</td><td>SCN-02</td><td>PAGE-01 投稿池区</td><td>删除自己的投稿</td><td>已提交 → 删除确认 → 投稿池更新 / 合成中</td><td>只能删除自己的投稿；重复删除不造成错误结果</td><td>最新作品基于剩余投稿生成</td><td>删除失败保留投稿并提示重试</td></tr>
+</tbody></table></div>
+<h3 id="prd-6-2-3-页面信息结构">2.3 页面信息结构</h3>
+<h4 id="prd-6-页面结构摘要">页面结构摘要</h4>
+<pre><code>PAGE-01 异步合唱活动页
+├── IA-01 活动与玩法说明区
+├── IA-02 原唱播放器区
+├── IA-03 最新合唱作品区
+├── IA-04 录音与试听区
+├── IA-05 投稿池区
+└── IA-06 合成状态与提示区</code></pre>
+<h4 id="prd-6-关键区域与信息项">关键区域与信息项</h4>
+<div class="table-wrap"><table><thead><tr><th>页面 ID</th><th>区域 / 信息结构 ID</th><th>区域目的</th><th>关键内容或元素</th><th>优先级</th><th>展示条件 / 状态</th><th>操作结果</th><th>数据 / 规则来源</th></tr></thead><tbody>
+<tr><td>PAGE-01</td><td>IA-01</td><td>让用户理解这是内部异步合唱体验</td><td>活动名称、固定歌曲、玩法说明、内部体验提示</td><td>P0</td><td>页面加载成功</td><td>无主操作</td><td>活动信息</td></tr>
+<tr><td>PAGE-01</td><td>IA-02</td><td>提供录音参考</td><td>原唱播放器、播放 / 暂停 / 重播</td><td>P0</td><td>原唱素材可用</td><td>播放原唱；录音中可按产品规则暂停或禁用</td><td>固定歌曲素材</td></tr>
+<tr><td>PAGE-01</td><td>IA-03</td><td>让用户听到最新合唱结果</td><td>最新作品播放器、空态、合成中、失败提示</td><td>P0</td><td>根据合成状态展示</td><td>成功时播放最新作品；失败时保留上一版作品</td><td>合成作品状态</td></tr>
+<tr><td>PAGE-01</td><td>IA-04</td><td>完成录音、试听、重录和提交</td><td>开始录音、停止录音、试听、重录、提交按钮</td><td>P0</td><td>微信录音能力可用；提交中禁用重复操作</td><td>生成本次待提交录音；提交后进入投稿池</td><td>录音状态、提交规则</td></tr>
+<tr><td>PAGE-01</td><td>IA-05</td><td>展示当前有效投稿集合</td><td>投稿人昵称或标识、我的投稿标识、删除入口</td><td>P0</td><td>有有效投稿时展示列表；无投稿时展示空态</td><td>只能删除自己的投稿</td><td>投稿有效性规则</td></tr>
+<tr><td>PAGE-01</td><td>IA-06</td><td>解释系统后台处理进度</td><td>合成中、成功、失败、等待提示</td><td>P0</td><td>投稿变化或合成任务状态变化</td><td>帮助用户理解最新作品是否已更新</td><td>合成任务状态</td></tr>
+</tbody></table></div>
+<h3 id="prd-6-2-4-原型范围与页面状态规划">2.4 原型范围与页面状态规划</h3>
+<p>本例是单页多信息区 + 多状态 + 异步结果的内部 MVP，需要原型。原型基本单位不是 6 个信息区，而是 PAGE-01 在关键用户任务下的页面状态；页面状态规划只负责确定原型覆盖和视觉表达约束，完整功能逻辑仍以第 3、4 章为准。</p>
+<div class="table-wrap"><table><thead><tr><th>原型状态 ID</th><th>页面 ID</th><th>状态名称</th><th>用户任务</th><th>需要表达的信息 / 反馈</th><th>主操作</th><th>下一状态</th><th>是否独立原型</th><th>关联功能 / 规则 / 验收</th></tr></thead><tbody>
+<tr><td>UI-STATE-01</td><td>PAGE-01</td><td>初始 / 未录制</td><td>理解玩法并开始参与</td><td>活动说明、原唱、最新作品状态、开始录音入口</td><td>播放原唱 / 开始录音</td><td>录音中</td><td>是</td><td><span id="ref-FR-01"></span>FR-01、<span id="ref-FR-02"></span>FR-02、<span id="ref-FR-04"></span>FR-04 / <span id="ref-AC-01"></span>AC-01、<span id="ref-AC-03"></span>AC-03</td></tr>
+<tr><td>UI-STATE-02</td><td>PAGE-01</td><td>录音中</td><td>完成本次录音</td><td>录音中提示、停止入口</td><td>停止录音</td><td>待试听 / 录音失败</td><td>是</td><td>FR-04 / AC-03</td></tr>
+<tr><td>UI-STATE-03</td><td>PAGE-01</td><td>待试听</td><td>判断是否提交</td><td>录音播放器、重录、提交</td><td>试听 / 重录 / 提交</td><td>未录制 / 提交中</td><td>是</td><td>FR-04、<span id="ref-FR-05"></span>FR-05 / AC-01、AC-03</td></tr>
+<tr><td>UI-STATE-04</td><td>PAGE-01</td><td>已提交 / 合成中</td><td>理解投稿已生效并等待结果</td><td>我的投稿、合成中提示、上一版作品（如有）</td><td>播放上一版 / 等待</td><td>合成成功 / 合成失败</td><td>是</td><td>FR-05、<span id="ref-FR-07"></span>FR-07 / AC-01、<span id="ref-AC-05"></span>AC-05</td></tr>
+<tr><td>UI-STATE-05</td><td>PAGE-01</td><td>合成成功</td><td>播放最新作品</td><td>最新作品播放器、投稿池、成功反馈</td><td>播放 / 暂停 / 重播</td><td>后续投稿变化后再次合成中</td><td>是</td><td><span id="ref-FR-03"></span>FR-03、FR-07 / AC-01、AC-05</td></tr>
+<tr><td>UI-STATE-06</td><td>PAGE-01</td><td>合成失败</td><td>理解失败并知道后续路径</td><td>失败原因、上一版作品或暂无作品、后续提示</td><td>播放上一版 / 稍后查看</td><td>后续重新合成</td><td>是</td><td>FR-07、<span id="ref-FR-08"></span>FR-08 / <span id="ref-RULE-05"></span>RULE-05、<span id="ref-RULE-06"></span>RULE-06 / AC-05</td></tr>
+<tr><td>UI-STATE-07</td><td>PAGE-01</td><td>删除确认 / 删除中</td><td>删除自己的投稿</td><td>删除确认、处理中反馈</td><td>确认删除 / 取消</td><td>合成中 / 返回已提交</td><td>是</td><td><span id="ref-FR-06"></span>FR-06 / <span id="ref-RULE-02"></span>RULE-02 / <span id="ref-AC-04"></span>AC-04</td></tr>
+</tbody></table></div>
+<p>独立原型判断：录音中、待试听、提交中、合成成功、合成失败和删除确认都会改变用户可见信息或主要操作，不能只用一张静态页面代替；6 个信息区仍属于同一 PAGE-01，不拆成多个页面。</p>
+<h4 id="prd-6-原型约束">原型约束</h4>
+<ul><li>端类型与页面尺寸：微信 H5，沿用 PAGE-01 单页形态；</li><li>目标用户：内部业务、产品、研发和测试同事，优先保证主任务和异常路径易懂；</li><li>需要复用：原唱播放器、最新作品播放器、投稿池、录音 / 试听组件和合成状态提示；</li><li>不应暴露：队列、存储、转码、混音算法和内部任务状态码；</li><li>关键约束：合成失败时保留上一版成功作品；录音或上传失败不得展示待试听、已提交或合成中等假成功状态。</li></ul>
+<h3 id="prd-6-2-5-原型与设计资产索引">2.5 原型与设计资产索引</h3>
+<div class="table-wrap"><table><thead><tr><th>资产 ID</th><th>类型</th><th>精确链接 / 文件路径 / Frame</th><th>版本或更新时间</th><th>状态</th><th>负责人</th><th>覆盖场景 / 页面 / 功能</th></tr></thead><tbody>
+<tr><td>UI-01</td><td>H5 原型 / 内嵌 SVG 原型</td><td>示例项目 <code>design/async-chorus-mvp.fig</code> / <code>PAGE-01</code>；HTML 由 <code>pm-prd-html</code> 内嵌 SVG</td><td>待产出</td><td>原型规划已确认</td><td>设计 / <code>pm-prd-html</code></td><td>PAGE-01 / FR-01 至 FR-08</td></tr>
+</tbody></table></div>
+<p>原型未产出不阻塞产品评审，但会阻塞视觉验收；PRD 是业务规则、状态和验收主源，<code>pm-prd-html</code> 生成的内嵌 SVG 负责布局和视觉表达。</p>
+<h3 id="prd-6-2-6-场景-原型关联">2.6 场景—原型关联</h3>
+<div class="table-wrap"><table><thead><tr><th>场景 ID / 流程步骤</th><th>功能 ID</th><th>原型状态</th><th>关键交互 / 状态</th><th>备注</th></tr></thead><tbody>
+<tr><td>SCN-01 / 录音与提交</td><td>FR-04、FR-05</td><td>UI-STATE-01 至 UI-STATE-04</td><td>录音、试听、提交、合成中</td><td>不允许跳过待试听直接假成功</td></tr>
+<tr><td>SCN-01 / 播放最新作品</td><td>FR-03、FR-07、FR-08</td><td>UI-STATE-04 至 UI-STATE-06</td><td>成功、失败、上一版保留</td><td>合成失败不覆盖上一版成功作品</td></tr>
+<tr><td>SCN-02 / 删除投稿</td><td>FR-06、FR-07</td><td>UI-STATE-07</td><td>删除确认、删除中、重新合成</td><td>只能删除自己的有效投稿</td></tr>
+</tbody></table></div>
+<hr>
+</div></details><details class="chapter-detail"><summary>3. 交付范围与功能需求</summary><div class="chapter-body"><h2 id="prd-6-3-交付范围与功能需求">3. 交付范围与功能需求</h2>
+<h3 id="prd-7-3-1-交付范围与版本">3.1 交付范围与版本</h3>
+<div class="table-wrap"><table><thead><tr><th>版本</th><th>目标</th><th>包含功能 / 页面 / 端</th><th>暂不包含</th><th>验证重点</th></tr></thead><tbody>
+<tr><td>MVP v1</td><td>跑通内部异步合唱真实闭环</td><td>微信 H5 单页、固定歌曲、录音、试听、提交、投稿池、删除、自动重合成、最新作品播放</td><td>实时合唱、视频、多歌曲后台、公开传播、评论点赞排行、专业修音</td><td>微信主链路可用、投稿变化后自动更新最新作品、失败态不误导</td></tr>
+</tbody></table></div>
+<h3 id="prd-7-3-2-功能清单">3.2 功能清单</h3>
+<div class="table-wrap"><table><thead><tr><th>功能 ID</th><th>功能点</th><th>所属页面 / 信息区</th><th>对应目标 / 场景</th><th>优先级</th><th>所属版本</th><th>原型 ID</th><th>依赖</th></tr></thead><tbody>
+<tr><td>FR-01</td><td>页面加载活动信息</td><td>PAGE-01 / IA-01 至 IA-06</td><td>OBJ-01 / SCN-01</td><td>P0</td><td>MVP v1</td><td>UI-01</td><td>活动详情能力</td></tr>
+<tr><td>FR-02</td><td>原唱播放</td><td>IA-02</td><td>OBJ-01 / SCN-01</td><td>P0</td><td>MVP v1</td><td>UI-01</td><td>原唱素材可用</td></tr>
+<tr><td>FR-03</td><td>最新合唱作品播放</td><td>IA-03</td><td>OBJ-01 / SCN-01</td><td>P0</td><td>MVP v1</td><td>UI-01</td><td>合成作品可访问</td></tr>
+<tr><td>FR-04</td><td>微信录音、试听与重录</td><td>IA-04</td><td>OBJ-02 / SCN-01</td><td>P0</td><td>MVP v1</td><td>UI-01</td><td>微信录音能力预验证</td></tr>
+<tr><td>FR-05</td><td>提交或替换投稿</td><td>IA-04 / IA-05</td><td>OBJ-01、OBJ-03 / SCN-01</td><td>P0</td><td>MVP v1</td><td>UI-01</td><td>投稿保存能力</td></tr>
+<tr><td>FR-06</td><td>投稿池展示与删除自己的投稿</td><td>IA-05</td><td>OBJ-03 / SCN-02</td><td>P0</td><td>MVP v1</td><td>UI-01</td><td>投稿权限规则</td></tr>
+<tr><td>FR-07</td><td>自动重新合成与状态展示</td><td>IA-03 / IA-06</td><td>OBJ-03 / SCN-01、SCN-02</td><td>P0</td><td>MVP v1</td><td>UI-01</td><td>合成任务能力</td></tr>
+<tr><td>FR-08</td><td>空态和失败兜底</td><td>IA-02 至 IA-06</td><td>OBJ-01、OBJ-02</td><td>P0</td><td>MVP v1</td><td>UI-01</td><td>前后端错误处理</td></tr>
+</tbody></table></div>
+<h3 id="prd-7-3-2-1-系统能力需求表">3.2.1 系统能力需求表</h3>
+<p>本表只描述产品需要系统提供的能力和用户可见结果，不定义 API 路径、请求 / 响应字段、队列、存储、转码或混音算法。</p>
+<div class="table-wrap"><table><thead><tr><th>能力 ID</th><th>系统能力</th><th>支撑的页面 / 流程</th><th>触发时机</th><th>PRD 需要确认的产品结果</th><th>失败或不可用时的用户兜底</th><th>关联功能 / 规则</th><th>spec 需补齐</th></tr></thead><tbody>
+<tr><td>CAP-01</td><td>活动详情与页面渲染状态</td><td>PAGE-01 初始加载</td><td>用户打开活动页或刷新页面</td><td>页面能展示活动说明、原唱状态、最新作品状态、投稿池、我的投稿和合成状态</td><td>页面级错误或区块级暂不可用提示，不开放高风险操作</td><td>FR-01 / <span id="ref-RULE-04"></span>RULE-04 至 RULE-06</td><td>接口字段、缓存、鉴权、状态聚合策略</td></tr>
+<tr><td>CAP-02</td><td>原唱素材播放能力</td><td>IA-02 原唱播放器</td><td>页面加载成功后用户点击播放</td><td>用户可播放、暂停、重播原唱；原唱不可用时阻塞录音</td><td>原唱失败提示，录音入口不可用或说明原因</td><td>FR-02</td><td>音频格式、素材地址、播放器兼容</td></tr>
+<tr><td>CAP-03</td><td>微信录音与待提交素材能力</td><td>IA-04 录音与试听区</td><td>用户开始录音、停止录音、试听</td><td>用户能获得可试听、可提交的本次录音；失败时不进入假成功</td><td>授权 / 录音 / 试听失败提示，允许重试或重录</td><td>FR-04</td><td>微信 JS-SDK 授权、serverId、上传和转码流程</td></tr>
+<tr><td>CAP-04</td><td>投稿提交、替换与删除能力</td><td>IA-04 / IA-05 投稿链路</td><td>用户提交录音或删除自己的投稿</td><td>单用户只有一条有效投稿；删除后投稿不再参与最新作品</td><td>提交失败保留本地录音；删除失败保留投稿</td><td>FR-05、FR-06 / <span id="ref-RULE-01"></span>RULE-01 至 <span id="ref-RULE-03"></span>RULE-03</td><td>API、幂等、权限校验、软删除实现</td></tr>
+<tr><td>CAP-05</td><td>自动合成与作品状态能力</td><td>IA-03 / IA-06 合成链路</td><td>有效投稿新增、替换或删除后</td><td>页面进入合成中；成功后最新作品更新；失败时保留上一版（如有）</td><td>合成失败提示，不展示假最新作品</td><td>FR-07、FR-08 / RULE-05、RULE-06</td><td>队列、任务去重、重试超时、存储和混音算法</td></tr>
+<tr><td>CAP-06</td><td>内部体验可观测能力</td><td>MVP 体验与排查</td><td>录音、提交、删除、合成、播放失败或完成时</td><td>产品和研发能判断主链路是否跑通、失败能否定位</td><td>人工反馈和日志兜底</td><td>FR-08 / MET-01 至 MET-03</td><td>日志字段、监控、看板、排查脚本</td></tr>
+</tbody></table></div>
+<h3 id="prd-7-3-3-功能需求明细">3.3 功能需求明细</h3>
+<p>本节按 P0 核心功能完整展开。所有接口、队列、存储、转码和混音实现细节均不在本节定义，只表达产品能力、页面表现、业务结果和验收口径。</p>
+<h4 id="prd-7-fr-01-页面加载活动信息">FR-01 页面加载活动信息</h4>
+<p><strong>需求结论</strong></p>
+<p>用户进入 PAGE-01 后，页面应加载并展示活动基础信息、原唱可用状态、最新合唱作品状态、当前有效投稿集合、当前用户投稿状态和合成状态。加载成功后，6 个信息区应形成一致的初始状态，让用户知道当前能否听原唱、是否已有最新作品、能否录音提交、自己是否已有投稿。加载失败或关键数据缺失时，页面必须明确提示并提供重试，不得让用户在信息不完整时误以为可以完成提交或播放。</p>
+<p><strong>行为说明</strong></p>
+<ol><li><strong>触发与前提：</strong>用户通过内部 H5 链接进入 PAGE-01，页面开始获取当前活动所需的产品数据。活动必须处于可访问状态；若活动已关闭、不可访问或数据不存在，页面进入对应终止态，不展示录音提交主操作。</li><li><strong>用户可见行为：</strong>加载中展示页面级加载反馈，不提前展示可点击的录音、提交或删除入口。加载成功后，IA-01 至 IA-06 同步更新：活动说明可读、原唱播放器按素材状态展示、最新作品按合成状态展示、录音区按用户状态展示、投稿池展示有效投稿、合成提示区展示当前任务状态。</li><li><strong>系统与数据行为：</strong>系统需要向页面提供足以判断上述信息区状态的活动、投稿和合成结果。PRD 不规定接口字段、缓存策略或错误码；研发 spec 需保证页面能得到唯一且一致的渲染状态。</li><li><strong>结果与后续路径：</strong>加载成功且活动允许投稿时，用户可继续播放原唱和录音。加载失败时，用户只能重试或退出；重试成功后重新进入正常页面状态。</li></ol>
+<p><strong>条件与分支</strong></p>
+<div class="table-wrap"><table><thead><tr><th>进入条件</th><th>用户看到什么</th><th>可执行操作</th><th>系统处理与数据结果</th><th>后续页面 / 状态</th><th>优先级或冲突规则</th></tr></thead><tbody>
+<tr><td>活动加载中</td><td>页面骨架或加载提示，录音和提交入口不可用</td><td>等待或退出</td><td>不产生投稿、删除或合成副作用</td><td>加载成功 / 加载失败</td><td>加载中不得展示旧的可操作状态</td></tr>
+<tr><td>活动加载成功，允许内部体验</td><td>6 个信息区按当前活动、投稿和合成状态展示</td><td>播放原唱、录音、查看投稿、播放最新作品（如有）</td><td>页面获得当前渲染状态</td><td>PAGE-01 可操作</td><td>以最新加载结果为准</td></tr>
+<tr><td>活动不存在或已关闭</td><td>活动不可用提示，说明暂不能参与</td><td>返回或退出</td><td>不允许录音、提交、删除</td><td>终止态</td><td>高于所有录音和投稿状态</td></tr>
+<tr><td>关键数据部分缺失，如缺少原唱可用状态或投稿状态</td><td>页面说明活动信息暂不完整，关键操作不可用</td><td>重新加载</td><td>不写入投稿，不触发合成</td><td>重试后重新判断</td><td>数据不完整时不得进入半成功状态</td></tr>
+<tr><td>网络或服务异常导致加载失败</td><td>页面级错误提示和“重新加载”入口</td><td>点击重新加载</td><td>重新获取活动渲染状态</td><td>加载中 / 加载成功 / 加载失败</td><td>不复用可能过期的操作状态</td></tr>
+</tbody></table></div>
+<p><strong>异常与恢复</strong></p>
+<div class="table-wrap"><table><thead><tr><th>异常条件</th><th>用户反馈</th><th>系统 / 数据处理</th><th>是否可重试及方式</th><th>记录与告警</th></tr></thead><tbody>
+<tr><td>页面初始加载失败</td><td>“活动信息加载失败，请重试”</td><td>不产生任何投稿、删除和合成结果</td><td>可点击重新加载</td><td>记录页面加载失败，具体日志由 spec 定义</td></tr>
+<tr><td>活动状态在页面停留期间变化</td><td>用户操作时看到状态刷新或操作失败原因</td><td>操作结果以系统最新判断为准</td><td>刷新页面状态后可继续</td><td>记录状态变化导致的操作失败</td></tr>
+<tr><td>投稿或合成状态暂时不可用</td><td>投稿池或最新作品区展示暂不可用提示</td><td>不把未知状态当作空态或成功态</td><td>可刷新</td><td>记录状态缺失</td></tr>
+</tbody></table></div>
+<p><strong>保持不变与边界</strong></p>
+<ul><li>本功能只定义页面进入后的产品渲染状态，不定义 API 路径、字段、缓存、鉴权和错误码。</li><li>活动不可访问或关键数据缺失时，宁可阻止操作，也不能展示可提交但实际不可完成的状态。</li><li>固定歌曲和内部体验边界来自需求定义；本 PRD 不扩展为多歌曲或公开活动管理。</li></ul>
+<p><strong>追溯</strong></p>
+<ul><li>对应目标 / 场景：OBJ-01 / SCN-01。</li><li>所属页面 / 信息结构：PAGE-01 / IA-01 至 IA-06。</li><li>关联规则：RULE-04、RULE-05、RULE-06。</li><li>对应验收：AC-01、AC-03、AC-05。</li></ul>
+<h4 id="prd-7-fr-02-原唱播放">FR-02 原唱播放</h4>
+<p><strong>需求结论</strong></p>
+<p>原唱播放器是用户录音前理解歌曲节奏和内容的基础能力，应在页面加载成功后稳定可见。用户可以播放、暂停和重播原唱；若原唱不可播放，用户不能继续录音提交，因为录音会失去参考。原唱播放规则需要与录音状态配合，避免用户在录音过程中因播放器状态混乱而无法判断自己正在唱什么。</p>
+<p><strong>行为说明</strong></p>
+<ol><li><strong>触发与前提：</strong>页面加载成功且固定原唱素材可用时，IA-02 展示原唱播放器。用户点击播放、暂停或重播时触发播放器状态变化。</li><li><strong>用户可见行为：</strong>播放器至少展示歌曲名称、播放状态、播放 / 暂停入口和加载 / 失败提示。录音前用户可自由播放原唱；进入录音中后，页面应明确当前原唱是否继续播放，不能出现“看似播放但无声”或“录音已开始但原唱状态不明”的情况。</li><li><strong>系统与数据行为：</strong>系统提供可播放原唱素材；页面管理原唱播放器与录音状态的产品交互关系。具体音频格式、CDN、缓存和播放器实现交给研发 spec。</li><li><strong>结果与后续路径：</strong>原唱可播放时，用户可进入录音流程。原唱失败时，页面提示无法继续录音，用户可重试加载或退出。</li></ol>
+<p><strong>条件与分支</strong></p>
+<div class="table-wrap"><table><thead><tr><th>进入条件</th><th>用户看到什么</th><th>可执行操作</th><th>系统处理与数据结果</th><th>后续页面 / 状态</th><th>优先级或冲突规则</th></tr></thead><tbody>
+<tr><td>原唱未播放</td><td>播放按钮可用，显示歌曲名称</td><td>播放原唱</td><td>播放器进入播放中</td><td>原唱播放中</td><td>默认状态</td></tr>
+<tr><td>原唱播放中</td><td>暂停入口和播放进度</td><td>暂停 / 重播；进入录音前可继续试听</td><td>播放器状态更新</td><td>暂停 / 重播 / 准备录音</td><td>录音规则高于播放自由度</td></tr>
+<tr><td>用户点击开始录音</td><td>页面提示录音即将开始，原唱播放关系明确</td><td>确认开始或取消</td><td>按产品规则处理原唱播放，页面进入录音中</td><td>录音中</td><td>不能同时出现冲突按钮状态</td></tr>
+<tr><td>原唱加载失败</td><td>原唱区显示失败提示，录音入口不可用或明确禁用原因</td><td>重试加载原唱</td><td>不进入录音中，不产生投稿</td><td>原唱可用 / 原唱失败</td><td>原唱失败阻塞录音主链路</td></tr>
+</tbody></table></div>
+<p><strong>异常与恢复</strong></p>
+<div class="table-wrap"><table><thead><tr><th>异常条件</th><th>用户反馈</th><th>系统 / 数据处理</th><th>是否可重试及方式</th><th>记录与告警</th></tr></thead><tbody>
+<tr><td>原唱播放中断</td><td>提示“原唱播放失败，请重试”</td><td>保持未提交录音不受影响</td><td>可重试播放</td><td>记录播放器失败</td></tr>
+<tr><td>录音前原唱不可用</td><td>提示“原唱暂不可播放，无法开始录音”</td><td>不进入录音状态</td><td>可重新加载页面或重试播放器</td><td>记录素材不可用</td></tr>
+<tr><td>用户在录音中尝试操作原唱</td><td>按既定录音中规则展示禁用或明确说明</td><td>不影响当前录音状态</td><td>停止录音后恢复操作</td><td>不需要业务告警</td></tr>
+</tbody></table></div>
+<p><strong>保持不变与边界</strong></p>
+<ul><li>本功能不定义音频格式、音量处理、缓存、CDN 或底层播放器技术。</li><li>本期固定一首歌，不提供切歌、收藏、下载或分享能力。</li><li>原唱失败会阻塞录音，但不阻塞用户查看投稿池或已有最新作品。</li></ul>
+<p><strong>追溯</strong></p>
+<ul><li>对应目标 / 场景：OBJ-01 / SCN-01。</li><li>所属页面 / 信息结构：PAGE-01 / IA-02。</li><li>关联规则：RULE-04。</li><li>对应验收：AC-01、AC-03。</li></ul>
+<h4 id="prd-7-fr-03-最新合唱作品播放">FR-03 最新合唱作品播放</h4>
+<p><strong>需求结论</strong></p>
+<p>最新合唱作品区让用户感知“大家的声音已经被合成到一起”，是 MVP 体验判断的核心结果区。页面应根据作品状态展示无作品、合成中、合成成功和合成失败，不得把失败或过期结果伪装为最新成功作品。合成失败时，如果存在上一版成功作品，用户仍可播放上一版，但页面必须说明最新版本生成失败。</p>
+<p><strong>行为说明</strong></p>
+<ol><li><strong>触发与前提：</strong>页面加载成功后，IA-03 根据当前合成作品状态展示；每次投稿新增、替换或删除后，该区域随合成状态更新。</li><li><strong>用户可见行为：</strong>无作品时展示空态；合成中时展示生成中提示；成功时展示可播放作品；失败时展示失败提示，并根据是否有上一版成功作品决定是否保留播放器。</li><li><strong>系统与数据行为：</strong>系统提供当前最新成功作品和当前合成任务的产品状态。PRD 不规定文件地址字段、版本号字段或轮询机制；spec 需保证页面能识别“当前最新成功作品”和“本轮合成状态”。</li><li><strong>结果与后续路径：</strong>用户能播放最新成功作品，或理解为什么暂时没有可播放作品。后续投稿变化会再次进入合成中并最终更新该区域。</li></ol>
+<p><strong>条件与分支</strong></p>
+<div class="table-wrap"><table><thead><tr><th>进入条件</th><th>用户看到什么</th><th>可执行操作</th><th>系统处理与数据结果</th><th>后续页面 / 状态</th><th>优先级或冲突规则</th></tr></thead><tbody>
+<tr><td>当前无有效投稿，且无历史成功作品</td><td>最新作品区展示暂无作品</td><td>无播放操作</td><td>不触发合成</td><td>等待用户提交投稿</td><td>无投稿空态不是错误</td></tr>
+<tr><td>有投稿变化，本轮正在合成</td><td>展示“正在生成最新版本”；如有上一版，可继续播放上一版并标明不是最新</td><td>播放上一版（如有）、等待或刷新</td><td>合成任务继续处理</td><td>成功 / 失败</td><td>合成中状态高于静态成功展示</td></tr>
+<tr><td>本轮合成成功</td><td>展示最新作品播放器和成功状态</td><td>播放 / 暂停 / 重播最新作品</td><td>最新成功作品成为页面默认播放对象</td><td>等待后续投稿变化</td><td>成功结果覆盖上一版</td></tr>
+<tr><td>本轮合成失败且有上一版成功作品</td><td>展示失败提示，同时保留上一版播放器</td><td>播放上一版</td><td>不把失败结果设为最新成功作品</td><td>后续投稿变化后可再次合成</td><td>必须说明上一版不是本轮最新结果</td></tr>
+<tr><td>本轮合成失败且无上一版作品</td><td>展示生成失败，暂无可播放作品</td><td>无播放操作，可等待后续重新触发</td><td>不生成假作品</td><td>后续投稿变化后可再次合成</td><td>失败不得展示为成功</td></tr>
+</tbody></table></div>
+<p><strong>异常与恢复</strong></p>
+<div class="table-wrap"><table><thead><tr><th>异常条件</th><th>用户反馈</th><th>系统 / 数据处理</th><th>是否可重试及方式</th><th>记录与告警</th></tr></thead><tbody>
+<tr><td>最新作品播放失败</td><td>提示“作品播放失败，请稍后重试”</td><td>不改变合成成功状态</td><td>可重试播放或刷新页面</td><td>记录播放失败</td></tr>
+<tr><td>合成状态未知</td><td>展示“最新作品状态暂不可用”</td><td>不覆盖上一版成功作品</td><td>可刷新</td><td>记录状态缺失</td></tr>
+<tr><td>合成中等待较久</td><td>展示仍在生成中或稍后再听提示</td><td>不催生重复提交</td><td>用户可离开后再回来</td><td>记录长时间合成，告警细节由 spec 定义</td></tr>
+</tbody></table></div>
+<p><strong>保持不变与边界</strong></p>
+<ul><li>本功能不定义作品文件命名、存储路径、音频格式和合成算法。</li><li>页面默认只展示最新成功作品；历史作品是否在后台保留只作为排查能力交给 spec。</li><li>本期不提供下载、分享、评论、点赞或排行。</li></ul>
+<p><strong>追溯</strong></p>
+<ul><li>对应目标 / 场景：OBJ-01、OBJ-03 / SCN-01、SCN-02。</li><li>所属页面 / 信息结构：PAGE-01 / IA-03、IA-06。</li><li>关联规则：RULE-04、RULE-05、RULE-06。</li><li>对应验收：AC-04、AC-05。</li></ul>
+<h4 id="prd-7-fr-04-微信录音-试听与重录">FR-04 微信录音、试听与重录</h4>
+<p><strong>需求结论</strong></p>
+<p>微信录音是 MVP 的主链路。用户点击开始录音后，页面应清楚进入录音中状态；停止后，用户必须能试听本次录音，并可选择重录或提交。授权失败、录音失败或上传失败时，页面应给出明确提示并回到可理解状态，不得展示待试听、已提交或合成中等假成功状态。</p>
+<p><strong>行为说明</strong></p>
+<ol><li><strong>触发与前提：</strong>用户位于 IA-04，活动允许投稿，原唱可用，且当前不处于提交中、删除中或页面加载失败状态。用户点击开始录音触发录音流程。</li><li><strong>用户可见行为：</strong>开始后按钮切换为录音中和停止入口，其他可能导致状态冲突的操作应禁用或明确提示。停止录音后，页面展示试听播放器、重录按钮和提交按钮；重录前应让用户理解会丢弃当前未提交录音。</li><li><strong>系统与数据行为：</strong>系统需要获得一段可用于提交的本次录音素材。PRD 不定义微信 <code>serverId</code>、上传流程、转码格式或临时文件处理；spec 需保证产品上能区分“未录制、录音中、待试听、录音失败”。</li><li><strong>结果与后续路径：</strong>用户满意后进入 FR-05 提交流程；不满意则重录并回到未录制 / 录音中。未提交录音不影响已提交有效投稿。</li></ol>
+<p><strong>条件与分支</strong></p>
+<div class="table-wrap"><table><thead><tr><th>进入条件</th><th>用户看到什么</th><th>可执行操作</th><th>系统处理与数据结果</th><th>后续页面 / 状态</th><th>优先级或冲突规则</th></tr></thead><tbody>
+<tr><td>未录制且可录音</td><td>“开始录音”主按钮可用，提示建议先听原唱</td><td>开始录音</td><td>准备录音能力</td><td>录音中 / 录音失败</td><td>活动关闭或原唱失败时禁用</td></tr>
+<tr><td>录音中</td><td>录音中提示、停止录音入口，提交不可用</td><td>停止录音</td><td>生成本次待试听录音</td><td>待试听 / 录音失败</td><td>录音中不得重复开始录音</td></tr>
+<tr><td>待试听</td><td>本次录音试听、重录、提交入口</td><td>试听 / 重录 / 提交</td><td>试听不产生投稿；重录丢弃本次未提交录音</td><td>待试听 / 未录制 / 提交中</td><td>重录不影响已提交投稿</td></tr>
+<tr><td>微信授权失败或录音能力不可用</td><td>明确提示无法录音</td><td>重试授权 / 返回 / 刷新</td><td>不生成待提交录音</td><td>未录制 / 录音失败</td><td>不进入假录音状态</td></tr>
+<tr><td>非微信环境访问</td><td>提示当前优先支持微信 H5，按产品确认展示兜底</td><td>查看说明；如有兜底则使用兜底</td><td>不默认承诺完整录音体验</td><td>兜底态</td><td>微信主链路优先</td></tr>
+</tbody></table></div>
+<p><strong>异常与恢复</strong></p>
+<div class="table-wrap"><table><thead><tr><th>异常条件</th><th>用户反馈</th><th>系统 / 数据处理</th><th>是否可重试及方式</th><th>记录与告警</th></tr></thead><tbody>
+<tr><td>用户拒绝录音授权</td><td>提示需要授权后才能录音</td><td>不创建录音</td><td>可重新授权或刷新</td><td>记录授权失败</td></tr>
+<tr><td>录音中断或停止失败</td><td>提示录音失败，请重新录制</td><td>丢弃不完整录音</td><td>可重新开始录音</td><td>记录录音失败</td></tr>
+<tr><td>试听播放失败</td><td>提示试听失败，建议重录</td><td>不提交不可确认录音</td><td>可重试试听或重录</td><td>记录试听失败</td></tr>
+<tr><td>用户刷新或离开页面</td><td>未提交录音可能丢失，页面不承诺保留</td><td>不影响已提交有效投稿</td><td>返回后重新录音</td><td>不需要业务告警</td></tr>
+</tbody></table></div>
+<p><strong>保持不变与边界</strong></p>
+<ul><li>未提交录音是本地或临时状态，不等同于有效投稿。</li><li>重录只丢弃当前未提交录音，不删除已提交投稿。</li><li>本功能不定义微信素材下载、音频转码、降噪、音量归一和混音处理。</li></ul>
+<p><strong>追溯</strong></p>
+<ul><li>对应目标 / 场景：OBJ-02 / SCN-01。</li><li>所属页面 / 信息结构：PAGE-01 / IA-04。</li><li>关联规则：不适用；受活动可投稿状态约束。</li><li>对应验收：AC-01、AC-03。</li></ul>
+<h4 id="prd-7-fr-05-提交或替换投稿">FR-05 提交或替换投稿</h4>
+<p><strong>需求结论</strong></p>
+<p>用户在待试听状态下点击提交后，系统应把本次录音保存为该用户在当前活动下的唯一有效投稿；如果此前已有有效投稿，本次提交替换旧投稿。提交成功后，投稿池应立即体现“我的投稿”，最新作品区进入合成中；提交失败时保留本次待试听录音并允许重试，不得展示已提交或合成中成功路径。</p>
+<p><strong>行为说明</strong></p>
+<ol><li><strong>触发与前提：</strong>用户已完成录音并处于待试听状态，活动允许投稿，页面没有正在提交的请求。用户点击提交触发提交流程。</li><li><strong>用户可见行为：</strong>点击后提交按钮进入加载态并禁止重复点击；页面保留当前录音试听结果，但避免用户在提交中重复重录造成状态混乱。提交成功时展示成功反馈，投稿池出现或更新“我的投稿”，合成状态进入合成中。</li><li><strong>系统与数据行为：</strong>系统将本次录音变成当前用户的有效投稿；若已有有效投稿，则旧投稿不再有效且不参与下一版作品。具体提交接口、幂等键、存储路径和事务实现交给研发 spec。</li><li><strong>结果与后续路径：</strong>提交成功后进入 FR-07 自动合成链路；提交失败时回到待试听状态，用户可以重试提交或重录。</li></ol>
+<p><strong>条件与分支</strong></p>
+<div class="table-wrap"><table><thead><tr><th>进入条件</th><th>用户看到什么</th><th>可执行操作</th><th>系统处理与数据结果</th><th>后续页面 / 状态</th><th>优先级或冲突规则</th></tr></thead><tbody>
+<tr><td>首次提交，用户无有效投稿</td><td>提交按钮可用</td><td>点击提交</td><td>本次录音成为有效投稿</td><td>已提交 / 合成中</td><td>提交成功后触发合成</td></tr>
+<tr><td>再次提交，用户已有有效投稿</td><td>提示或默认说明将以最新录音为准</td><td>点击提交</td><td>旧投稿失效，新录音成为唯一有效投稿</td><td>投稿池更新 / 合成中</td><td>单用户只保留一条有效投稿</td></tr>
+<tr><td>提交中</td><td>提交按钮加载中，重复点击不可用</td><td>等待</td><td>不重复创建有效投稿</td><td>成功 / 失败</td><td>防重复优先级高</td></tr>
+<tr><td>提交成功</td><td>成功提示，投稿池展示“我的投稿”</td><td>可继续查看、播放作品、后续重录再提交</td><td>有效投稿集合变化，触发合成</td><td>合成中</td><td>投稿池和合成状态必须同步更新</td></tr>
+<tr><td>提交失败</td><td>失败提示，本次试听保留，提交按钮恢复</td><td>重试提交 / 重录</td><td>不新增有效投稿，不触发合成成功态</td><td>待试听</td><td>失败不得覆盖旧有效投稿，除非系统已确认替换成功</td></tr>
+<tr><td>活动在提交时变为不可投稿</td><td>展示不可投稿原因</td><td>返回页面或刷新</td><td>不保存为有效投稿</td><td>活动不可用 / 不可投稿</td><td>最新活动状态高于页面旧状态</td></tr>
+</tbody></table></div>
+<p><strong>异常与恢复</strong></p>
+<div class="table-wrap"><table><thead><tr><th>异常条件</th><th>用户反馈</th><th>系统 / 数据处理</th><th>是否可重试及方式</th><th>记录与告警</th></tr></thead><tbody>
+<tr><td>网络失败，结果未知</td><td>提示提交结果暂未确认，建议刷新查看投稿池</td><td>不在未确认时展示已提交</td><td>可刷新页面或重试；重复处理规则由 spec 保证</td><td>记录结果未知</td></tr>
+<tr><td>提交被业务规则拒绝</td><td>展示可理解原因，如活动已关闭</td><td>不创建有效投稿</td><td>按原因决定是否可重试</td><td>记录业务失败</td></tr>
+<tr><td>重复点击提交</td><td>按钮加载中，不产生第二次可见提交</td><td>不生成多个有效投稿</td><td>等待当前结果</td><td>记录可选，具体由 spec 定义</td></tr>
+</tbody></table></div>
+<p><strong>保持不变与边界</strong></p>
+<ul><li>提交成功才算有效投稿；录音完成或试听完成都不算投稿。</li><li>单用户一条有效投稿是产品规则，不规定数据库唯一索引或幂等实现。</li><li>提交或替换后自动合成是产品结果，不规定任务创建方式。</li></ul>
+<p><strong>追溯</strong></p>
+<ul><li>对应目标 / 场景：OBJ-01、OBJ-03 / SCN-01。</li><li>所属页面 / 信息结构：PAGE-01 / IA-04、IA-05、IA-06。</li><li>关联规则：RULE-01。</li><li>对应验收：AC-01、<span id="ref-AC-02"></span>AC-02。</li></ul>
+<h4 id="prd-7-fr-06-投稿池展示与删除自己的投稿">FR-06 投稿池展示与删除自己的投稿</h4>
+<p><strong>需求结论</strong></p>
+<p>投稿池用于展示当前参与最新合唱的有效投稿集合，并让用户确认自己的声音是否已经参与。列表需要区分“我的投稿”和“其他同事投稿”；只有我的有效投稿展示删除入口。删除成功后，该投稿从有效投稿集合中移除，并触发重新合成；删除失败时，投稿仍保留，页面明确提示失败并允许重试。</p>
+<p><strong>行为说明</strong></p>
+<ol><li><strong>触发与前提：</strong>页面加载成功后展示投稿池；提交成功、删除成功或刷新页面时更新投稿池。用户已有有效投稿时，可对自己的投稿发起删除。</li><li><strong>用户可见行为：</strong>无投稿时展示空态；有投稿时展示投稿列表和我的投稿标识。我的投稿展示删除入口，点击后建议出现确认提示，避免误删；他人投稿不展示删除入口。</li><li><strong>系统与数据行为：</strong>删除成功意味着该投稿不再是有效投稿，且不参与下一版合唱。具体软删除字段、权限校验实现和重复删除处理交给研发 spec。</li><li><strong>结果与后续路径：</strong>删除成功后投稿池更新，合成状态进入合成中；删除失败时列表保持不变，用户可重试。</li></ol>
+<p><strong>条件与分支</strong></p>
+<div class="table-wrap"><table><thead><tr><th>进入条件</th><th>用户看到什么</th><th>可执行操作</th><th>系统处理与数据结果</th><th>后续页面 / 状态</th><th>优先级或冲突规则</th></tr></thead><tbody>
+<tr><td>当前无有效投稿</td><td>投稿池空态，提示还没有同事投稿</td><td>去录音</td><td>不改变投稿集合</td><td>等待提交</td><td>空态不是错误</td></tr>
+<tr><td>有他人有效投稿，无我的投稿</td><td>展示他人投稿，无删除入口</td><td>播放最新作品（如有）、去录音</td><td>不允许删除他人投稿</td><td>可提交自己的投稿</td><td>权限规则高于页面展示</td></tr>
+<tr><td>有我的有效投稿</td><td>展示“我的投稿”和删除入口</td><td>删除 / 重新录音提交</td><td>删除或替换会改变有效投稿集合</td><td>删除中 / 合成中</td><td>我的投稿最多一条有效</td></tr>
+<tr><td>删除确认中</td><td>展示确认文案，说明删除后会重新生成最新作品</td><td>确认删除 / 取消</td><td>取消不改变投稿</td><td>删除中 / 已提交</td><td>避免误删</td></tr>
+<tr><td>删除成功</td><td>我的投稿从列表移除，提示已删除，合成中</td><td>重新录音提交</td><td>投稿失效并触发重合成</td><td>合成中</td><td>删除后不得继续参与最新作品</td></tr>
+<tr><td>删除失败</td><td>投稿仍保留，展示失败原因或重试提示</td><td>重试删除 / 取消</td><td>投稿仍为有效投稿</td><td>已提交</td><td>不进入已删除状态</td></tr>
+</tbody></table></div>
+<p><strong>异常与恢复</strong></p>
+<div class="table-wrap"><table><thead><tr><th>异常条件</th><th>用户反馈</th><th>系统 / 数据处理</th><th>是否可重试及方式</th><th>记录与告警</th></tr></thead><tbody>
+<tr><td>删除请求失败</td><td>提示删除失败，投稿仍保留</td><td>不改变有效投稿集合</td><td>可重试删除</td><td>记录删除失败</td></tr>
+<tr><td>重复删除或投稿已失效</td><td>页面刷新后不再展示该投稿，或提示已删除</td><td>以最新有效投稿集合为准</td><td>可刷新</td><td>记录状态不一致</td></tr>
+<tr><td>尝试删除他人投稿</td><td>页面不提供入口；若异常触发则提示无权限</td><td>不改变他人投稿</td><td>不可重试，除非身份变化</td><td>记录权限异常</td></tr>
+</tbody></table></div>
+<p><strong>保持不变与边界</strong></p>
+<ul><li>删除是从有效投稿集合中移除，不定义物理删除、保留周期和审计实现。</li><li>本期不支持管理员删除、批量删除、举报、审核和恢复投稿。</li><li>投稿池展示用于内部体验，不提供公开头像墙、排行或社交互动。</li></ul>
+<p><strong>追溯</strong></p>
+<ul><li>对应目标 / 场景：OBJ-03 / SCN-02。</li><li>所属页面 / 信息结构：PAGE-01 / IA-05、IA-06。</li><li>关联规则：RULE-01、RULE-02、RULE-03。</li><li>对应验收：AC-02、AC-04。</li></ul>
+<h4 id="prd-7-fr-07-自动重新合成与状态展示">FR-07 自动重新合成与状态展示</h4>
+<p><strong>需求结论</strong></p>
+<p>新增有效投稿、替换有效投稿和删除有效投稿都会自动触发重新合成，用户不需要也不应该操作“合成”按钮。页面需要让用户理解当前最新作品是否正在生成、是否已成功、是否失败，以及当前可播放作品是否为上一版。多次投稿变化连续发生时，页面最终应呈现基于最新有效投稿集合的合唱结果；具体任务去重、排队和并发处理由研发 spec 定义。</p>
+<p><strong>行为说明</strong></p>
+<ol><li><strong>触发与前提：</strong>FR-05 提交 / 替换成功或 FR-06 删除成功后，系统进入自动合成链路。页面在 IA-06 展示合成状态，在 IA-03 展示最新作品区对应状态。</li><li><strong>用户可见行为：</strong>合成中显示“正在生成最新版本”一类提示；成功后最新作品播放器更新；失败后显示失败提示。若合成中或失败时存在上一版成功作品，页面可保留播放入口，但必须标明它不是本轮最新结果。</li><li><strong>系统与数据行为：</strong>系统基于当前有效投稿集合生成合唱作品。PRD 不规定队列、任务 ID、去重、重试、超时、文件存储或混音算法；spec 需保证产品上可识别当前作品状态和最新成功作品。</li><li><strong>结果与后续路径：</strong>合成成功后用户可播放最新作品；失败时用户可继续查看投稿池、播放上一版作品（如有），并等待后续投稿变化再次触发合成。</li></ol>
+<p><strong>条件与分支</strong></p>
+<div class="table-wrap"><table><thead><tr><th>进入条件</th><th>用户看到什么</th><th>可执行操作</th><th>系统处理与数据结果</th><th>后续页面 / 状态</th><th>优先级或冲突规则</th></tr></thead><tbody>
+<tr><td>首个有效投稿提交成功</td><td>最新作品区进入合成中，投稿池展示有效投稿</td><td>等待、播放原唱、查看投稿池</td><td>自动触发合成</td><td>成功 / 失败</td><td>有效投稿变化必须触发合成</td></tr>
+<tr><td>用户替换有效投稿成功</td><td>提示正在基于最新投稿重新生成</td><td>可播放上一版作品（如有）</td><td>旧投稿不参与新作品，新投稿参与</td><td>最新成功 / 失败</td><td>新投稿集合高于旧作品</td></tr>
+<tr><td>用户删除有效投稿成功</td><td>提示正在重新生成最新作品</td><td>等待或重新投稿</td><td>被删除投稿不参与新作品</td><td>最新成功 / 失败 / 无作品</td><td>删除规则高于上一版内容</td></tr>
+<tr><td>合成成功</td><td>最新作品播放器更新，合成提示消失或显示已更新</td><td>播放最新作品</td><td>最新成功作品更新</td><td>可播放</td><td>成功状态覆盖合成中</td></tr>
+<tr><td>合成失败</td><td>展示失败提示；上一版如有则保留</td><td>播放上一版（如有）、继续投稿</td><td>不生成新的最新成功作品</td><td>失败态</td><td>失败不得覆盖上一版成功作品</td></tr>
+<tr><td>连续多次投稿变化</td><td>页面提示正在生成最新版本</td><td>等待、查看投稿池</td><td>最终结果应对应最新有效投稿集合</td><td>最新成功 / 失败</td><td>产品结果以最新有效集合为准，技术实现交给 spec</td></tr>
+</tbody></table></div>
+<p><strong>异常与恢复</strong></p>
+<div class="table-wrap"><table><thead><tr><th>异常条件</th><th>用户反馈</th><th>系统 / 数据处理</th><th>是否可重试及方式</th><th>记录与告警</th></tr></thead><tbody>
+<tr><td>合成长时间未完成</td><td>提示仍在生成，可稍后回来</td><td>不展示假成功</td><td>用户可刷新或稍后访问</td><td>记录长耗时，告警方案由 spec 定义</td></tr>
+<tr><td>合成失败</td><td>提示最新版本生成失败</td><td>不更新最新成功作品</td><td>后续投稿变化可再次触发</td><td>记录合成失败</td></tr>
+<tr><td>状态刷新失败</td><td>提示状态暂不可用，保留已知安全状态</td><td>不把未知状态当成功</td><td>可刷新页面</td><td>记录状态刷新失败</td></tr>
+</tbody></table></div>
+<p><strong>保持不变与边界</strong></p>
+<ul><li>自动合成是产品触发规则，不定义任务队列和算法实现。</li><li>本期不提供用户手动合成按钮。</li><li>页面只要求展示最新成功作品；历史版本管理和排查入口由 spec 或后台方案决定。</li></ul>
+<p><strong>追溯</strong></p>
+<ul><li>对应目标 / 场景：OBJ-03 / SCN-01、SCN-02。</li><li>所属页面 / 信息结构：PAGE-01 / IA-03、IA-06。</li><li>关联规则：RULE-01、RULE-02、RULE-05、RULE-06。</li><li>对应验收：AC-02、AC-04、AC-05。</li></ul>
+<h4 id="prd-7-fr-08-空态和失败兜底">FR-08 空态和失败兜底</h4>
+<p><strong>需求结论</strong></p>
+<p>MVP 可以接受部分能力失败，但不能让用户误解当前状态。页面需要覆盖无投稿、原唱失败、录音失败、提交失败、删除失败、合成失败和页面整体加载失败等关键分支，并明确哪些情况下用户可以继续、哪些情况下必须重试或退出。所有失败态都应优先保护用户理解和数据正确性，不为了流程顺畅展示假成功。</p>
+<p><strong>行为说明</strong></p>
+<ol><li><strong>触发与前提：</strong>任一关键能力无数据、失败或状态未知时触发对应兜底。兜底应发生在对应信息区，页面级失败才覆盖整页。</li><li><strong>用户可见行为：</strong>用户能看到明确状态说明、可行下一步和不可操作原因。例如无投稿时鼓励录音，提交失败时保留试听，合成失败时说明最新作品未生成。</li><li><strong>系统与数据行为：</strong>失败态不应产生错误的有效投稿、已删除、最新成功作品或公开传播结果。具体错误码、重试次数和告警通道交给研发 spec。</li><li><strong>结果与后续路径：</strong>用户可以按提示重试、刷新、重新录音、稍后再看或退出；页面不要求用户理解底层技术原因。</li></ol>
+<p><strong>条件与分支</strong></p>
+<div class="table-wrap"><table><thead><tr><th>进入条件</th><th>用户看到什么</th><th>可执行操作</th><th>系统处理与数据结果</th><th>后续页面 / 状态</th><th>优先级或冲突规则</th></tr></thead><tbody>
+<tr><td>无有效投稿</td><td>投稿池空态，最新作品暂无</td><td>开始录音</td><td>不触发合成，直到有投稿</td><td>待录音 / 提交后合成中</td><td>空态不算失败</td></tr>
+<tr><td>原唱失败</td><td>原唱区失败提示，录音入口禁用或说明原因</td><td>重试原唱 / 刷新</td><td>不进入录音</td><td>原唱可用 / 失败</td><td>原唱失败阻塞录音</td></tr>
+<tr><td>录音失败</td><td>录音区失败提示</td><td>重新录音</td><td>不生成待提交录音</td><td>未录制</td><td>不可提交失败录音</td></tr>
+<tr><td>提交失败</td><td>提交失败提示，保留试听</td><td>重试提交 / 重录</td><td>不新增有效投稿</td><td>待试听</td><td>不触发合成成功态</td></tr>
+<tr><td>删除失败</td><td>删除失败提示，投稿仍展示</td><td>重试删除</td><td>有效投稿保持不变</td><td>已提交</td><td>不触发删除后的合成成功态</td></tr>
+<tr><td>合成失败</td><td>最新作品区失败提示；上一版如有保留</td><td>播放上一版 / 稍后查看</td><td>不更新最新成功作品</td><td>失败 / 后续合成中</td><td>不展示假最新作品</td></tr>
+<tr><td>页面整体加载失败</td><td>整页错误和重试入口</td><td>重新加载</td><td>不产生业务副作用</td><td>加载中 / 成功 / 失败</td><td>页面级失败高于区块态</td></tr>
+</tbody></table></div>
+<p><strong>异常与恢复</strong></p>
+<div class="table-wrap"><table><thead><tr><th>异常条件</th><th>用户反馈</th><th>系统 / 数据处理</th><th>是否可重试及方式</th><th>记录与告警</th></tr></thead><tbody>
+<tr><td>多个区块同时失败</td><td>优先展示会阻塞主链路的失败，例如页面加载或原唱失败</td><td>各区块独立保持安全状态</td><td>按区块重试或整页刷新</td><td>记录组合失败</td></tr>
+<tr><td>用户在失败态重复点击</td><td>按钮应禁用或提示当前不可操作</td><td>不产生重复副作用</td><td>恢复后可操作</td><td>记录异常点击可选</td></tr>
+<tr><td>状态不一致</td><td>提示刷新后查看最新状态</td><td>以刷新后的系统状态为准</td><td>可刷新</td><td>记录状态不一致</td></tr>
+</tbody></table></div>
+<p><strong>保持不变与边界</strong></p>
+<ul><li>兜底文案应让内部体验者知道下一步，不需要暴露技术错误细节。</li><li>本期不承诺大规模并发、高可用 SLA 或正式客服流程。</li><li>隐私和内部使用提示属于关键边界，失败态不得引导公开传播。</li></ul>
+<p><strong>追溯</strong></p>
+<ul><li>对应目标 / 场景：OBJ-01、OBJ-02、OBJ-03 / SCN-01、SCN-02。</li><li>所属页面 / 信息结构：PAGE-01 / IA-01 至 IA-06。</li><li>关联规则：RULE-04、RULE-05、RULE-06。</li><li>对应验收：AC-03、AC-05。</li></ul>
+<hr>
+</div></details><details class="chapter-detail"><summary>4. 规则、数据与质量边界</summary><div class="chapter-body"><h2 id="prd-7-4-规则-数据与质量边界">4. 规则、数据与质量边界</h2>
+<h3 id="prd-8-4-1-业务规则">4.1 业务规则</h3>
+<div class="table-wrap"><table><thead><tr><th>规则 ID</th><th>条件 / 角色 / 当前状态</th><th>允许或禁止的动作</th><th>处理结果 / 后续状态</th><th>冲突优先级</th><th>异常处理</th></tr></thead><tbody>
+<tr><td>RULE-01</td><td>单个用户已有一条有效投稿</td><td>再次提交</td><td>旧投稿失效，新投稿成为有效投稿，并触发重新合成</td><td>高</td><td>重复提交不得生成多个有效投稿</td></tr>
+<tr><td>RULE-02</td><td>用户查看自己的有效投稿</td><td>删除</td><td>软删除该投稿，并触发重新合成</td><td>高</td><td>重复删除不应造成页面错误或重复合成风暴</td></tr>
+<tr><td>RULE-03</td><td>用户查看他人投稿</td><td>删除</td><td>禁止删除</td><td>高</td><td>前端不展示入口；系统仍需校验</td></tr>
+<tr><td>RULE-04</td><td>活动无有效投稿</td><td>播放最新作品</td><td>展示空态，不报错</td><td>中</td><td>原唱播放器仍可用</td></tr>
+<tr><td>RULE-05</td><td>合成失败且有上一版作品</td><td>播放最新作品</td><td>保留上一版作品，并提示最新版本生成失败</td><td>高</td><td>后续投稿变化可再次触发合成</td></tr>
+<tr><td>RULE-06</td><td>合成失败且无上一版作品</td><td>播放最新作品</td><td>展示失败 / 暂无作品提示</td><td>高</td><td>不展示假作品</td></tr>
+</tbody></table></div>
+<h3 id="prd-8-4-2-页面状态与操作矩阵">4.2 页面状态与操作矩阵</h3>
+<div class="table-wrap"><table><thead><tr><th>状态对象 / 区域</th><th>进入条件</th><th>用户看到什么</th><th>可执行操作</th><th>禁止或置灰操作</th><th>系统处理与数据结果</th><th>下一状态</th><th>关联规则 / 验收</th></tr></thead><tbody>
+<tr><td>IA-04 录音区</td><td>未录制且活动允许投稿、原唱可用</td><td>开始录音入口</td><td>开始录音</td><td>提交、试听</td><td>准备录音能力</td><td>录音中 / 录音失败</td><td>FR-04 / AC-03</td></tr>
+<tr><td>IA-04 录音区</td><td>正在录音</td><td>录音中提示、停止入口</td><td>停止录音</td><td>重复开始、提交</td><td>生成本次待试听录音</td><td>待试听 / 录音失败</td><td>FR-04 / AC-03</td></tr>
+<tr><td>IA-04 录音区</td><td>已停止且有本次未提交录音</td><td>试听、重录、提交入口</td><td>试听 / 重录 / 提交</td><td>重复开始录音（除非先重录）</td><td>试听不产生投稿；重录丢弃本次未提交录音</td><td>未录制 / 提交中 / 提交失败</td><td>FR-04、FR-05 / AC-01</td></tr>
+<tr><td>IA-05 投稿池</td><td>用户已有有效投稿</td><td>投稿池展示“我的投稿”和删除入口</td><td>删除自己的投稿 / 再次录制提交</td><td>删除他人投稿</td><td>删除或替换改变有效投稿集合</td><td>删除中 / 替换后合成中</td><td>FR-05、FR-06 / RULE-01 至 RULE-03</td></tr>
+<tr><td>IA-03 / IA-06 合成区</td><td>有效投稿集合变化且本轮合成未完成</td><td>最新作品区提示正在生成；上一版如有可播放并标明</td><td>播放上一版（如有）、等待</td><td>手动触发合成</td><td>自动生成最新作品</td><td>成功 / 失败</td><td>FR-07 / AC-04、AC-05</td></tr>
+<tr><td>IA-03 最新作品区</td><td>本轮合成成功</td><td>最新作品可播放</td><td>播放 / 暂停 / 重播</td><td>无</td><td>最新成功作品更新</td><td>后续投稿变化后再次合成中</td><td>FR-03、FR-07 / AC-05</td></tr>
+<tr><td>IA-03 最新作品区</td><td>本轮合成失败</td><td>失败提示；上一版作品如有则保留</td><td>播放上一版（如有）、稍后查看</td><td>播放失败版本</td><td>不更新最新成功作品</td><td>后续重新合成</td><td>FR-03、FR-08 / RULE-05、RULE-06</td></tr>
+</tbody></table></div>
+<h3 id="prd-8-4-3-数据与埋点">4.3 数据与埋点</h3>
+<p>只定义产品口径，不定义数据库字段和接口字段。</p>
+<div class="table-wrap"><table><thead><tr><th>字段 / 指标 / 事件</th><th>定义与取值</th><th>生成或触发时机</th><th>展示 / 计算规则</th><th>历史数据处理</th><th>数据源</th></tr></thead><tbody>
+<tr><td>有效投稿</td><td>当前未被删除、参与最新合成的用户投稿</td><td>投稿提交成功或删除成功后变化</td><td>投稿池只展示有效投稿</td><td>旧版本作品可保留用于排查，不作为当前有效投稿</td><td>投稿记录能力</td></tr>
+<tr><td>最新合唱作品</td><td>最近一次成功合成且可播放的作品</td><td>合成成功后更新</td><td>页面默认展示最新成功版本</td><td>合成失败时保留上一版成功作品</td><td>合成作品能力</td></tr>
+<tr><td>内部体验完成</td><td>用户完成录音提交并播放最新作品</td><td>播放最新作品后记录</td><td>用于判断 MVP 体验是否跑通</td><td>不做公开增长指标</td><td>埋点 / 访谈记录</td></tr>
+</tbody></table></div>
+<h3 id="prd-8-4-4-非功能与质量要求">4.4 非功能与质量要求</h3>
+<div class="table-wrap"><table><thead><tr><th>维度</th><th>要求 / 阈值</th><th>适用范围</th><th>验证方式</th></tr></thead><tbody>
+<tr><td>稳定性</td><td>录音、提交、合成任一失败时不得进入假成功状态</td><td>微信 H5 主链路</td><td>测试用例和异常模拟</td></tr>
+<tr><td>隐私</td><td>内部体验声音和作品不得默认公开传播</td><td>投稿和作品</td><td>权限配置和页面入口检查</td></tr>
+<tr><td>可观测性</td><td>合成失败、录音失败和提交失败可被定位</td><td>MVP 体验期</td><td>日志和人工排查清单，具体实现由 spec 定义</td></tr>
+</tbody></table></div>
+<hr>
+</div></details><details class="chapter-detail"><summary>5. 影响、依赖与发布</summary><div class="chapter-body"><h2 id="prd-8-5-影响-依赖与发布">5. 影响、依赖与发布</h2>
+<h3 id="prd-9-5-1-联动影响与兼容">5.1 联动影响与兼容</h3>
+<div class="table-wrap"><table><thead><tr><th>影响面</th><th>有 / 无 / 待确认</th><th>具体变化</th><th>历史或旧版本处理</th><th>负责人</th></tr></thead><tbody>
+<tr><td>微信 H5</td><td>有</td><td>录音能力是主链路</td><td>非微信环境仅作为兜底提示或降级体验</td><td>前端</td></tr>
+<tr><td>服务端投稿能力</td><td>有</td><td>需要支持有效投稿、替换和软删除</td><td>MVP 无历史迁移</td><td>服务端</td></tr>
+<tr><td>音频合成能力</td><td>有</td><td>投稿变化后自动生成最新作品</td><td>可保留历史成功作品用于排查</td><td>服务端 / 音频处理</td></tr>
+<tr><td>运营客服</td><td>轻度</td><td>内部体验需说明素材和声音用途</td><td>不对外传播</td><td>产品 / 运营</td></tr>
+</tbody></table></div>
+<h3 id="prd-9-5-2-依赖">5.2 依赖</h3>
+<div class="table-wrap"><table><thead><tr><th>依赖项</th><th>前置产物</th><th>负责人</th><th>最晚时间</th><th>阻塞影响</th><th>状态</th></tr></thead><tbody>
+<tr><td>微信录音预验证</td><td>授权、录音、上传和素材获取链路验证结果</td><td>前端 / 服务端</td><td>开发前</td><td>阻塞微信主链路投入评估</td><td>待验证</td></tr>
+<tr><td>音频合成预验证</td><td>最小可用混音效果和耗时评估</td><td>服务端</td><td>开发前</td><td>阻塞排期和 MVP 质量判断</td><td>待验证</td></tr>
+<tr><td>H5 原型</td><td>单页 6 信息区设计稿</td><td>设计</td><td>开发联调前</td><td>阻塞视觉验收，不阻塞规则评审</td><td>待产出</td></tr>
+</tbody></table></div>
+<h3 id="prd-9-5-3-发布方案">5.3 发布方案</h3>
+<ul><li>上线前准备：确认内部体验名单、入口链接、素材使用范围和问题反馈渠道。</li><li>灰度范围：先对产品、研发和少量业务同事开放；确认主链路可用后扩大内部体验。</li><li>回滚条件：微信录音大面积不可用、提交后无法恢复、合成结果持续不可用或出现声音公开风险。</li><li>回滚方式：关闭入口或降级为只展示原唱和玩法说明；保留已提交素材用于排查时需遵守内部隐私约束。</li></ul>
+<hr>
+</div></details><details class="chapter-detail"><summary>6. 验收与追溯</summary><div class="chapter-body"><h2 id="prd-9-6-验收与追溯">6. 验收与追溯</h2>
+<h3 id="prd-10-6-1-端到端追溯矩阵">6.1 端到端追溯矩阵</h3>
+<div class="table-wrap"><table><thead><tr><th>目标 ID</th><th>场景 ID</th><th>功能 ID</th><th>页面 / 信息区</th><th>规则 ID</th><th>验收 ID</th><th>状态</th></tr></thead><tbody>
+<tr><td>OBJ-01</td><td>SCN-01</td><td>FR-01 至 FR-05</td><td>PAGE-01 / IA-01 至 IA-05</td><td>RULE-01</td><td>AC-01、AC-02</td><td>原型待产出</td></tr>
+<tr><td>OBJ-02</td><td>SCN-01</td><td>FR-04</td><td>PAGE-01 / IA-04</td><td>不适用</td><td>AC-03</td><td>微信能力待预验证</td></tr>
+<tr><td>OBJ-03</td><td>SCN-01、SCN-02</td><td>FR-06、FR-07</td><td>PAGE-01 / IA-03、IA-05、IA-06</td><td>RULE-02 至 RULE-06</td><td>AC-04、AC-05</td><td>合成 spec 待产出</td></tr>
+</tbody></table></div>
+<h3 id="prd-10-6-2-研发验收标准">6.2 研发验收标准</h3>
+<h4 id="prd-10-ac-01-用户能完成提交并看到自己的投稿">AC-01 用户能完成提交并看到自己的投稿</h4>
+<ul><li><strong>Given：</strong>用户通过微信打开 PAGE-01，原唱可播放，录音能力可用，活动当前允许投稿。</li><li><strong>When：</strong>用户完成录音、试听并提交。</li><li><strong>Then：</strong>页面提示提交成功，投稿池展示“我的投稿”，系统进入合成中状态；提交失败时页面保留本次试听结果并允许重试，不展示已提交。</li></ul>
+<h4 id="prd-10-ac-02-再次提交会替换自己的有效投稿">AC-02 再次提交会替换自己的有效投稿</h4>
+<ul><li><strong>Given：</strong>用户已经有一条有效投稿。</li><li><strong>When：</strong>用户重新录音并再次提交成功。</li><li><strong>Then：</strong>投稿池中该用户仍只有一条有效投稿，内容以最新提交为准，并触发新一轮合成。</li></ul>
+<h4 id="prd-10-ac-03-微信录音不可用时不会假成功">AC-03 微信录音不可用时不会假成功</h4>
+<ul><li><strong>Given：</strong>微信授权失败、录音 API 不可用或上传失败。</li><li><strong>When：</strong>用户尝试录音或提交。</li><li><strong>Then：</strong>页面展示明确失败原因或重试提示，不展示待试听、已提交或合成中成功路径；原唱播放器仍按可用状态展示。</li></ul>
+<h4 id="prd-10-ac-04-删除自己的投稿后会重新合成">AC-04 删除自己的投稿后会重新合成</h4>
+<ul><li><strong>Given：</strong>用户已有有效投稿，且投稿池中可能还有其他同事投稿。</li><li><strong>When：</strong>用户删除自己的投稿成功。</li><li><strong>Then：</strong>投稿池不再展示该投稿，该投稿不参与下一版合唱，页面进入合成中；合成成功后最新作品更新为不包含该投稿的版本。</li></ul>
+<h4 id="prd-10-ac-05-合成失败能够明确兜底">AC-05 合成失败能够明确兜底</h4>
+<ul><li><strong>Given：</strong>投稿变化后系统开始合成，且存在“有上一版作品”和“无上一版作品”两组数据。</li><li><strong>When：</strong>本轮合成失败。</li><li><strong>Then：</strong>页面提示最新版本生成失败；有上一版作品时继续允许播放上一版，无上一版作品时展示暂无可播放作品；页面不得把失败版本展示为成功。</li></ul>
+<hr>
+</div></details><details class="chapter-detail"><summary>7. 效果验证</summary><div class="chapter-body"><h2 id="prd-10-7-效果验证">7. 效果验证</h2>
+<p>内部 MVP 不设置对外增长指标，使用体验完成信号和护栏判断是否继续投入。</p>
+<div class="table-wrap"><table><thead><tr><th>指标 ID</th><th>对应目标</th><th>类型</th><th>定义与计算口径</th><th>基线</th><th>目标 / 阈值</th><th>数据来源</th><th>周期</th><th>负责人</th></tr></thead><tbody>
+<tr><td>MET-01</td><td>OBJ-01</td><td>过程</td><td>受邀体验人员中完成录音、提交并播放最新作品的人数占比</td><td>无</td><td>首轮不少于 5 人完成，或不少于 70% 受邀者完成</td><td>埋点 / 体验记录</td><td>首轮内部体验</td><td>产品</td></tr>
+<tr><td>MET-02</td><td>OBJ-01</td><td>结果</td><td>体验者是否能描述“多人异步提交后自动合成”的玩法</td><td>无</td><td>访谈中多数体验者能复述核心玩法</td><td>访谈记录</td><td>首轮内部体验</td><td>产品</td></tr>
+<tr><td>MET-03</td><td>OBJ-02</td><td>护栏</td><td>微信主链路被录音授权、上传或提交失败阻断的比例</td><td>无</td><td>首轮不出现系统性阻断；个别失败可定位</td><td>日志 / 反馈</td><td>首轮内部体验</td><td>研发</td></tr>
+</tbody></table></div>
+<p>达标时进入下一轮产品化评估；若 MET-03 不达标，优先补技术链路，不扩大体验范围；若 MET-01 达标但 MET-02 不达标，优先调整页面说明和合唱结果反馈。</p>
+<h3 id="prd-11-输出前一致性审查">输出前一致性审查</h3>
+<div class="table-wrap"><table><thead><tr><th>检查域</th><th>检查结果</th><th>处理说明</th></tr></thead><tbody>
+<tr><td>术语与角色</td><td>一致</td><td>全文统一使用“发起人”“受邀参与者”“有效投稿”“最新成功作品”</td></tr>
+<tr><td>状态、动作与结果</td><td>一致</td><td>投稿新增、替换、删除都会触发重新合成；页面状态矩阵、功能正文、异常规则和验收均保留上一版成功作品作为失败兜底</td></tr>
+<tr><td>数值、单位与口径</td><td>2 项待验证</td><td>合成耗时和音频质量没有虚构阈值，保留为技术预验证项；体验完成率口径与受邀人数口径一致</td></tr>
+<tr><td>追溯关系</td><td>一致</td><td>目标、场景、PAGE / IA、FR、RULE、AC 和 MET 的关联无断链</td></tr>
+<tr><td>事实状态</td><td>一致</td><td>已确认产品规则、技术前置和待研发 spec 补齐事项分开记录，没有把实现假设写成既定方案</td></tr>
+</tbody></table></div>
+<hr>
+</div></details><details class="chapter-detail"><summary>8. 风险、待确认项、研发 spec 交接与附录</summary><div class="chapter-body"><h2 id="prd-11-8-风险-待确认项-研发-spec-交接与附录">8. 风险、待确认项、研发 spec 交接与附录</h2>
+<h3 id="prd-12-8-1-风险-假设与待确认项">8.1 风险、假设与待确认项</h3>
+<div class="table-wrap"><table><thead><tr><th>类型</th><th>内容</th><th>是否阻塞</th><th>验证 / 缓解方式</th><th>负责人</th><th>最晚时间</th></tr></thead><tbody>
+<tr><td>技术前置</td><td>微信录音、上传和服务端素材处理链路未验证</td><td>阻塞实现排期</td><td>开发前完成最小链路预验证</td><td>前端 / 服务端</td><td>开发前</td></tr>
+<tr><td>技术前置</td><td>音频合成质量和耗时未知</td><td>阻塞 MVP 体验质量判断</td><td>用 2-3 条样本录音验证合成效果</td><td>服务端</td><td>开发前</td></tr>
+<tr><td>产品风险</td><td>内部体验者误以为作品可公开分享</td><td>不阻塞</td><td>页面和体验通知明确内部使用</td><td>产品 / 运营</td><td>上线前</td></tr>
+<tr><td>体验风险</td><td>合成等待时间过长导致用户离开</td><td>不阻塞产品评审，可能影响体验</td><td>页面展示生成中和稍后再听提示</td><td>产品 / 前端</td><td>联调前</td></tr>
+</tbody></table></div>
+<h3 id="prd-12-8-2-待研发-spec-补齐事项">8.2 待研发 spec 补齐事项</h3>
+<div class="table-wrap"><table><thead><tr><th>类别</th><th>PRD 已确认的产品能力 / 结果</th><th>spec 需补齐事项</th><th>是否阻塞产品评审</th><th>是否阻塞研发实现</th><th>负责人 / 下一步</th></tr></thead><tbody>
+<tr><td>接口能力</td><td>页面需要获取活动、原唱、最新作品、投稿池、用户投稿和合成状态；用户可提交 / 替换 / 删除投稿</td><td>API 路径、方法、请求响应字段、错误码、鉴权、幂等策略</td><td>否</td><td>是</td><td>服务端输出接口 spec</td></tr>
+<tr><td>微信能力</td><td>微信 H5 为录音主链路；不可用时明确提示，不进入假录音</td><td>JS-SDK 授权、录音、上传、服务端素材获取、异常映射</td><td>否</td><td>是</td><td>前端 / 服务端完成预验证</td></tr>
+<tr><td>异步任务</td><td>投稿新增、替换、删除后自动重新合成，页面展示合成中 / 成功 / 失败</td><td>队列选型、任务去重、重试超时、失败告警、并发处理</td><td>否</td><td>是</td><td>服务端输出合成任务方案</td></tr>
+<tr><td>存储与算法</td><td>最新作品可播放；合成失败时保留上一版作品</td><td>素材存储、文件命名、转码参数、混音算法、历史版本保留策略</td><td>否</td><td>是</td><td>服务端 / 音频处理确认方案</td></tr>
+<tr><td>测试与运维</td><td>MVP 体验问题可定位，失败态可复现</td><td>接口契约测试、日志字段、监控告警、问题排查脚本</td><td>否</td><td>是</td><td>研发 / 测试制定联调清单</td></tr>
+</tbody></table></div>
+<h3 id="prd-12-8-3-附录与资料索引">8.3 附录与资料索引</h3>
+<div class="table-wrap"><table><thead><tr><th>资料</th><th>链接 / 路径</th><th>版本 / 日期</th><th>用途</th></tr></thead><tbody>
+<tr><td>需求定义示例</td><td><code>examples/async-chorus-requirement-define.md</code></td><td>示例</td><td>产品决策来源</td></tr>
+<tr><td>H5 原型</td><td><code>design/async-chorus-mvp.fig</code></td><td>待产出</td><td>页面布局和视觉表达</td></tr>
+<tr><td>研发 spec</td><td><code>docs/spec/async-chorus-mvp-spec.md</code></td><td>待产出</td><td>接口、任务、存储和合成实现方案</td></tr>
+</tbody></table></div></div></details></div></section>
+    <section class="section" id="consistency"><div class="section-head"><div><h2>一致性检查</h2></div></div><div class="checks"><div class="check"><strong>信息完整性</strong><span class="muted">正式 PRD 原章节已内嵌，未用摘要替代正文。</span></div><div class="check"><strong>原型边界</strong><span class="muted">原型只表达用户可见 UI，颜色已降为黑白灰。</span></div><div class="check"><strong>交付依赖</strong><span class="muted">CSS、脚本、SVG 均内嵌，无 PNG 或外部资源。</span></div></div></section>
+  </main>
+</div>
+<script>
+const STATES=[{"id":"UI-STATE-01","label":"初始 / 未录制","page":"PAGE-01 异步合唱活动页","state_label":"可以开始参与","screen_title":"开始录音","message":"开始录音","action":"开始录音","task":"理解玩法并开始参与","visible":["活动说明","原唱播放器","最新作品状态","开始录音入口"],"next":"录音中","trace":["FR-01","FR-02","FR-04","AC-01","AC-03"]},{"id":"UI-STATE-02","label":"录音中","page":"PAGE-01 异步合唱活动页","state_label":"正在录音","screen_title":"正在录音","message":"录音进行中","action":"停止录音","task":"完成本次录音","visible":["录音中提示","停止录音入口","不展示假成功"],"next":"待试听 / 录音失败","trace":["FR-04","AC-03"]},{"id":"UI-STATE-03","label":"待试听","page":"PAGE-01 异步合唱活动页","state_label":"录音完成，等待确认","screen_title":"录音完成","message":"确认并提交","action":"提交投稿","task":"判断是否提交","visible":["录音播放器","试听入口","重录入口","提交入口"],"next":"未录制 / 提交中","trace":["FR-04","FR-05","AC-01","AC-03"]},{"id":"UI-STATE-04","label":"已提交 / 合成中","page":"PAGE-01 异步合唱活动页","state_label":"投稿已提交，正在生成","screen_title":"正在生成最新合唱","message":"投稿已提交","action":"等待结果","task":"理解投稿已生效并等待结果","visible":["我的投稿","合成中提示","上一版作品（如有）"],"next":"合成成功 / 合成失败","trace":["FR-05","FR-07","AC-01","AC-05"]},{"id":"UI-STATE-05","label":"合成成功","page":"PAGE-01 异步合唱活动页","state_label":"最新作品已更新","screen_title":"最新合唱已更新","message":"最新合唱已更新","action":"播放最新作品","task":"播放最新作品","visible":["最新作品播放器","投稿池","成功反馈"],"next":"后续投稿变化后再次合成中","trace":["FR-03","FR-07","AC-01","AC-05"]},{"id":"UI-STATE-06","label":"合成失败","page":"PAGE-01 异步合唱活动页","state_label":"本次生成失败","screen_title":"暂未生成成功","message":"暂未生成成功","action":"稍后查看","task":"理解失败并知道后续路径","visible":["失败原因","上一版作品或暂无作品","后续处理提示"],"next":"后续重新合成","trace":["FR-07","FR-08","RULE-05","RULE-06","AC-05"]},{"id":"UI-STATE-07","label":"删除确认 / 删除中","page":"PAGE-01 异步合唱活动页","state_label":"删除投稿","screen_title":"删除我的投稿","message":"删除我的投稿","action":"确认删除","task":"删除自己的投稿","visible":["删除确认","处理中反馈","取消入口"],"next":"合成中 / 返回已提交","trace":["FR-06","RULE-02","AC-04"]}];
+const PAGE_STRUCTURE=[
+  '活动与玩法说明 · 固定信息',
+  '原唱播放器 · 固定信息 + 播放状态',
+  '最新合唱作品 · 合成结果动态区',
+  '录音与试听 · 用户操作动态区',
+  '投稿池 · 投稿集合 / 权限动态区',
+  '合成状态与提示 · 系统反馈区'
+];
+const STATE_CHANGES={
+  'UI-STATE-01':['原唱可播放，录音入口可用','最新作品暂无播放入口，投稿池为空态','合成状态为等待投稿'],
+  'UI-STATE-02':['录音区进入录音中，主操作变为停止录音','不展示待试听、提交或成功状态','合成状态保持等待投稿'],
+  'UI-STATE-03':['录音区展示试听、重录和提交','本次录音尚未进入投稿池','提交后进入合成中'],
+  'UI-STATE-04':['投稿池展示我的投稿，合成状态显示正在生成','最新作品保留上一版作品（如有）','录音区不提供重复提交'],
+  'UI-STATE-05':['最新作品区显示可播放结果','投稿池展示当前有效投稿和删除入口','合成状态显示成功'],
+  'UI-STATE-06':['最新作品区显示失败及上一版作品（如有）','合成状态显示失败和后续路径','不把失败展示为成功'],
+  'UI-STATE-07':['投稿池进入删除确认 / 删除中','合成状态说明删除后会重新生成','处理中不允许重复删除']
+};
+const STATE_VIEWPORT={
+  'UI-STATE-01':0,
+  'UI-STATE-02':450,
+  'UI-STATE-03':450,
+  'UI-STATE-04':330,
+  'UI-STATE-05':330,
+  'UI-STATE-06':330,
+  'UI-STATE-07':650
+};
+const svgText=(x,y,value,size=14,weight=400,fill='#202020',anchor='start')=>`<text x="${x}" y="${y}" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif" font-size="${size}" font-weight="${weight}" fill="${fill}" text-anchor="${anchor}">${value}</text>`;
+const svgBox=(x,y,w,h,fill='#fff',stroke='#d0d0d0',radius=10)=>`<rect x="${x}" y="${y}" width="${w}" height="${h}" rx="${radius}" fill="${fill}" stroke="${stroke}"/>`;
+const svgRule=(x1,y1,x2,y2,stroke='#dedede')=>`<line x1="${x1}" y1="${y1}" x2="${x2}" y2="${y2}" stroke="${stroke}"/>`;
+const svgPlay=(x,y,filled=false)=>`${svgBox(x,y,44,44,filled?'#242424':'#fff','#242424',22)}${svgText(x+22,y+28,'▶',15,700,filled?'#fff':'#242424','middle')}`;
+const svgButton=(x,y,w,label,enabled=true)=>`${svgBox(x,y,w,44,enabled?'#242424':'#f1f1f1',enabled?'#242424':'#c9c9c9',7)}${svgText(x+w/2,y+28,label,14,700,enabled?'#fff':'#888','middle')}`;
+const sharedChorusSvg=(s)=>{
+  const id=s.id;
+  const latest={
+    'UI-STATE-01':['暂无最新作品','提交投稿后生成'],
+    'UI-STATE-02':['暂无最新作品','录音完成后可提交'],
+    'UI-STATE-03':['暂无最新作品','提交后生成最新合唱'],
+    'UI-STATE-04':['上一版作品','正在生成最新合唱'],
+    'UI-STATE-05':['最新合唱作品','可以播放最新合唱作品'],
+    'UI-STATE-06':['最新合唱作品','本次生成失败，保留上一版'],
+    'UI-STATE-07':['上一版作品','删除后重新生成']
+  }[id]||['暂无最新作品','提交后生成'];
+  const record={
+    'UI-STATE-01':['未录制','先听原唱，再录下你的声音。'],
+    'UI-STATE-02':['录音进行中','完成后可以试听或重录。'],
+    'UI-STATE-03':['录音完成','先试听，确认后再提交投稿。'],
+    'UI-STATE-04':['投稿已提交','已进入生成流程，等待最新作品。'],
+    'UI-STATE-05':['可以继续参与','可播放最新作品或再次录音。'],
+    'UI-STATE-06':['本次生成失败','保留上一版作品，可稍后查看。'],
+    'UI-STATE-07':['删除我的投稿','确认后将重新生成最新作品。']
+  }[id]||['未录制','先听原唱，再录下你的声音。'];
+  const submission={
+    'UI-STATE-01':['暂无有效投稿','提交后显示在这里'],
+    'UI-STATE-02':['录音完成后提交投稿','本次录音尚未提交'],
+    'UI-STATE-03':['尚未提交本次录音','提交后显示在这里'],
+    'UI-STATE-04':['我的投稿 · 已提交','删除'],
+    'UI-STATE-05':['我的投稿 · 有效','删除'],
+    'UI-STATE-06':['我的投稿 · 保留','删除'],
+    'UI-STATE-07':['我的投稿 · 待处理','可取消']
+  }[id]||['暂无有效投稿','提交后显示在这里'];
+  const system={
+    'UI-STATE-01':['等待投稿','提交后自动生成最新作品'],
+    'UI-STATE-02':['等待投稿','完成录音后再提交'],
+    'UI-STATE-03':['等待提交','提交后自动生成'],
+    'UI-STATE-04':['合成中','请稍后查看'],
+    'UI-STATE-05':['合成成功','最新作品已更新'],
+    'UI-STATE-06':['合成失败','保留上一版作品，如有'],
+    'UI-STATE-07':['删除后重新合成','请稍后查看']
+  }[id]||['等待投稿','提交后自动生成'];
+  let recordActions='';
+  if(id==='UI-STATE-01') recordActions=svgButton(34,630,322,'开始录音');
+  if(id==='UI-STATE-02') recordActions=svgButton(34,630,322,'停止录音');
+  if(id==='UI-STATE-03') recordActions=svgButton(34,630,94,'试听')+svgButton(140,630,94,'重录',false)+svgButton(246,630,110,'提交投稿');
+  if(id==='UI-STATE-04') recordActions=svgButton(34,630,322,'等待结果',false);
+  if(id==='UI-STATE-05') recordActions=svgButton(34,630,322,'开始录音');
+  if(id==='UI-STATE-06') recordActions=svgButton(34,630,322,'开始录音');
+  if(id==='UI-STATE-07') recordActions=svgButton(34,630,322,'确认删除');
+  const latestPlay=id==='UI-STATE-05'?svgPlay(312,398):'';
+  const submissionAction=(id==='UI-STATE-04'||id==='UI-STATE-05'||id==='UI-STATE-06')?svgButton(278,768,78,'删除'):id==='UI-STATE-07'?svgButton(278,768,78,'取消'):'';
+  return `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 390 1040" role="img" aria-label="${s.screen_title}">
+    <rect width="390" height="1040" fill="#f7f7f7"/>
+    <rect width="390" height="74" fill="#fff"/>
+    ${svgText(22,25,'9:41',12,400,'#777')}${svgText(366,25,'● ● ▰',12,400,'#777','end')}
+    ${svgText(20,57,'异步合唱',22,700)}
+    ${svgBox(20,86,350,120,'#fff','#c8c8c8',8)}${svgText(34,118,'活动与玩法说明',16,700)}${svgText(34,148,'固定歌曲 · 内部体验',14,500,'#444')}${svgText(34,176,'先听原唱，再录下你的声音。',14,400,'#666')}
+    ${svgBox(20,218,350,112,'#fff','#c8c8c8',8)}${svgText(34,250,'原唱播放器',16,700)}${svgText(34,282,'固定歌曲',15,500,'#444')}${svgText(34,306,'录音前可播放、暂停或重播。',14,400,'#666')}${svgPlay(312,264)}
+    ${svgBox(20,342,350,150,'#fff','#c8c8c8',8)}${svgText(34,374,'最新合唱作品',16,700)}${svgText(34,409,latest[0],16,600)}${svgText(34,437,latest[1],14,400,'#666')}${latestPlay}
+    ${svgBox(20,504,350,190,'#fff','#c8c8c8',8)}${svgText(34,536,'录音与试听',16,700)}${svgText(34,570,record[0],16,600)}${svgText(34,598,record[1],14,400,'#666')}${recordActions}
+    ${svgBox(20,706,350,156,'#fff','#c8c8c8',8)}${svgText(34,738,'投稿池',16,700)}${svgText(34,774,submission[0],15,600)}${svgText(34,804,submission[1],14,400,'#666')}${submissionAction}${svgRule(34,830,356,830)}
+    ${svgBox(20,874,350,120,'#fff','#c8c8c8',8)}${svgText(34,906,'合成状态与提示',16,700)}${svgText(34,942,system[0],16,600)}${svgText(34,970,system[1],14,400,'#666')}
+    ${svgRule(20,1018,370,1018)}
+  </svg>`;
+};
+STATES.forEach(s=>{s.svg=sharedChorusSvg(s);s.structure=PAGE_STRUCTURE;s.changes=STATE_CHANGES[s.id]||[];});
+const body=document.body;
+const navToggle=document.getElementById('nav-toggle');
+const mobileNavToggle=document.getElementById('mobile-nav-toggle');
+mobileNavToggle.addEventListener('click',()=>body.classList.toggle('nav-open'));
+navToggle.addEventListener('click',()=>{body.classList.toggle('nav-collapsed');navToggle.textContent=body.classList.contains('nav-collapsed')?'›':'‹';});
+const render=(s)=>{
+  document.querySelectorAll('.state-btn').forEach(b=>b.classList.toggle('active',b.dataset.state===s.id));
+  document.getElementById('svg-host').innerHTML=s.svg;
+  document.getElementById('svg-host').scrollTop=STATE_VIEWPORT[s.id]||0;
+  document.getElementById('state-pill').textContent=s.id;
+  document.getElementById('stage-title').textContent=s.page;
+  document.getElementById('stage-subtitle').textContent=s.state_label;
+  document.getElementById('inspect-title').textContent=s.label;
+  document.getElementById('inspect-subtitle').textContent=s.page+' · '+s.state_label;
+  document.getElementById('inspect-task').textContent=s.task||'';
+  document.getElementById('inspect-structure').innerHTML=(s.structure||[]).map(x=>'<li>'+x+'</li>').join('');
+  document.getElementById('inspect-action').textContent=s.action||'';
+  document.getElementById('inspect-next').textContent=s.next||'';
+  document.getElementById('inspect-visible').innerHTML=(s.visible||[]).map(x=>'<li>'+x+'</li>').join('');
+  document.getElementById('inspect-changes').innerHTML=(s.changes||[]).map(x=>'<li>'+x+'</li>').join('');
+  document.getElementById('inspect-trace').innerHTML=(s.trace||[]).map(x=>'<code>'+x+'</code>').join('');
+};
+document.querySelectorAll('.state-btn').forEach(b=>b.addEventListener('click',()=>render(STATES.find(s=>s.id===b.dataset.state))));
+const revealTarget=(href)=>{const target=document.querySelector(href);const detail=target&&target.closest('details');if(detail) detail.open=true;};
+document.querySelectorAll('a[href^="#"]').forEach(a=>a.addEventListener('click',()=>revealTarget(a.getAttribute('href'))));
+document.querySelectorAll('.doc-link').forEach(a=>a.addEventListener('click',()=>{document.querySelectorAll('.doc-link').forEach(x=>x.classList.remove('active'));a.classList.add('active');if(window.innerWidth<720) body.classList.remove('nav-open');}));
+render(STATES[0]);
+</script>
+</body></html>

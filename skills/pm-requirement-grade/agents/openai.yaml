@@ -1,7 +1,7 @@
 interface:
   display_name: "pm-requirement-grade"
   short_description: "需求分析后判断 L0/L1/L2/L3/H，并输出交付路由和门禁包"
-  default_prompt: "使用 $pm-requirement-grade 先检查这个需求是否分析清楚，再判断属于 L0/L1/L2/L3/H 哪一类，是否允许 AI Coding 自助，并输出对应交付路由和门禁包：L1 AI Coding 任务边界、L2 协作简报、L3 PRD/spec 评审门禁或 H hotfix 治理包；不要替代 pm-prd-write、研发 spec、测试方案或指标复盘。"
+  default_prompt: "使用 $pm-requirement-grade 先检查这个需求是否分析清楚，再判断属于 L0/L1/L2/L3/H 哪一类、体验交付复杂度是否需要额外中间层、是否允许 AI Coding 自助，并输出对应交付路由和门禁包：L1 AI Coding 任务边界、L2 协作简报、L3 PRD/spec 评审门禁或 H hotfix 治理包；不要替代 pm-prd-write、研发 spec、测试方案或指标复盘。"
 
 policy:
   allow_implicit_invocation: true

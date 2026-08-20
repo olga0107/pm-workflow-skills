@@ -4,6 +4,17 @@
 
 ## [Unreleased]
 
+### Added
+
+- 新增 `pm-quality-audit` 跨阶段质量审计 skill，将“生成完成”和“质量通过”分开，统一检查上下文充分性、逻辑有效性、覆盖完整性、可追溯性、可执行性和不确定性校准。
+
+### Changed
+
+- 在 README、WORKFLOW_GUIDE 和 `pm-quality-audit` 命令中补充实际协作说明：讨论 / 初稿默认不自动审计，ready / 最终定级 / 准备交接时自动审计；审计报告默认回到对话，需要留档时写入项目根目录 `quality-audits/`。
+- 新增《产品交付质量框架》和质量审计模板，规定 Blocker / Major / Minor、PASS / PASS_WITH_CONDITIONS / BLOCKED、证据状态和最小追溯矩阵。
+- 将质量审计接入 README、WORKFLOW_GUIDE、各阶段 skill 和迭代指南，形成“先审计、再修复、后复审”的自迭代闭环。
+
+
 ### Changed
 
 - 将页面体验交付从“页面 × 状态 + 原型覆盖”升级为“页面信息结构 + 页面内容契约 + 页面 × 状态 × 内容覆盖 + UX 原型”；新增共享参考 `shared-references/页面内容契约与UX原型.md`。

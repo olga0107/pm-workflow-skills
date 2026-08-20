@@ -1,7 +1,7 @@
 interface:
   display_name: "pm-prd-html"
   short_description: "把确认后的 PRD 编译成可阅读、可评审的单文件 HTML"
-  default_prompt: "使用 $pm-prd-html 将已确认的 PRD 按‘问题 → 主线 → 页面状态 → 原型 → 规则 → 评审点’重组为单文件 HTML；从页面 × 状态 × 内容中间层生成必要的黑白灰 SVG 原型；复杂体验只按 PRD 的页面地图、状态架构、组件行为、端与布局、内容契约和覆盖计划编译代表组合，保留可按需回看的完整规格，并执行内容覆盖与真实渲染阅读验收。"
+  default_prompt: "使用 $pm-prd-html 将已确认的 PRD 按‘问题 → 主线 → 页面状态 → 原型 → 规则 → 评审点’重组为单文件 HTML；从页面 × 状态 × 内容中间层生成必要的黑白灰 SVG 原型；复杂体验只按 PRD 的页面地图、状态架构、组件行为、端与布局、内容契约和覆盖计划编译代表组合，保留可按需回看的完整规格，并执行内容覆盖与真实渲染阅读验收。 交付前：若输出 ready、最终结论或准备交接，自动调用 pm-quality-audit；若只是讨论或初稿，则标记为未审计。"
 
 policy:
   allow_implicit_invocation: true

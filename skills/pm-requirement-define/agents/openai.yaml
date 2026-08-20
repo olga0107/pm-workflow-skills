@@ -1,7 +1,7 @@
 interface:
   display_name: "pm-requirement-define"
   short_description: "定义产品问题、目标、方向与范围，并按需进行深度决策质询"
-  default_prompt: "使用 $pm-requirement-define 先判断缺口类型和是否需要单问题试探或深度质询，再将这个产品想法或提需整理成可进入需求分级与后续交付路由的需求定义。"
+  default_prompt: "使用 $pm-requirement-define 先判断缺口类型和是否需要单问题试探或深度质询，再将这个产品想法或提需整理成可进入需求分级与后续交付路由的需求定义；如果要求设计前评估完整页面效果，记录页面内容完整性和 UX 原型评审目标，但不要提前展开页面规格。"
 
 policy:
   allow_implicit_invocation: true

@@ -84,6 +84,17 @@ def validate_workflow_docs() -> None:
         if not (ROOT / relative).exists():
             error(f"missing workflow document {relative}")
 
+    quality_framework = ROOT / "shared-references/产品交付质量框架.md"
+    if not quality_framework.exists():
+        error("missing shared quality framework shared-references/产品交付质量框架.md")
+
+    for skill_dir in sorted((ROOT / "skills").iterdir()):
+        if not skill_dir.is_dir() or skill_dir.name == "pm-quality-audit":
+            continue
+        skill_file = skill_dir / "SKILL.md"
+        if skill_file.exists() and "pm-quality-audit" not in skill_file.read_text(encoding="utf-8"):
+            error(f"{skill_file.relative_to(ROOT)}: missing pm-quality-audit quality gate reference")
+
 
 def main() -> int:
     files = markdown_files()

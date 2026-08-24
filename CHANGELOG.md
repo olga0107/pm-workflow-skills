@@ -6,10 +6,13 @@
 
 ### Added
 
+- 新增《需求迭代闭环与收尾协议》，把既有规则 / 角色 / 指标 / 结算改造中的规则变更台账、影响地图、时序与归属、幂等 / 失败恢复、历史边界和交付闭环沉淀为可按风险裁剪的共享协议。
+
 - 新增 `pm-quality-audit` 跨阶段质量审计 skill，将“生成完成”和“质量通过”分开，统一检查上下文充分性、逻辑有效性、覆盖完整性、可追溯性、可执行性和不确定性校准。
 
 ### Changed
 
+- 将既有系统规则迭代接入 `pm-requirement-define`、`pm-prd-write`、`pm-quality-audit`、`pm-update-write`、README、WORKFLOW_GUIDE 和 ITERATION_GUIDE；新增 `release-closure` 收尾审计模式，并明确验收、稳定文档同步、生产发布和发布后观察不可互相替代。
 - 在 README、WORKFLOW_GUIDE 和 `pm-quality-audit` 命令中补充实际协作说明：讨论 / 初稿默认不自动审计，ready / 最终定级 / 准备交接时自动审计；审计报告默认回到对话，需要留档时写入项目根目录 `quality-audits/`。
 - 新增《产品交付质量框架》和质量审计模板，规定 Blocker / Major / Minor、PASS / PASS_WITH_CONDITIONS / BLOCKED、证据状态和最小追溯矩阵。
 - 将质量审计接入 README、WORKFLOW_GUIDE、各阶段 skill 和迭代指南，形成“先审计、再修复、后复审”的自迭代闭环。

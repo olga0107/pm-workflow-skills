@@ -4,6 +4,12 @@
 
 ## [Unreleased]
 
+### Changed
+
+- 将页面体验交付从“单点 HTML 原型优化”收敛为全链路契约：需求定义记录体验交付意图与静态预览风险，需求分级分别记录风险等级和原型 / 静态交付轴，`pm-prd-write` 负责 `pageSchema`、`contentContract`、`viewportContract`、`designSystemRefs`、`staticDelivery` 和 `prototypeReadiness`，`pm-prd-html` 负责静态优先 UX 原型编译，`pm-quality-audit` 负责跨阶段放行判断。
+- 将 `pm-prd-html` 默认档位统一为 `ux-prototype`；`wireframe` 仅在显式选择时使用。页面状态的 SVG 必须直接存在于 HTML 初始 DOM，JavaScript 仅做渐进增强；禁止把 `innerHTML` / 运行时渲染作为受限预览下的唯一展示路径。
+- 同步更新 README、WORKFLOW_GUIDE、ITERATION_GUIDE、CONTRIBUTING、PROGRESS、命令入口、分级路由 / 模板、项目画像、`agents/openai.yaml` 和示例，新增静态 HTML 原型检查脚本并接入 CI，避免上下游和项目引导文件继续保留旧口径。
+
 ### Added
 
 - 新增《需求迭代闭环与收尾协议》，把既有规则 / 角色 / 指标 / 结算改造中的规则变更台账、影响地图、时序与归属、幂等 / 失败恢复、历史边界和交付闭环沉淀为可按风险裁剪的共享协议。

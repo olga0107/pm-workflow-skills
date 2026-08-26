@@ -19,3 +19,6 @@ jobs:
 
       - name: Run documentation validation
         run: python3 scripts/validate-docs.py
+
+      - name: Run static HTML prototype validation
+        run: python3 scripts/validate-html-prototypes.py

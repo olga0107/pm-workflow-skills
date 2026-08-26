@@ -55,6 +55,7 @@ upstream-mapping/
 - 需求定义、分级、PRD、更新和复盘之间的交接契约变更，必须同步检查上游 / 下游文档是否一致，避免只改单个 skill。
 - 新增或修改阶段产物规则时，必须说明“生成完成”和“质量通过”的区别，并确认是否需要同步 `pm-quality-audit` 与《产品交付质量框架》。
 - 页面体验交付口径变更时，至少检查 `shared-references/页面内容契约与UX原型.md`、`pm-requirement-define`、`pm-requirement-grade`、`pm-prd-write`、`pm-prd-html`、PRD / HTML 模板和案例，不得只修改原型生成 skill。
+- 若涉及 UX 原型或静态交付，还必须检查 `README.md`、`WORKFLOW_GUIDE.md`、`ITERATION_GUIDE.md`、`CHANGELOG.md`、`PROGRESS.md`、相关 `agents/openai.yaml`、命令入口、分级模板 / 路由说明，以及 `scripts/validate-html-prototypes.py` 和 CI；至少验证 `prototypeReadiness → HTML 静态结构 → 视觉 / 无脚本验收` 三道门禁口径一致。
 
 ## 提交流程
 
@@ -63,6 +64,7 @@ upstream-mapping/
 ```bash
 bash scripts/validate-skills.sh
 python3 scripts/validate-docs.py
+python3 scripts/validate-html-prototypes.py
 ```
 
 建议在 PR 或提交说明中写清楚：

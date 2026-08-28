@@ -1,7 +1,7 @@
 interface:
   display_name: "pm-metrics-review"
   short_description: "复盘产品指标表现、数据口径、异常原因与后续行动建议"
-  default_prompt: "使用 $pm-metrics-review 复盘这些产品指标并给出可执行的后续建议。"
+  default_prompt: "使用 $pm-metrics-review 复盘这些产品指标并给出可执行的后续建议。 交付前：若输出 ready、最终结论或准备交接，自动调用 pm-quality-audit；若只是讨论或初稿，则标记为未审计。"
 
 policy:
   allow_implicit_invocation: true

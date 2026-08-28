@@ -12,7 +12,8 @@
 6. 定义问题、目标与非目标
 7. 方向未定时比较真实可选方案
 8. 划定一级范围并扫描会影响方向或投入的重大约束
-9. 输出 `ready`、`needs-decision` 或 `needs-input`
+9. 如果涉及页面改版或设计前 UX 评审，记录页面效果评审目标、内容完整性要求、静态预览限制和不可由设计稿补齐的信息；不展开页面规格，但把“需要页面内容契约 / UX 原型 / 静态 HTML 交付”作为交给 `pm-requirement-grade` 的体验交付意图和风险线索
+10. 输出 `ready`、`needs-decision` 或 `needs-input`
 
 达到 `ready` 后先转 `pm-requirement-grade` 做 L0/L1/L2/L3/H 分级；只有分级结论要求 PRD 时再转 `pm-prd-write`。
 

@@ -6,6 +6,34 @@
 
 ### Changed
 
+- `pm-collaboration-deliver` 结构瘦身（方案 A：纯迁移，不改运行时行为）：7 个回归测试移至仓库级 `tests/pm-collaboration-deliver/`，两份设计依据案例移至仓库级 `training-cases/`，仅被测试引用的 `black-white-wireframe-theme.json` 随测试迁出；skill 目录从 40 个文件减至 31 个，剩余全部为运行时文件。
+- 将页面体验交付从“单点 HTML 原型优化”收敛为全链路契约：需求定义记录体验交付意图与静态预览风险，需求分级分别记录风险等级和原型 / 静态交付轴，`pm-prd-write` 负责 `pageSchema`、`contentContract`、`viewportContract`、`designSystemRefs`、`staticDelivery` 和 `prototypeReadiness`，`pm-prd-html` 负责静态优先 UX 原型编译，`pm-quality-audit` 负责跨阶段放行判断。
+- 将 `pm-prd-html` 默认档位统一为 `ux-prototype`；`wireframe` 仅在显式选择时使用。页面状态的 SVG 必须直接存在于 HTML 初始 DOM，JavaScript 仅做渐进增强；禁止把 `innerHTML` / 运行时渲染作为受限预览下的唯一展示路径。
+- 同步更新 README、WORKFLOW_GUIDE、ITERATION_GUIDE、CONTRIBUTING、PROGRESS、命令入口、分级路由 / 模板、项目画像、`agents/openai.yaml` 和示例，新增静态 HTML 原型检查脚本并接入 CI，避免上下游和项目引导文件继续保留旧口径。
+
+### Added
+
+- `pm-collaboration-deliver` 蒸馏开源原型能力（multi-screen-wireframe、prd2prototype、visual-plan 等）：资产稳定定位协议与批注覆盖层模板（`annotations-overlay-template.js`）、原型版本与变更信号（v0.1/v0.2/v0.3.x 升号判据、三色徽标、倒序版本记录、隐藏而非删除）、复杂联动三件套、反馈定位三元组与四分类处置流、持久视觉上下文（design-context.md）与可选对抗性自审；`build_screen_html.py` 输出稳定 id 待后续补齐。
+- 合并上游 `Cyrus2333:master`，引入 `pm-prd-html` 及配套的 `pm-prd-write` 体验中间层契约（原型范围与页面状态规划、复杂体验中间层示例）。
+- 新增《需求迭代闭环与收尾协议》，把既有规则 / 角色 / 指标 / 结算改造中的规则变更台账、影响地图、时序与归属、幂等 / 失败恢复、历史边界和交付闭环沉淀为可按风险裁剪的共享协议。
+
+- 新增 `pm-quality-audit` 跨阶段质量审计 skill，将“生成完成”和“质量通过”分开，统一检查上下文充分性、逻辑有效性、覆盖完整性、可追溯性、可执行性和不确定性校准。
+
+### Changed
+
+- 将既有系统规则迭代接入 `pm-requirement-define`、`pm-prd-write`、`pm-quality-audit`、`pm-update-write`、README、WORKFLOW_GUIDE 和 ITERATION_GUIDE；新增 `release-closure` 收尾审计模式，并明确验收、稳定文档同步、生产发布和发布后观察不可互相替代。
+- 在 README、WORKFLOW_GUIDE 和 `pm-quality-audit` 命令中补充实际协作说明：讨论 / 初稿默认不自动审计，ready / 最终定级 / 准备交接时自动审计；审计报告默认回到对话，需要留档时写入项目根目录 `quality-audits/`。
+- 新增《产品交付质量框架》和质量审计模板，规定 Blocker / Major / Minor、PASS / PASS_WITH_CONDITIONS / BLOCKED、证据状态和最小追溯矩阵。
+- 将质量审计接入 README、WORKFLOW_GUIDE、各阶段 skill 和迭代指南，形成“先审计、再修复、后复审”的自迭代闭环。
+
+
+### Changed
+
+- 将页面体验交付从“页面 × 状态 + 原型覆盖”升级为“页面信息结构 + 页面内容契约 + 页面 × 状态 × 内容覆盖 + UX 原型”；新增共享参考 `shared-references/页面内容契约与UX原型.md`。
+- `pm-requirement-define` 增加页面效果评审目标和“哪些用户可见内容不能由设计稿补齐”的上游线索；`pm-requirement-grade` 增加“内容完整型 UX 原型”交付门槛，但不改变风险等级。
+- `pm-prd-write` 新增页面内容契约模板和代表性数据约束，明确静态文案、状态标签、按钮、placeholder、空态、错误和操作反馈的产品主源；`pm-prd-html` 增加内容覆盖检查和未确认 / 阻塞回退规则。
+- 同步更新 PRD 模板、复杂体验示例、HTML 交付规范、README、WORKFLOW_GUIDE、CONTRIBUTING 和 ITERATION_GUIDE，避免只改单个 skill 造成上下游口径漂移。
+
 - 引入独立于风险等级的“体验交付复杂度”路由：`pm-requirement-grade` 识别多页面、独立状态域、复杂组件、多端和状态组合等信号；`pm-prd-write` 按需补充页面地图、状态架构、组件行为、端与布局矩阵和原型覆盖计划；`pm-prd-html` 只据此编译代表状态、端形态和可核对的覆盖台账，不改变 L0/L1/L2/L3/H 门禁，也不要求简单需求填写空表。
 - 补齐移动端原型的上下游契约：`pm-prd-write` 在页面 × 状态规划中声明逻辑视窗、页面长度、滚动 / 固定区域、状态视口锚点和信息密度约束；`pm-prd-html` 据此在真实设备视窗内编译可滚动 SVG，不再通过缩小字号将长页压进单屏。
 - 新增 `pm-prd-html`，将已确认 PRD 编译为单一 `prd.html` 交付物：新增阅读版编译层：按“问题 → 主线 → 页面状态 → 原型 → 规则 → 评审点”重组正式 PRD，完整规格在同一 HTML 内按需回看；提供固定可收起侧栏、黑白灰内嵌 SVG 页面原型与流程图、需求上下文和跨产物一致性检查；不生成 PNG、多个 HTML 或第二套业务规则。

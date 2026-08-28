@@ -43,8 +43,8 @@
 ## 原项目流程保留
 
 - L1：在 `pm-requirement-grade` 内输出 AI Coding 任务边界和门禁，限定文件白名单，执行 `npm run build:weapp`，微信开发者工具自测，保留截图/录屏和回滚方案。
-- L2：在 `pm-requirement-grade` 内输出协作简报和门禁，至少需要研发影响面评估、测试/设计验收和上线观察；复杂规则再转 `pm-prd-write`。
-- L3：在 `pm-requirement-grade` 内输出 PRD/spec 评审门禁和交接摘要；完整 PRD 必须进入 `pm-prd-write`。
+- L2：在 `pm-requirement-grade` 内输出协作简报和门禁，至少需要研发影响面评估、测试/设计验收和上线观察；复杂规则再转 `pm-prd-write`；若要求设计前评估页面效果，追加页面内容契约、代表性数据、`prototypeReadiness` 和静态 HTML / SVG 交付约束。
+- L3：在 `pm-requirement-grade` 内输出 PRD/spec 评审门禁和交接摘要；完整 PRD 必须进入 `pm-prd-write`；需要 UX 原型时，必须沿 `prototypeTarget → pageSchema/contentContract → prototypeReadiness → pm-prd-html` 传递，不能由设计阶段补齐用户可见事实。
 - H：在 `pm-requirement-grade` 内输出 hotfix 治理包，由研发/值班负责人止血，禁止产品自助修复后上线。
 
 ## 原项目安全审查

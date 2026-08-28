@@ -1,0 +1,7 @@
+interface:
+  display_name: "pm-quality-audit"
+  short_description: "审计产品工作产物的完整性、严谨性、追溯性与交付 readiness"
+  default_prompt: "使用 $pm-quality-audit 对这份产品工作产物做独立质量审计：先建立上下文账本和追溯矩阵，再检查逻辑、遗漏、矛盾、过度确定和下游可执行性，输出带证据定位的 Blocker/Major/Minor、放行结论和修复条件；不要为了通过而补造事实；审计 UX 原型时额外检查 PRD → HTML 的内容覆盖、`prototypeReadiness`、静态 DOM / SVG 降级和浏览器验收证据。 交付前：若输出 ready、最终结论或准备交接，自动调用 pm-quality-audit；若只是讨论或初稿，则标记为未审计。"
+
+policy:
+  allow_implicit_invocation: true

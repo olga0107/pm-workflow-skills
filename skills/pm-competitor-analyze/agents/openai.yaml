@@ -1,7 +1,7 @@
 interface:
   display_name: "pm-competitor-analyze"
   short_description: "围绕产品决策完成竞品对比或单品机制拆解并形成可追溯建议"
-  default_prompt: "使用 $pm-competitor-analyze 围绕这个产品问题选择合适深度，完成竞品对比或单品机制拆解并给出可追溯建议。"
+  default_prompt: "使用 $pm-competitor-analyze 围绕这个产品问题选择合适深度，完成竞品对比或单品机制拆解并给出可追溯建议。 交付前：若输出 ready、最终结论或准备交接，自动调用 pm-quality-audit；若只是讨论或初稿，则标记为未审计。"
 
 policy:
   allow_implicit_invocation: true

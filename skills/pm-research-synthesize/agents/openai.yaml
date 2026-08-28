@@ -1,7 +1,7 @@
 interface:
   display_name: "pm-research-synthesize"
   short_description: "综合研究材料，提炼用户模式、证据强度、机会与产品建议"
-  default_prompt: "使用 $pm-research-synthesize 综合这些研究材料并提炼产品洞察。"
+  default_prompt: "使用 $pm-research-synthesize 综合这些研究材料并提炼产品洞察。 交付前：若输出 ready、最终结论或准备交接，自动调用 pm-quality-audit；若只是讨论或初稿，则标记为未审计。"
 
 policy:
   allow_implicit_invocation: true

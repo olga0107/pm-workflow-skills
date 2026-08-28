@@ -28,6 +28,22 @@
 
 ## 验证记录
 
-- `bash scripts/validate-skills.sh`：通过，7 个 skill。
-- `python3 scripts/validate-docs.py`：通过，45 个 Markdown 文件、链接、表格和工作流约定。
+- `bash scripts/validate-skills.sh`：通过，8 个 skill。
+- `python3 scripts/validate-docs.py`：通过，49 个 Markdown 文件、链接、表格和工作流约定。
 - `git diff --check`：通过。
+
+## 本轮页面体验工作流升级（2026-08-20）
+
+- 结论：复杂页面需求不能只依赖页面地图、组件骨架和代表性原型；当目标是设计前评估页面效果时，必须增加页面内容契约，维护所有用户可见静态 / 动态 / 条件 / 反馈内容。
+- 新增共享参考 `shared-references/页面内容契约与UX原型.md`，统一信息架构、页面内容契约、状态组合矩阵和 UX 原型的职责边界。
+- 同步更新需求定义、需求分级、PRD 编写、HTML 编译及仓库级交接 / 迭代文档，形成需求定义 → 分级门槛 → PRD 内容主源 → HTML 内容覆盖的完整链路。
+- 已完成：运行仓库校验、提交并推送远程、同步 Codex 本地 skills；下一步用真实页面需求回归内容契约和 HTML 原型覆盖效果。
+
+
+## 全链路 UX 原型与静态交付同步（2026-08-26）
+
+- 本轮不再把问题视为只修改 `pm-prd-html`：已把 `prototypeTarget`、`prototypeFidelity`、`pageSchema`、`contentContract`、`viewportContract`、`designSystemRefs`、`staticDelivery` 和 `prototypeReadiness` 串入需求分级、PRD、HTML 和质量审计的交接语义。
+- 已同步仓库级说明与引导：`README.md`、`WORKFLOW_GUIDE.md`、`ITERATION_GUIDE.md`、`CONTRIBUTING.md`、`CHANGELOG.md`、命令入口、分级路由、L2/L3 模板、项目画像和 HTML agent 默认提示。
+- 已将 HTML 原型交付口径统一为：默认 `ux-prototype`，显式 `wireframe` 才输出低保真线框；每个状态的 SVG 静态内嵌在初始 DOM，脚本只做渐进增强，受限预览禁用 JS 后仍可阅读。
+- 已增加静态结构检查脚本并接入本地 / CI 校验；当前已完成 XML / 脚本 / 静态 DOM 检查，以及 Headless Chrome 对两个示例在 320 / 375 / 390 / 430 宽度下的截图渲染。活动详情示例的 390×844 正常版与移除脚本版截图字节一致，证明静态初始 DOM 可在无脚本浏览器路径中生成同样的首屏图像。
+- 仍需人工完成项：当前对话表面无法直接审看截图像素，因此不能把“截图生成成功”表述为完整的视觉设计验收；后续在可查看截图的浏览器 / 设计评审环境中，应复核信息密度、裁切、长页滚动和每个状态的视觉层级。

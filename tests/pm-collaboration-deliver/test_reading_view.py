@@ -9,7 +9,10 @@ import unittest
 from pathlib import Path
 
 
-SCRIPT = Path(__file__).with_name("check_reading_view.py")
+SCRIPT = (
+    Path(__file__).resolve().parents[2]
+    / "skills" / "pm-collaboration-deliver" / "scripts" / "check_reading_view.py"
+)
 spec = importlib.util.spec_from_file_location("check_reading_view", SCRIPT)
 checker = importlib.util.module_from_spec(spec)
 assert spec.loader is not None

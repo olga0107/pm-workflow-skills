@@ -6,7 +6,7 @@ import unittest
 from pathlib import Path
 
 
-SKILL_DIR = Path(__file__).resolve().parents[1]
+SKILL_DIR = Path(__file__).resolve().parents[2] / "skills" / "pm-collaboration-deliver"
 
 
 class SkillRoutingTest(unittest.TestCase):

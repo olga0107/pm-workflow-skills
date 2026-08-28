@@ -10,7 +10,10 @@ import unittest
 from pathlib import Path
 
 
-CHECKER = Path(__file__).resolve().parent / "audit" / "check_interaction_model.py"
+CHECKER = (
+    Path(__file__).resolve().parents[2]
+    / "skills" / "pm-collaboration-deliver" / "scripts" / "audit" / "check_interaction_model.py"
+)
 
 
 def base_model() -> dict:

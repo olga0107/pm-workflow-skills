@@ -1,7 +1,13 @@
 import json
+import sys
 import tempfile
 import unittest
 from pathlib import Path
+
+sys.path.insert(
+    0,
+    str(Path(__file__).resolve().parents[2] / "skills" / "pm-collaboration-deliver" / "scripts"),
+)
 
 from check_page_interaction_overview import validate
 

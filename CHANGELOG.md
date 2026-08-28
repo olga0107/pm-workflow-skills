@@ -4,6 +4,10 @@
 
 ## [Unreleased]
 
+### Changed
+
+- `pm-collaboration-deliver` 结构瘦身（方案 A：纯迁移，不改运行时行为）：7 个回归测试移至仓库级 `tests/pm-collaboration-deliver/`，两份设计依据案例移至仓库级 `training-cases/`，仅被测试引用的 `black-white-wireframe-theme.json` 随测试迁出；skill 目录从 40 个文件减至 31 个，剩余全部为运行时文件。
+
 ### Added
 
 - `pm-collaboration-deliver` 蒸馏开源原型能力（multi-screen-wireframe、prd2prototype、visual-plan 等）：资产稳定定位协议与批注覆盖层模板（`annotations-overlay-template.js`）、原型版本与变更信号（v0.1/v0.2/v0.3.x 升号判据、三色徽标、倒序版本记录、隐藏而非删除）、复杂联动三件套、反馈定位三元组与四分类处置流、持久视觉上下文（design-context.md）与可选对抗性自审；`build_screen_html.py` 输出稳定 id 待后续补齐。

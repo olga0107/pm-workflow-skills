@@ -11,10 +11,10 @@ import unittest
 from pathlib import Path
 
 
-ROOT = Path(__file__).resolve().parent
+ROOT = Path(__file__).resolve().parents[2] / "skills" / "pm-collaboration-deliver" / "scripts"
 RENDERER = ROOT / "render_wireframe_board.py"
 PACK_CHECKER = ROOT / "audit" / "check_execution_pack.py"
-THEME = ROOT.parent / "assets" / "black-white-wireframe-theme.json"
+THEME = Path(__file__).resolve().parent / "black-white-wireframe-theme.json"
 
 
 class VisualToolsTest(unittest.TestCase):

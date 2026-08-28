@@ -9,8 +9,9 @@ import unittest
 from pathlib import Path
 
 
-CHECKER = Path(__file__).resolve().parent / "audit" / "check_feishu_delivery.py"
-BUILDER = Path(__file__).resolve().parent / "audit" / "build_feishu_audit.py"
+SCRIPTS = Path(__file__).resolve().parents[2] / "skills" / "pm-collaboration-deliver" / "scripts"
+CHECKER = SCRIPTS / "audit" / "check_feishu_delivery.py"
+BUILDER = SCRIPTS / "audit" / "build_feishu_audit.py"
 
 
 class FeishuDeliveryTest(unittest.TestCase):
